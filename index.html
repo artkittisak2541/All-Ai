@@ -15,6 +15,21 @@
     --danger: #ef4444;
     --warning: #f59e0b;
     --info: #3b82f6;
+    --chat: #10b981;
+    --slide: #8b5cf6;
+    --code: #3b82f6;
+    --email: #ec4899;
+    --image: #f59e0b;
+    --excel: #10b981;
+    --meeting: #6366f1;
+    --workflow: #06b6d4;
+    --writing: #ef4444;
+    --schedule: #14b8a6;
+    --notes: #8b5cf6;
+    --video: #ec4899;
+    --design: #f59e0b;
+    --data: #06b6d4;
+    
     --dark-bg: #0f172a;
     --dark-card: #1e293b;
     --dark-border: #334155;
@@ -63,7 +78,7 @@ body.light-mode {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
     position: relative;
@@ -78,11 +93,16 @@ body.light-mode {
     padding: 20px 0;
     margin-bottom: 20px;
     border-bottom: 1px solid var(--dark-border);
-    position: relative;
+    position: sticky;
+    top: 0;
+    background: var(--dark-bg);
+    z-index: 100;
+    backdrop-filter: blur(10px);
 }
 
 body.light-mode .header {
     border-bottom-color: var(--light-border);
+    background: var(--light-bg);
 }
 
 .logo {
@@ -289,27 +309,107 @@ body.light-mode .action-btn.secondary {
     color: var(--primary);
 }
 
-/* AI Selection Section */
-.selection-section {
-    margin-top: 20px;
+/* Category Tabs */
+.category-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--dark-border);
+    overflow-x: auto;
 }
 
-.section-title {
+body.light-mode .category-tabs {
+    border-bottom-color: var(--light-border);
+}
+
+.category-tab {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 20px;
-    font-weight: 600;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-full);
+    color: var(--dark-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+body.light-mode .category-tab {
+    background: rgba(226, 232, 240, 0.6);
+    border-color: var(--light-border);
+    color: var(--light-text-secondary);
+}
+
+.category-tab:hover {
+    transform: translateY(-2px);
+}
+
+.category-tab.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+/* Category Sections */
+.category-section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.category-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid;
+}
+
+.category-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+}
+
+.category-title {
+    font-size: 24px;
+    font-weight: 600;
     color: var(--dark-text);
 }
 
-body.light-mode .section-title {
+body.light-mode .category-title {
     color: var(--light-text);
 }
 
-.section-title i {
-    color: var(--primary);
+.category-description {
+    font-size: 16px;
+    color: var(--dark-text-secondary);
+    margin-top: 8px;
+}
+
+body.light-mode .category-description {
+    color: var(--light-text-secondary);
 }
 
 /* AI Grid */
@@ -324,11 +424,14 @@ body.light-mode .section-title {
     background: var(--dark-card);
     border: 1px solid var(--dark-border);
     border-radius: var(--radius-lg);
-    padding: 24px;
+    padding: 20px;
     cursor: pointer;
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 body.light-mode .ai-card {
@@ -345,11 +448,6 @@ body.light-mode .ai-card {
 .ai-card.active {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(30, 41, 59, 0.8));
-}
-
-body.light-mode .ai-card.active {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(255, 255, 255, 0.9));
 }
 
 .ai-card-header {
@@ -371,44 +469,9 @@ body.light-mode .ai-card.active {
     flex-shrink: 0;
 }
 
-.ai-icon.chatgpt {
-    background: linear-gradient(135deg, #10a37f, #19c37d);
-}
-
-.ai-icon.claude {
-    background: linear-gradient(135deg, #d4a574, #b8843a);
-}
-
-.ai-icon.gemini {
-    background: linear-gradient(135deg, #4285f4, #34a853);
-}
-
-.ai-icon.deepseek {
-    background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-}
-
-.ai-icon.perplexity {
-    background: linear-gradient(135deg, #000000, #333333);
-}
-
-.ai-icon.stai {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-}
-
-.ai-icon.copilot {
-    background: linear-gradient(135deg, #000000, #7d7d7d);
-}
-
-.ai-icon.midjourney {
-    background: linear-gradient(135deg, #3a0ca3, #4361ee);
-}
-
-.ai-icon.local {
-    background: linear-gradient(135deg, #dc2626, #ef4444);
-}
-
 .ai-info {
     flex: 1;
+    min-width: 0;
 }
 
 .ai-name {
@@ -416,6 +479,9 @@ body.light-mode .ai-card.active {
     font-weight: 600;
     margin-bottom: 4px;
     color: var(--dark-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 body.light-mode .ai-name {
@@ -436,6 +502,7 @@ body.light-mode .ai-provider {
     display: flex;
     gap: 6px;
     margin-top: 4px;
+    flex-wrap: wrap;
 }
 
 .ai-badge {
@@ -445,6 +512,7 @@ body.light-mode .ai-provider {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 .badge-free {
@@ -457,14 +525,14 @@ body.light-mode .ai-provider {
     color: var(--primary);
 }
 
-.badge-local {
-    background: rgba(239, 68, 68, 0.2);
-    color: var(--danger);
-}
-
 .badge-mobile {
     background: rgba(59, 130, 246, 0.2);
     color: var(--info);
+}
+
+.badge-web {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
 }
 
 .ai-description {
@@ -472,6 +540,7 @@ body.light-mode .ai-provider {
     color: var(--dark-text-secondary);
     line-height: 1.5;
     margin-bottom: 16px;
+    flex: 1;
 }
 
 body.light-mode .ai-description {
@@ -497,13 +566,14 @@ body.light-mode .ai-description {
 body.light-mode .ai-feature {
     background: rgba(226, 232, 240, 0.7);
     border-color: var(--light-border);
+    color: var(--light-text-secondary);
 }
 
 .ai-action {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 16px;
+    margin-top: auto;
     padding-top: 16px;
     border-top: 1px solid var(--dark-border);
 }
@@ -720,7 +790,7 @@ body.light-mode .modal-text {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: var(--transition;
+    transition: var(--transition);
     border: none;
 }
 
@@ -805,6 +875,121 @@ body.light-mode .modal-btn.secondary {
     font-weight: 500;
 }
 
+/* Category Colors */
+.category-chat {
+    border-bottom-color: var(--chat);
+}
+.category-chat .category-icon {
+    background: linear-gradient(135deg, var(--chat), #059669);
+}
+
+.category-slide {
+    border-bottom-color: var(--slide);
+}
+.category-slide .category-icon {
+    background: linear-gradient(135deg, var(--slide), var(--primary-dark));
+}
+
+.category-code {
+    border-bottom-color: var(--code);
+}
+.category-code .category-icon {
+    background: linear-gradient(135deg, var(--code), #2563eb);
+}
+
+.category-email {
+    border-bottom-color: var(--email);
+}
+.category-email .category-icon {
+    background: linear-gradient(135deg, var(--email), #be185d);
+}
+
+.category-image {
+    border-bottom-color: var(--image);
+}
+.category-image .category-icon {
+    background: linear-gradient(135deg, var(--image), #d97706);
+}
+
+.category-excel {
+    border-bottom-color: var(--excel);
+}
+.category-excel .category-icon {
+    background: linear-gradient(135deg, var(--excel), #059669);
+}
+
+.category-meeting {
+    border-bottom-color: var(--meeting);
+}
+.category-meeting .category-icon {
+    background: linear-gradient(135deg, var(--meeting), #4f46e5);
+}
+
+.category-workflow {
+    border-bottom-color: var(--workflow);
+}
+.category-workflow .category-icon {
+    background: linear-gradient(135deg, var(--workflow), #0891b2);
+}
+
+.category-writing {
+    border-bottom-color: var(--writing);
+}
+.category-writing .category-icon {
+    background: linear-gradient(135deg, var(--writing), #dc2626);
+}
+
+.category-schedule {
+    border-bottom-color: var(--schedule);
+}
+.category-schedule .category-icon {
+    background: linear-gradient(135deg, var(--schedule), #0d9488);
+}
+
+.category-notes {
+    border-bottom-color: var(--notes);
+}
+.category-notes .category-icon {
+    background: linear-gradient(135deg, var(--notes), var(--primary-dark));
+}
+
+.category-video {
+    border-bottom-color: var(--video);
+}
+.category-video .category-icon {
+    background: linear-gradient(135deg, var(--video), #be185d);
+}
+
+.category-design {
+    border-bottom-color: var(--design);
+}
+.category-design .category-icon {
+    background: linear-gradient(135deg, var(--design), #d97706);
+}
+
+.category-data {
+    border-bottom-color: var(--data);
+}
+.category-data .category-icon {
+    background: linear-gradient(135deg, var(--data), #0891b2);
+}
+
+/* AI Icon Colors */
+.ai-icon.chat { background: linear-gradient(135deg, var(--chat), #059669); }
+.ai-icon.slide { background: linear-gradient(135deg, var(--slide), var(--primary-dark)); }
+.ai-icon.code { background: linear-gradient(135deg, var(--code), #2563eb); }
+.ai-icon.email { background: linear-gradient(135deg, var(--email), #be185d); }
+.ai-icon.image { background: linear-gradient(135deg, var(--image), #d97706); }
+.ai-icon.excel { background: linear-gradient(135deg, var(--excel), #059669); }
+.ai-icon.meeting { background: linear-gradient(135deg, var(--meeting), #4f46e5); }
+.ai-icon.workflow { background: linear-gradient(135deg, var(--workflow), #0891b2); }
+.ai-icon.writing { background: linear-gradient(135deg, var(--writing), #dc2626); }
+.ai-icon.schedule { background: linear-gradient(135deg, var(--schedule), #0d9488); }
+.ai-icon.notes { background: linear-gradient(135deg, var(--notes), var(--primary-dark)); }
+.ai-icon.video { background: linear-gradient(135deg, var(--video), #be185d); }
+.ai-icon.design { background: linear-gradient(135deg, var(--design), #d97706); }
+.ai-icon.data { background: linear-gradient(135deg, var(--data), #0891b2); }
+
 /* Responsive */
 @media (max-width: 768px) {
     .main-container {
@@ -845,11 +1030,20 @@ body.light-mode .modal-btn.secondary {
     .modal {
         padding: 24px;
     }
+    
+    .category-tabs {
+        gap: 6px;
+    }
+    
+    .category-tab {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 480px) {
     .ai-card {
-        padding: 20px;
+        padding: 16px;
     }
     
     .ai-card-header {
@@ -870,6 +1064,14 @@ body.light-mode .modal-btn.secondary {
     
     .modal-btn {
         width: 100%;
+    }
+    
+    .category-tab span:last-child {
+        display: none;
+    }
+    
+    .category-tab {
+        padding: 8px 12px;
     }
 }
 
@@ -984,19 +1186,14 @@ body.light-mode ::-webkit-scrollbar-track {
             </div>
         </div>
         
-        <!-- AI Selection -->
-        <div class="selection-section">
-            <h2 class="section-title">
-                <i class="fas fa-robot"></i>
-                <span>เลือก AI ที่ต้องการใช้</span>
-            </h2>
-            <p style="color: var(--dark-text-secondary); margin-bottom: 20px;">
-                เลือก AI ที่เหมาะกับคำถามของคุณ ทั้งบนเว็บและแอปมือถือ
-            </p>
-            
-            <div class="ai-grid" id="aiGrid">
-                <!-- AI Cards will be inserted here -->
-            </div>
+        <!-- Category Tabs -->
+        <div class="category-tabs" id="categoryTabs">
+            <!-- Tabs will be generated by JavaScript -->
+        </div>
+        
+        <!-- Category Sections -->
+        <div id="categorySections">
+            <!-- Sections will be generated by JavaScript -->
         </div>
         
         <!-- Recently Used -->
@@ -1014,15 +1211,17 @@ body.light-mode ::-webkit-scrollbar-track {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
 <script>
-// AI Database - ทุก AI บนโลก 🌍
+// AI Database - จัดหมวดหมู่ครบวงจร 🌍
 const aiDatabase = [
+    // 🧠 AI คุยแชท / แชทบอท
     {
         id: 'chatgpt',
         name: 'ChatGPT',
         provider: 'OpenAI',
         icon: 'fas fa-comment',
-        colorClass: 'chatgpt',
-        description: 'AI สนทนาที่ทรงพลังที่สุด พัฒนาโดย OpenAI รองรับหลายภาษาและงานหลากหลายรูปแบบ',
+        colorClass: 'chat',
+        category: 'chat',
+        description: 'AI สนทนาที่ทรงพลังที่สุด รองรับหลายภาษาและงานหลากหลายรูปแบบ',
         badges: [
             { text: 'ฟรี/จ่าย', type: 'paid' },
             { text: 'มือถือ', type: 'mobile' }
@@ -1037,8 +1236,9 @@ const aiDatabase = [
         name: 'Claude',
         provider: 'Anthropic',
         icon: 'fas fa-brain',
-        colorClass: 'claude',
-        description: 'AI ที่ปลอดภัยและมีจริยธรรม พัฒนาโดย Anthropic เหมาะสำหรับงานเขียนและวิเคราะห์',
+        colorClass: 'chat',
+        category: 'chat',
+        description: 'AI ที่ปลอดภัยและมีจริยธรรม เหมาะสำหรับงานเขียนและวิเคราะห์',
         badges: [
             { text: 'ฟรี', type: 'free' },
             { text: 'มือถือ', type: 'mobile' }
@@ -1053,7 +1253,8 @@ const aiDatabase = [
         name: 'Gemini',
         provider: 'Google',
         icon: 'fas fa-gem',
-        colorClass: 'gemini',
+        colorClass: 'chat',
+        category: 'chat',
         description: 'AI จาก Google ที่ผสานการค้นหาและสร้างสรรค์ในตัวเดียว',
         badges: [
             { text: 'ฟรี', type: 'free' },
@@ -1069,11 +1270,12 @@ const aiDatabase = [
         name: 'DeepSeek',
         provider: 'DeepSeek AI',
         icon: 'fas fa-search-deep',
-        colorClass: 'deepseek',
+        colorClass: 'chat',
+        category: 'chat',
         description: 'AI ฟรีที่มีความสามารถสูง รองรับ 128K context เหมาะสำหรับงานเขียนโค้ด',
         badges: [
             { text: 'ฟรี', type: 'free' },
-            { text: 'เว็บ', type: 'free' }
+            { text: 'เว็บ', type: 'web' }
         ],
         features: ['เขียนโค้ด', 'แก้บั๊ก', 'สอนโปรแกรมมิ่ง', 'วิเคราะห์โค้ด'],
         webUrl: 'https://chat.deepseek.com/?q={prompt}',
@@ -1081,12 +1283,64 @@ const aiDatabase = [
         fallbackUrl: 'https://chat.deepseek.com/?q={prompt}'
     },
     {
+        id: 'xai',
+        name: 'xAI Grok',
+        provider: 'xAI',
+        icon: 'fas fa-bolt',
+        colorClass: 'chat',
+        category: 'chat',
+        description: 'AI ด้วยอารมณ์ขันและความรู้แบบเรียลไทม์ พัฒนาโดย Elon Musk',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['สนทนา', 'เรียลไทม์', 'อารมณ์ขัน', 'ข้อมูลล่าสุด'],
+        webUrl: 'https://x.ai/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://x.ai/?q={prompt}'
+    },
+    {
+        id: 'metaai',
+        name: 'Meta AI',
+        provider: 'Meta',
+        icon: 'fab fa-facebook',
+        colorClass: 'chat',
+        category: 'chat',
+        description: 'AI จาก Meta (Facebook) บูรณาการในแอปครอบครัว Meta',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['สนทนา', 'สร้างภาพ', 'Facebook', 'Instagram'],
+        webUrl: 'https://www.meta.ai/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://www.meta.ai/?q={prompt}'
+    },
+    {
+        id: 'copilot',
+        name: 'MS Copilot',
+        provider: 'Microsoft',
+        icon: 'fas fa-robot',
+        colorClass: 'chat',
+        category: 'chat',
+        description: 'AI จาก Microsoft บูรณาการใน Windows และ Office',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['Windows', 'Office', 'Edge', 'ทำงานร่วมกัน'],
+        webUrl: 'https://copilot.microsoft.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://copilot.microsoft.com/?q={prompt}'
+    },
+    {
         id: 'perplexity',
         name: 'Perplexity',
         provider: 'Perplexity AI',
         icon: 'fas fa-compass',
-        colorClass: 'perplexity',
-        description: 'AI ค้นหาข้อมูลแบบเรียลไทม์ พร้อมแหล่งอ้างอิง เหมาะสำหรับงานวิจัย',
+        colorClass: 'chat',
+        category: 'chat',
+        description: 'AI ค้นหาข้อมูลแบบเรียลไทม์ พร้อมแหล่งอ้างอิง',
         badges: [
             { text: 'ฟรี/จ่าย', type: 'paid' },
             { text: 'มือถือ', type: 'mobile' }
@@ -1096,29 +1350,69 @@ const aiDatabase = [
         mobileUrl: 'perplexity://?q={prompt}',
         fallbackUrl: 'https://www.perplexity.ai/?q={prompt}'
     },
+
+    // 🎨 AI ทำสไลด์พรีเซนต์
     {
-        id: 'stai',
-        name: 'ST Chat Bot AI',
-        provider: 'ST AI Router',
-        icon: 'fas fa-robot',
-        colorClass: 'stai',
-        description: 'AI หลายโหมดในตัวเดียว สร้างภาพ วิเคราะห์ภาพ สนทนา และเขียนโค้ด',
+        id: 'beautiful',
+        name: 'Beautiful.AI',
+        provider: 'Beautiful.AI',
+        icon: 'fas fa-sliders-h',
+        colorClass: 'slide',
+        category: 'slide',
+        description: 'AI ช่วยสร้างพรีเซนต์ที่สวยงามอัตโนมัติ',
         badges: [
-            { text: 'ฟรี', type: 'free' },
-            { text: 'หลายโหมด', type: 'free' }
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'เว็บ', type: 'web' }
         ],
-        features: ['สร้างภาพ', 'วิเคราะห์ภาพ', 'สนทนา', 'เขียนโค้ด', 'เสียง'],
-        webUrl: 'st-chatbot.html?prompt={prompt}',
+        features: ['พรีเซนต์', 'ดีไซน์', 'อัตโนมัติ', 'ทีม'],
+        webUrl: 'https://www.beautiful.ai/?ref={prompt}',
         mobileUrl: null,
-        fallbackUrl: 'st-chatbot.html?prompt={prompt}'
+        fallbackUrl: 'https://www.beautiful.ai'
     },
     {
-        id: 'copilot',
+        id: 'gamma',
+        name: 'Gamma',
+        provider: 'Gamma',
+        icon: 'fas fa-chart-line',
+        colorClass: 'slide',
+        category: 'slide',
+        description: 'สร้างพรีเซนต์ สารคดี และเว็บไซต์ด้วย AI',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'เว็บ', type: 'web' }
+        ],
+        features: ['พรีเซนต์', 'เว็บไซต์', 'สารคดี', 'ร่วมกัน'],
+        webUrl: 'https://gamma.app/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://gamma.app'
+    },
+    {
+        id: 'tome',
+        name: 'Tome',
+        provider: 'Tome',
+        icon: 'fas fa-book-open',
+        colorClass: 'slide',
+        category: 'slide',
+        description: 'AI สร้างเรื่องเล่าและพรีเซนต์ที่น่าสนใจ',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['เรื่องเล่า', 'พรีเซนต์', 'สร้างภาพ', 'แบ่งปัน'],
+        webUrl: 'https://tome.app/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://tome.app'
+    },
+
+    // 💻 AI ช่วยเขียนโค้ด
+    {
+        id: 'github-copilot',
         name: 'GitHub Copilot',
         provider: 'Microsoft',
         icon: 'fas fa-code',
-        colorClass: 'copilot',
-        description: 'AI สำหรับช่วยเขียนโค้ดโดยเฉพาะ ติดตั้งใน VS Code และ IDE อื่นๆ',
+        colorClass: 'code',
+        category: 'code',
+        description: 'AI สำหรับช่วยเขียนโค้ดโดยเฉพาะ ใน VS Code และ IDE',
         badges: [
             { text: 'จ่าย', type: 'paid' },
             { text: 'สำหรับ Dev', type: 'paid' }
@@ -1129,15 +1423,88 @@ const aiDatabase = [
         fallbackUrl: 'https://github.com/features/copilot'
     },
     {
+        id: 'cursor',
+        name: 'Cursor',
+        provider: 'Cursor',
+        icon: 'fas fa-mouse-pointer',
+        colorClass: 'code',
+        category: 'code',
+        description: 'IDE ที่ใช้ AI ช่วยเขียนโค้ดและแก้ปัญหา',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'Desktop', type: 'web' }
+        ],
+        features: ['IDE', 'เขียนโค้ด', 'แก้บั๊ก', 'เรียนรู้โค้ด'],
+        webUrl: 'https://cursor.sh/',
+        mobileUrl: null,
+        fallbackUrl: 'https://cursor.sh/'
+    },
+    {
+        id: 'replit',
+        name: 'Replit',
+        provider: 'Replit',
+        icon: 'fas fa-terminal',
+        colorClass: 'code',
+        category: 'code',
+        description: 'แพลตฟอร์มเขียนโค้ดออนไลน์พร้อม AI Assistant',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'เว็บ', type: 'web' }
+        ],
+        features: ['ออนไลน์', 'หลายภาษา', 'ทีม', 'Deploy'],
+        webUrl: 'https://replit.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://replit.com'
+    },
+
+    // 📧 AI ช่วยเขียนอีเมล
+    {
+        id: 'superhuman',
+        name: 'Superhuman',
+        provider: 'Superhuman',
+        icon: 'fas fa-envelope',
+        colorClass: 'email',
+        category: 'email',
+        description: 'AI ช่วยเขียนอีเมลที่เร็วและฉลาด',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['เขียนอีเมล', 'ตอบกลับ', 'จัดลำดับ', 'วิเคราะห์'],
+        webUrl: 'https://superhuman.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://superhuman.com'
+    },
+    {
+        id: 'shortwave',
+        name: 'Shortwave',
+        provider: 'Shortwave',
+        icon: 'fas fa-paper-plane',
+        colorClass: 'email',
+        category: 'email',
+        description: 'AI ช่วยจัดการอีเมลและสรุปเนื้อหา',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['สรุปอีเมล', 'จัดการ', 'ตอบกลับ', 'เรียงลำดับ'],
+        webUrl: 'https://shortwave.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://shortwave.com'
+    },
+
+    // 🖼️ AI ช่วยสร้างภาพ
+    {
         id: 'midjourney',
         name: 'Midjourney',
         provider: 'Midjourney',
         icon: 'fas fa-palette',
-        colorClass: 'midjourney',
+        colorClass: 'image',
+        category: 'image',
         description: 'AI สร้างภาพศิลปะที่สวยงาม รองรับสไตล์หลากหลาย',
         badges: [
             { text: 'จ่าย', type: 'paid' },
-            { text: 'สร้างภาพ', type: 'paid' }
+            { text: 'Discord', type: 'web' }
         ],
         features: ['สร้างภาพ', 'ศิลปะ', 'ดีไซน์', 'ภาพเหมือน'],
         webUrl: 'https://www.midjourney.com/',
@@ -1145,20 +1512,399 @@ const aiDatabase = [
         fallbackUrl: 'https://www.midjourney.com/'
     },
     {
-        id: 'local',
-        name: 'AI ฝั่งเซิร์ฟเวอร์',
-        provider: 'Local / Self-hosted',
-        icon: 'fas fa-server',
-        colorClass: 'local',
-        description: 'ติดตั้งและใช้งาน AI บนเซิร์ฟเวอร์ของคุณเอง',
+        id: 'dalle',
+        name: 'DALL·E 3',
+        provider: 'OpenAI',
+        icon: 'fas fa-paint-brush',
+        colorClass: 'image',
+        category: 'image',
+        description: 'AI สร้างภาพจากข้อความที่ละเอียดและสมจริง',
         badges: [
-            { text: 'โลคอล', type: 'local' },
-            { text: 'ส่วนตัว', type: 'local' }
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
         ],
-        features: ['ส่วนตัว', 'ปลอดภัย', 'ปรับแต่งได้', 'ไร้ข้อจำกัด'],
-        webUrl: 'http://localhost:3000/?prompt={prompt}',
+        features: ['สร้างภาพ', 'แก้ไขภาพ', 'สมจริง', 'หลายรูปแบบ'],
+        webUrl: 'https://openai.com/dall-e-3',
         mobileUrl: null,
-        fallbackUrl: 'http://localhost:3000/?prompt={prompt}'
+        fallbackUrl: 'https://openai.com/dall-e-3'
+    },
+    {
+        id: 'firefly',
+        name: 'Adobe Firefly',
+        provider: 'Adobe',
+        icon: 'fas fa-fire',
+        colorClass: 'image',
+        category: 'image',
+        description: 'AI สร้างภาพจาก Adobe ผสานกับ Creative Cloud',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['สร้างภาพ', 'Photoshop', 'Illustrator', 'Professional'],
+        webUrl: 'https://www.adobe.com/products/firefly.html',
+        mobileUrl: null,
+        fallbackUrl: 'https://www.adobe.com/products/firefly.html'
+    },
+
+    // 📊 AI ช่วยทำ Excel
+    {
+        id: 'sheetai',
+        name: 'SheetAI',
+        provider: 'SheetAI',
+        icon: 'fas fa-table',
+        colorClass: 'excel',
+        category: 'excel',
+        description: 'AI ช่วยทำงานกับ Google Sheets และ Excel',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'Add-on', type: 'web' }
+        ],
+        features: ['Excel', 'Google Sheets', 'สูตร', 'วิเคราะห์ข้อมูล'],
+        webUrl: 'https://sheetai.app/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://sheetai.app'
+    },
+    {
+        id: 'formulabot',
+        name: 'Formula Bot',
+        provider: 'Formula Bot',
+        icon: 'fas fa-calculator',
+        colorClass: 'excel',
+        category: 'excel',
+        description: 'AI ช่วยสร้างสูตร Excel และ Google Sheets',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'Add-on', type: 'web' }
+        ],
+        features: ['สูตร', 'Excel', 'Google Sheets', 'อัตโนมัติ'],
+        webUrl: 'https://formulabot.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://formulabot.com'
+    },
+
+    // 📝 AI สรุปการประชุม
+    {
+        id: 'otter',
+        name: 'Otter.ai',
+        provider: 'Otter AI',
+        icon: 'fas fa-microphone',
+        colorClass: 'meeting',
+        category: 'meeting',
+        description: 'AI บันทึกและสรุปการประชุมอัตโนมัติ',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['บันทึก', 'สรุป', 'ประชุม', 'ทีม'],
+        webUrl: 'https://otter.ai/?q={prompt}',
+        mobileUrl: 'otterai://?q={prompt}',
+        fallbackUrl: 'https://otter.ai'
+    },
+    {
+        id: 'fireflies',
+        name: 'Fireflies',
+        provider: 'Fireflies AI',
+        icon: 'fas fa-fire',
+        colorClass: 'meeting',
+        category: 'meeting',
+        description: 'AI บันทึกและวิเคราะห์การประชุม',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'เว็บ', type: 'web' }
+        ],
+        features: ['บันทึก', 'วิเคราะห์', 'ค้นหา', 'สรุป'],
+        webUrl: 'https://fireflies.ai/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://fireflies.ai'
+    },
+
+    // ⚙️ AI ช่วยทำ Workflow / Automation
+    {
+        id: 'zapier',
+        name: 'Zapier',
+        provider: 'Zapier',
+        icon: 'fas fa-bolt',
+        colorClass: 'workflow',
+        category: 'workflow',
+        description: 'AI ช่วยสร้าง Workflow อัตโนมัติระหว่างแอป',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'เว็บ', type: 'web' }
+        ],
+        features: ['อัตโนมัติ', 'Workflow', 'เชื่อมต่อแอป', 'ทีม'],
+        webUrl: 'https://zapier.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://zapier.com'
+    },
+    {
+        id: 'make',
+        name: 'Make',
+        provider: 'Make',
+        icon: 'fas fa-puzzle-piece',
+        colorClass: 'workflow',
+        category: 'workflow',
+        description: 'แพลตฟอร์มสร้าง Workflow แบบ Visual',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'เว็บ', type: 'web' }
+        ],
+        features: ['Visual', 'อัตโนมัติ', 'Scenario', 'Complex'],
+        webUrl: 'https://www.make.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://www.make.com'
+    },
+
+    // ✍️ AI ช่วยเขียนบทความ
+    {
+        id: 'writesonic',
+        name: 'Writesonic',
+        provider: 'Writesonic',
+        icon: 'fas fa-pen-nib',
+        colorClass: 'writing',
+        category: 'writing',
+        description: 'AI ช่วยเขียนเนื้อหา บทความ และการตลาด',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'เว็บ', type: 'web' }
+        ],
+        features: ['เขียนบทความ', 'การตลาด', 'SEO', 'หลายภาษา'],
+        webUrl: 'https://writesonic.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://writesonic.com'
+    },
+    {
+        id: 'grammarly',
+        name: 'Grammarly',
+        provider: 'Grammarly',
+        icon: 'fas fa-spell-check',
+        colorClass: 'writing',
+        category: 'writing',
+        description: 'AI ช่วยตรวจแกรมม่าและสไตล์การเขียน',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['ตรวจแกรมม่า', 'สไตล์', 'โทนเสียง', 'ปลั๊กอิน'],
+        webUrl: 'https://grammarly.com/?q={prompt}',
+        mobileUrl: 'grammarly://?q={prompt}',
+        fallbackUrl: 'https://grammarly.com'
+    },
+
+    // ⏱️ AI ช่วยจัดตาราง / ช่วยทำงาน
+    {
+        id: 'motion',
+        name: 'Motion',
+        provider: 'Motion',
+        icon: 'fas fa-calendar-check',
+        colorClass: 'schedule',
+        category: 'schedule',
+        description: 'AI ช่วยจัดตารางเวลาและจัดการงาน',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['จัดตาราง', 'จัดการงาน', 'นัดหมาย', 'เพิ่มประสิทธิภาพ'],
+        webUrl: 'https://www.usemotion.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://www.usemotion.com'
+    },
+    {
+        id: 'reclaim',
+        name: 'Reclaim AI',
+        provider: 'Reclaim AI',
+        icon: 'fas fa-clock',
+        colorClass: 'schedule',
+        category: 'schedule',
+        description: 'AI ช่วยจัดการเวลาและสร้างนิสัย',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['จัดการเวลา', 'นิสัย', 'Google Calendar', 'สมดุล'],
+        webUrl: 'https://reclaim.ai/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://reclaim.ai'
+    },
+
+    // 🗂️ AI ช่วยบันทึก / จัดการข้อมูล
+    {
+        id: 'notion',
+        name: 'Notion AI',
+        provider: 'Notion',
+        icon: 'fas fa-sticky-note',
+        colorClass: 'notes',
+        category: 'notes',
+        description: 'AI ช่วยจัดการความรู้และทำงานใน Notion',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['จัดการความรู้', 'ทำงาน', 'เขียน', 'สรุป'],
+        webUrl: 'https://www.notion.so/product/ai?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://www.notion.so/product/ai'
+    },
+
+    // 🎬 AI ช่วยสร้างวิดีโอ
+    {
+        id: 'runway',
+        name: 'Runway',
+        provider: 'Runway',
+        icon: 'fas fa-film',
+        colorClass: 'video',
+        category: 'video',
+        description: 'AI สร้างและแก้ไขวิดีโอด้วยเครื่องมือครบวงจร',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'เว็บ', type: 'web' }
+        ],
+        features: ['สร้างวิดีโอ', 'แก้ไข', 'เอฟเฟกต์', 'ครีเอทีฟ'],
+        webUrl: 'https://runwayml.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://runwayml.com'
+    },
+    {
+        id: 'pika',
+        name: 'Pika AI',
+        provider: 'Pika',
+        icon: 'fas fa-video',
+        colorClass: 'video',
+        category: 'video',
+        description: 'AI สร้างและปรับแต่งวิดีโอจากข้อความ',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['สร้างวิดีโอ', 'ข้อความเป็นวิดีโอ', 'ปรับแต่ง', 'แบ่งปัน'],
+        webUrl: 'https://pika.art/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://pika.art'
+    },
+
+    // 🎨 AI ออกแบบกราฟิก
+    {
+        id: 'canva',
+        name: 'Canva AI',
+        provider: 'Canva',
+        icon: 'fab fa-canva',
+        colorClass: 'design',
+        category: 'design',
+        description: 'AI ช่วยออกแบบกราฟิกใน Canva',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['ออกแบบ', 'สร้างภาพ', 'เทมเพลต', 'ทีม'],
+        webUrl: 'https://www.canva.com/ai-tools/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://www.canva.com/ai-tools'
+    },
+
+    // 📈 AI ช่วยนำเสนอข้อมูลภาพ
+    {
+        id: 'visme',
+        name: 'Visme AI',
+        provider: 'Visme',
+        icon: 'fas fa-chart-bar',
+        colorClass: 'data',
+        category: 'data',
+        description: 'AI ช่วยสร้างอินโฟกราฟิกและนำเสนอข้อมูล',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'เว็บ', type: 'web' }
+        ],
+        features: ['อินโฟกราฟิก', 'ข้อมูล', 'พรีเซนต์', 'รายงาน'],
+        webUrl: 'https://www.visme.com/ai/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://www.visme.com/ai'
+    }
+];
+
+// Categories Configuration
+const categories = [
+    {
+        id: 'chat',
+        name: '🧠 AI คุยแชท / แชทบอท',
+        icon: 'fas fa-comments',
+        description: 'AI สำหรับสนทนา รองรับหลากหลายภาษาและวัตถุประสงค์'
+    },
+    {
+        id: 'slide',
+        name: '🎨 AI ทำสไลด์พรีเซนต์',
+        icon: 'fas fa-sliders-h',
+        description: 'AI ช่วยสร้างและออกแบบพรีเซนเทชันที่น่าสนใจ'
+    },
+    {
+        id: 'code',
+        name: '💻 AI ช่วยเขียนโค้ด',
+        icon: 'fas fa-code',
+        description: 'AI สำหรับนักพัฒนา ช่วยเขียน โค้ด แก้บั๊ก และเรียนรู้โค้ดใหม่'
+    },
+    {
+        id: 'email',
+        name: '📧 AI ช่วยเขียนอีเมล',
+        icon: 'fas fa-envelope',
+        description: 'AI ช่วยเขียน จัดการ และตอบกลับอีเมลอย่างมีประสิทธิภาพ'
+    },
+    {
+        id: 'image',
+        name: '🖼️ AI ช่วยสร้างภาพ',
+        icon: 'fas fa-paint-brush',
+        description: 'AI สร้างและแก้ไขภาพ จากข้อความหรือไอเดียของคุณ'
+    },
+    {
+        id: 'excel',
+        name: '📊 AI ช่วยทำ Excel',
+        icon: 'fas fa-table',
+        description: 'AI ช่วยทำงานกับสเปรดชีท สร้างสูตร และวิเคราะห์ข้อมูล'
+    },
+    {
+        id: 'meeting',
+        name: '📝 AI สรุปการประชุม',
+        icon: 'fas fa-microphone',
+        description: 'AI บันทึก สรุป และวิเคราะห์การประชุมอัตโนมัติ'
+    },
+    {
+        id: 'workflow',
+        name: '⚙️ AI ช่วยทำ Workflow / Automation',
+        icon: 'fas fa-bolt',
+        description: 'AI สร้างและจัดการ Workflow อัตโนมัติระหว่างแอปพลิเคชัน'
+    },
+    {
+        id: 'writing',
+        name: '✍️ AI ช่วยเขียนบทความ',
+        icon: 'fas fa-pen-nib',
+        description: 'AI ช่วยเขียน ตรวจสอบ และปรับปรุงเนื้อหาต่างๆ'
+    },
+    {
+        id: 'schedule',
+        name: '⏱️ AI ช่วยจัดตาราง / ช่วยทำงาน',
+        icon: 'fas fa-calendar',
+        description: 'AI ช่วยจัดการเวลา จัดตาราง และเพิ่มประสิทธิภาพการทำงาน'
+    },
+    {
+        id: 'notes',
+        name: '🗂️ AI ช่วยบันทึก / จัดการข้อมูล',
+        icon: 'fas fa-sticky-note',
+        description: 'AI ช่วยจัดระเบียบ บันทึก และจัดการความรู้'
+    },
+    {
+        id: 'video',
+        name: '🎬 AI ช่วยสร้างวิดีโอ',
+        icon: 'fas fa-video',
+        description: 'AI สร้างและแก้ไขวิดีโอจากไอเดียหรือข้อความ'
+    },
+    {
+        id: 'design',
+        name: '🎨 AI ออกแบบกราฟิก',
+        icon: 'fas fa-palette',
+        description: 'AI ช่วยออกแบบกราฟิก โลโก้ และวัสดุการตลาด'
+    },
+    {
+        id: 'data',
+        name: '📈 AI ช่วยนำเสนอข้อมูลภาพ',
+        icon: 'fas fa-chart-pie',
+        description: 'AI แปลงข้อมูลเป็นภาพ และสร้างรายงานที่น่าสนใจ'
     }
 ];
 
@@ -1167,10 +1913,12 @@ let currentTheme = 'dark';
 let recentAIs = JSON.parse(localStorage.getItem('st_ai_router_recent') || '[]');
 let selectedAI = null;
 let currentPrompt = '';
+let activeCategory = 'chat';
 
 // DOM Elements
 const promptInput = document.getElementById('promptInput');
-const aiGrid = document.getElementById('aiGrid');
+const categoryTabs = document.getElementById('categoryTabs');
+const categorySections = document.getElementById('categorySections');
 const recentSection = document.getElementById('recentSection');
 const recentList = document.getElementById('recentList');
 const loading = document.getElementById('loading');
@@ -1190,8 +1938,11 @@ document.addEventListener('DOMContentLoaded', function() {
         setTheme('light');
     }
     
-    // Render AI cards
-    renderAICards();
+    // Render categories
+    renderCategories();
+    
+    // Render AI cards by category
+    renderAICardsByCategory();
     
     // Render recent AIs
     renderRecentAIs();
@@ -1217,17 +1968,96 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show welcome message
     setTimeout(() => {
-        showToast('ยินดีต้อนรับสู่ ST AI Router! พิมพ์คำถามแล้วเลือก AI ที่ต้องการ', 'info', 4000);
+        showToast('ยินดีต้อนรับสู่ ST AI Router! พิมพ์คำถามแล้วเลือก AI จากหมวดหมู่ที่ต้องการ', 'info', 4000);
     }, 1000);
 });
 
-// Render AI Cards
-function renderAICards() {
-    aiGrid.innerHTML = '';
+// Render Categories
+function renderCategories() {
+    categoryTabs.innerHTML = '';
     
-    aiDatabase.forEach(ai => {
-        const card = createAICard(ai);
-        aiGrid.appendChild(card);
+    categories.forEach(category => {
+        const tab = document.createElement('div');
+        tab.className = `category-tab ${category.id === activeCategory ? 'active' : ''}`;
+        tab.dataset.category = category.id;
+        
+        tab.innerHTML = `
+            <i class="${category.icon}"></i>
+            <span>${category.name.split(' ')[0]}</span>
+        `;
+        
+        tab.addEventListener('click', () => switchCategory(category.id));
+        categoryTabs.appendChild(tab);
+    });
+    
+    // Create category sections
+    categories.forEach(category => {
+        const section = document.createElement('div');
+        section.className = `category-section ${category.id === activeCategory ? 'active' : ''}`;
+        section.id = `section-${category.id}`;
+        
+        section.innerHTML = `
+            <div class="category-header category-${category.id}">
+                <div class="category-icon">
+                    <i class="${category.icon}"></i>
+                </div>
+                <div>
+                    <h2 class="category-title">${category.name}</h2>
+                    <p class="category-description">${category.description}</p>
+                </div>
+            </div>
+            <div class="ai-grid" id="grid-${category.id}">
+                <!-- AI cards will be inserted here -->
+            </div>
+        `;
+        
+        categorySections.appendChild(section);
+    });
+}
+
+// Switch Category
+function switchCategory(categoryId) {
+    activeCategory = categoryId;
+    
+    // Update tabs
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.category === categoryId);
+    });
+    
+    // Update sections
+    document.querySelectorAll('.category-section').forEach(section => {
+        section.classList.toggle('active', section.id === `section-${categoryId}`);
+    });
+    
+    // Show toast for category switch
+    const category = categories.find(c => c.id === categoryId);
+    showToast(`เปลี่ยนเป็นหมวดหมู่: ${category.name}`, 'info', 2000);
+}
+
+// Render AI Cards by Category
+function renderAICardsByCategory() {
+    categories.forEach(category => {
+        const grid = document.getElementById(`grid-${category.id}`);
+        if (!grid) return;
+        
+        grid.innerHTML = '';
+        
+        const categoryAIs = aiDatabase.filter(ai => ai.category === category.id);
+        
+        if (categoryAIs.length === 0) {
+            grid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--dark-text-secondary);">
+                    <i class="fas fa-robot" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                    <p>กำลังอัปเดต AI สำหรับหมวดหมู่นี้เร็วๆ นี้</p>
+                </div>
+            `;
+            return;
+        }
+        
+        categoryAIs.forEach(ai => {
+            const card = createAICard(ai);
+            grid.appendChild(card);
+        });
     });
 }
 
@@ -1243,7 +2073,7 @@ function createAICard(ai) {
     ).join('');
     
     // Build features HTML
-    const featuresHTML = ai.features.map(feature => 
+    const featuresHTML = ai.features.slice(0, 3).map(feature => 
         `<span class="ai-feature">${feature}</span>`
     ).join('');
     
@@ -1484,14 +2314,31 @@ function searchForAI() {
         return;
     }
     
+    // Find most relevant category
+    const categoryCount = {};
+    relevantAIs.forEach(ai => {
+        categoryCount[ai.category] = (categoryCount[ai.category] || 0) + 1;
+    });
+    
+    // Switch to most relevant category
+    let mostRelevantCategory = 'chat';
+    let maxCount = 0;
+    
+    for (const [category, count] of Object.entries(categoryCount)) {
+        if (count > maxCount) {
+            maxCount = count;
+            mostRelevantCategory = category;
+        }
+    }
+    
+    // Switch category
+    switchCategory(mostRelevantCategory);
+    
     // Highlight relevant AIs
-    document.querySelectorAll('.ai-card').forEach(card => {
-        const aiId = card.dataset.aiId;
-        const isRelevant = relevantAIs.some(ai => ai.id === aiId);
-        
-        card.classList.toggle('active', isRelevant);
-        
-        if (isRelevant) {
+    relevantAIs.forEach(ai => {
+        const card = document.querySelector(`.ai-card[data-ai-id="${ai.id}"]`);
+        if (card) {
+            card.classList.add('active');
             card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     });
@@ -1499,7 +2346,8 @@ function searchForAI() {
     // Show recommendation
     if (relevantAIs.length > 0) {
         const recommendedAI = relevantAIs[0];
-        showToast(`แนะนำ: ${recommendedAI.name} - ${recommendedAI.description.substring(0, 60)}...`, 'info', 4000);
+        const categoryName = categories.find(c => c.id === recommendedAI.category)?.name || '';
+        showToast(`แนะนำ: ${recommendedAI.name} (${categoryName})`, 'info', 4000);
     }
 }
 
@@ -1558,29 +2406,34 @@ function toggleTheme() {
 // Show info
 function showInfo() {
     const aiCount = aiDatabase.length;
+    const categoryCount = categories.length;
     const mobileCount = aiDatabase.filter(ai => ai.mobileUrl).length;
     
     modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> <span>เกี่ยวกับ ST AI Router</span>`;
     modalText.innerHTML = `
         <strong>ST AI Router</strong> คือระบบกลางสำหรับเข้าถึง AI ทุกตัวบนโลก 🌍<br><br>
         
-        📊 <strong>สถิติ:</strong><br>
+        📊 <strong>สถิติครบวงจร:</strong><br>
         • AI ทั้งหมด: ${aiCount} ตัว<br>
+        • หมวดหมู่: ${categoryCount} หมวด<br>
         • รองรับแอปมือถือ: ${mobileCount} ตัว<br>
         • ฟรีใช้งาน: ${aiDatabase.filter(ai => ai.badges.some(b => b.text === 'ฟรี')).length} ตัว<br><br>
         
+        🏷️ <strong>หมวดหมู่ทั้งหมด:</strong><br>
+        ${categories.map(c => `• ${c.name}`).join('<br>')}<br><br>
+        
         🚀 <strong>วิธีใช้งาน:</strong><br>
         1. พิมพ์คำถามของคุณ<br>
-        2. เลือก AI ที่ต้องการ<br>
-        3. ระบบจะเปิดไปยังแพลตฟอร์มนั้นทันที<br>
-        4. ถ้าเป็นมือถือและมีแอป → จะเปิดแอปทันที<br><br>
+        2. เลือกหมวดหมู่ AI ที่ต้องการ<br>
+        3. เลือก AI เฉพาะเจาะจง<br>
+        4. ระบบจะเปิดไปยังแพลตฟอร์มนั้นทันที<br><br>
         
         🔒 <strong>ความปลอดภัย:</strong><br>
         • ไม่เก็บข้อมูลคำถาม<br>
         • ไม่แชร์ข้อมูลส่วนตัว<br>
         • เปิดผ่านลิงก์อย่างถูกต้อง<br><br>
         
-        <small>เวอร์ชัน 1.0.0 | พัฒนาโดย ST AI Team</small>
+        <small>เวอร์ชัน 2.0.0 | พัฒนาโดย ST AI Team | รวม AI ครบวงจรที่สุด</small>
     `;
     
     confirmationModal.classList.add('active');
@@ -1601,19 +2454,8 @@ function showToast(message, type = 'info', duration = 3000) {
     }).showToast();
 }
 
-// Example prompts for demo
-function insertExamplePrompt(example) {
-    promptInput.value = example;
-    currentPrompt = example;
-    updateSearchButton();
-    promptInput.focus();
-    
-    showToast('ใส่ตัวอย่างคำถามแล้ว ลองค้นหา AI ที่เหมาะดู!', 'info', 3000);
-}
-
-// Add some example buttons (optional)
+// Add example prompts section
 document.addEventListener('DOMContentLoaded', function() {
-    // Add example prompts section
     const inputSection = document.querySelector('.input-section');
     const exampleSection = document.createElement('div');
     exampleSection.className = 'example-section';
@@ -1631,6 +2473,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </button>
             <button class="example-btn" onclick="insertExamplePrompt('สรุปข่าวเทคโนโลยีวันนี้')">
                 สรุปข่าว
+            </button>
+            <button class="example-btn" onclick="insertExamplePrompt('ช่วยสร้างสไลด์พรีเซนต์เกี่ยวกับ AI')">
+                สร้างสไลด์
             </button>
         </div>
     `;
@@ -1663,6 +2508,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     inputSection.appendChild(exampleSection);
 });
+
+// Example function to insert prompt
+function insertExamplePrompt(example) {
+    promptInput.value = example;
+    currentPrompt = example;
+    updateSearchButton();
+    promptInput.focus();
+    
+    showToast('ใส่ตัวอย่างคำถามแล้ว ลองค้นหา AI ที่เหมาะดู!', 'info', 3000);
+}
 </script>
 </body>
 </html>
