@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ST AI Router - Gateway to All AI Assistants</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css">
+<style>
+:root {
+    --primary: #8b5cf6;
+    --primary-dark: #7c3aed;
+    --secondary: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --info: #3b82f6;
+    --dark-bg: #0f172a;
+    --dark-card: #1e293b;
+    --dark-border: #334155;
+    --dark-text: #f1f5f9;
+    --dark-text-secondary: #94a3b8;
+    --light-bg: #f8fafc;
+    --light-card: #ffffff;
+    --light-border: #e2e8f0;
+    --light-text: #1e293b;
+    --light-text-secondary: #64748b;
+    --sidebar-width: 280px;
+    --header-height: 70px;
+    --input-height: 56px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+}
+
+body {
+    background: var(--dark-bg);
+    color: var(--dark-text);
+    height: 100vh;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+body.light-mode {
+    background: var(--light-bg);
+    color: var(--light-text);
+}
+
+/* Main Layout */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--dark-border);
+    position: relative;
+}
+
+body.light-mode .header {
+    border-bottom-color: var(--light-border);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo h1 {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+.logo-subtitle {
+    font-size: 14px;
+    color: var(--dark-text-secondary);
+    font-weight: 400;
+}
+
+body.light-mode .logo-subtitle {
+    color: var(--light-text-secondary);
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.icon-btn {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text-secondary);
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 18px;
+}
+
+body.light-mode .icon-btn {
+    background: rgba(226, 232, 240, 0.7);
+    border-color: var(--light-border);
+    color: var(--light-text-secondary);
+}
+
+.icon-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Main Content */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+/* Input Section */
+.input-section {
+    background: var(--dark-card);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--dark-border);
+    transition: var(--transition);
+}
+
+body.light-mode .input-section {
+    background: var(--light-card);
+    border-color: var(--light-border);
+}
+
+.input-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--dark-text);
+}
+
+body.light-mode .input-label {
+    color: var(--light-text);
+}
+
+.input-label i {
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.prompt-input {
+    width: 100%;
+    background: rgba(30, 41, 59, 0.8);
+    border: 2px solid var(--dark-border);
+    border-radius: var(--radius-md);
+    padding: 18px 150px 18px 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--dark-text);
+    outline: none;
+    resize: none;
+    min-height: 120px;
+    max-height: 200px;
+    transition: var(--transition);
+}
+
+body.light-mode .prompt-input {
+    background: rgba(226, 232, 240, 0.8);
+    border-color: var(--light-border);
+    color: var(--light-text);
+}
+
+.prompt-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+.input-actions {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.action-btn.secondary {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text-secondary);
+}
+
+body.light-mode .action-btn.secondary {
+    background: rgba(226, 232, 240, 0.8);
+    border-color: var(--light-border);
+    color: var(--light-text-secondary);
+}
+
+.action-btn.secondary:hover {
+    background: var(--dark-border);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* AI Selection Section */
+.selection-section {
+    margin-top: 20px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--dark-text);
+}
+
+body.light-mode .section-title {
+    color: var(--light-text);
+}
+
+.section-title i {
+    color: var(--primary);
+}
+
+/* AI Grid */
+.ai-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.ai-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+body.light-mode .ai-card {
+    background: var(--light-card);
+    border-color: var(--light-border);
+}
+
+.ai-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+}
+
+.ai-card.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(30, 41, 59, 0.8));
+}
+
+body.light-mode .ai-card.active {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(255, 255, 255, 0.9));
+}
+
+.ai-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.ai-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.ai-icon.chatgpt {
+    background: linear-gradient(135deg, #10a37f, #19c37d);
+}
+
+.ai-icon.claude {
+    background: linear-gradient(135deg, #d4a574, #b8843a);
+}
+
+.ai-icon.gemini {
+    background: linear-gradient(135deg, #4285f4, #34a853);
+}
+
+.ai-icon.deepseek {
+    background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+}
+
+.ai-icon.perplexity {
+    background: linear-gradient(135deg, #000000, #333333);
+}
+
+.ai-icon.stai {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+.ai-icon.copilot {
+    background: linear-gradient(135deg, #000000, #7d7d7d);
+}
+
+.ai-icon.midjourney {
+    background: linear-gradient(135deg, #3a0ca3, #4361ee);
+}
+
+.ai-icon.local {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.ai-info {
+    flex: 1;
+}
+
+.ai-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--dark-text);
+}
+
+body.light-mode .ai-name {
+    color: var(--light-text);
+}
+
+.ai-provider {
+    font-size: 14px;
+    color: var(--dark-text-secondary);
+    font-weight: 400;
+}
+
+body.light-mode .ai-provider {
+    color: var(--light-text-secondary);
+}
+
+.ai-badges {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.ai-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-free {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--secondary);
+}
+
+.badge-paid {
+    background: rgba(139, 92, 246, 0.2);
+    color: var(--primary);
+}
+
+.badge-local {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+}
+
+.badge-mobile {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--info);
+}
+
+.ai-description {
+    font-size: 14px;
+    color: var(--dark-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+body.light-mode .ai-description {
+    color: var(--light-text-secondary);
+}
+
+.ai-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.ai-feature {
+    font-size: 12px;
+    color: var(--dark-text-secondary);
+    background: rgba(30, 41, 59, 0.7);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--dark-border);
+}
+
+body.light-mode .ai-feature {
+    background: rgba(226, 232, 240, 0.7);
+    border-color: var(--light-border);
+}
+
+.ai-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--dark-border);
+}
+
+body.light-mode .ai-action {
+    border-top-color: var(--light-border);
+}
+
+.open-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    flex: 1;
+    justify-content: center;
+}
+
+.open-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.open-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.open-btn.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.device-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--dark-text-secondary);
+    margin-left: 12px;
+}
+
+/* Recently Used */
+.recently-used {
+    margin-top: 40px;
+}
+
+.recent-ai-list {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 10px 0;
+    margin-top: 16px;
+}
+
+.recent-ai-item {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    min-width: 180px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+body.light-mode .recent-ai-item {
+    background: var(--light-card);
+    border-color: var(--light-border);
+}
+
+.recent-ai-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.recent-ai-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+}
+
+.recent-ai-name {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: var(--dark-card);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid var(--dark-border);
+    box-shadow: var(--shadow-lg);
+    animation: modalSlide 0.3s ease-out;
+}
+
+body.light-mode .modal {
+    background: var(--light-card);
+    border-color: var(--light-border);
+}
+
+@keyframes modalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark-text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+body.light-mode .modal-title {
+    color: var(--light-text);
+}
+
+.close-modal {
+    background: transparent;
+    border: none;
+    color: var(--dark-text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+}
+
+.modal-body {
+    margin-bottom: 24px;
+}
+
+.modal-text {
+    color: var(--dark-text-secondary);
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+body.light-mode .modal-text {
+    color: var(--light-text-secondary);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-btn {
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition;
+    border: none;
+}
+
+.modal-btn.primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+}
+
+.modal-btn.secondary {
+    background: transparent;
+    border: 1px solid var(--dark-border);
+    color: var(--dark-text-secondary);
+}
+
+body.light-mode .modal-btn.secondary {
+    border-color: var(--light-border);
+    color: var(--light-text-secondary);
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Toast */
+.toastify {
+    font-family: 'Kanit', sans-serif;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+}
+
+.toastify.success {
+    background: linear-gradient(135deg, var(--secondary), #059669);
+}
+
+.toastify.error {
+    background: linear-gradient(135deg, var(--danger), #dc2626);
+}
+
+.toastify.info {
+    background: linear-gradient(135deg, var(--info), #2563eb);
+}
+
+/* Loading */
+.loading {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.loading.active {
+    display: flex;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(139, 92, 246, 0.1);
+    border-top: 4px solid var(--primary);
+    border-right: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 18px;
+    color: var(--dark-text);
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 16px;
+    }
+    
+    .header {
+        padding: 16px 0;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+    
+    .logo h1 {
+        font-size: 24px;
+    }
+    
+    .ai-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .input-actions {
+        position: static;
+        display: flex;
+        margin-top: 16px;
+        justify-content: flex-end;
+    }
+    
+    .prompt-input {
+        padding: 16px;
+    }
+    
+    .action-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .modal {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ai-card {
+        padding: 20px;
+    }
+    
+    .ai-card-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+    
+    .ai-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .modal-btn {
+        width: 100%;
+    }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.2);
+    border-radius: 4px;
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+    background: rgba(226, 232, 240, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">กำลังเปิด AI...</div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal-overlay" id="confirmationModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">
+                <i class="fas fa-rocket"></i>
+                <span id="modalTitle">ยืนยันการเปิด AI</span>
+            </h2>
+            <button class="close-modal" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-text" id="modalText">
+                คุณต้องการเปิด ChatGPT ด้วยคำถาม: "ตัวอย่างคำถาม" ใช่หรือไม่?
+            </p>
+        </div>
+        <div class="modal-actions">
+            <button class="modal-btn secondary" onclick="closeModal()">ยกเลิก</button>
+            <button class="modal-btn primary" onclick="confirmOpenAI()">เปิดเลย!</button>
+        </div>
+    </div>
+</div>
+
+<!-- Main Container -->
+<div class="main-container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-satellite-dish"></i>
+            </div>
+            <div class="logo-text">
+                <h1>ST AI ROUTER</h1>
+                <div class="logo-subtitle">Gateway to All AI Assistants</div>
+            </div>
+        </div>
+        
+        <div class="header-actions">
+            <button class="icon-btn" id="themeToggle" title="เปลี่ยนธีม">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="icon-btn" id="infoBtn" title="ข้อมูล">
+                <i class="fas fa-info-circle"></i>
+            </button>
+            <button class="icon-btn" id="settingsBtn" title="ตั้งค่า">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="input-label">
+                <i class="fas fa-question-circle"></i>
+                <span>คุณต้องการถามอะไรกับ AI?</span>
+            </div>
+            <div class="input-wrapper">
+                <textarea 
+                    class="prompt-input" 
+                    id="promptInput" 
+                    placeholder="พิมพ์คำถามหรือคำสั่งที่นี่... เช่น 'ช่วยเขียนโค้ด Python สำหรับระบบล็อกอิน', 'ออกแบบโลโก้สำหรับร้านกาแฟ', 'สรุปข่าววันนี้'"
+                ></textarea>
+                <div class="input-actions">
+                    <button class="action-btn secondary" id="clearBtn">
+                        <i class="fas fa-eraser"></i>
+                        ล้าง
+                    </button>
+                    <button class="action-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                        ค้นหา AI
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Selection -->
+        <div class="selection-section">
+            <h2 class="section-title">
+                <i class="fas fa-robot"></i>
+                <span>เลือก AI ที่ต้องการใช้</span>
+            </h2>
+            <p style="color: var(--dark-text-secondary); margin-bottom: 20px;">
+                เลือก AI ที่เหมาะกับคำถามของคุณ ทั้งบนเว็บและแอปมือถือ
+            </p>
+            
+            <div class="ai-grid" id="aiGrid">
+                <!-- AI Cards will be inserted here -->
+            </div>
+        </div>
+        
+        <!-- Recently Used -->
+        <div class="recently-used" id="recentSection" style="display: none;">
+            <h2 class="section-title">
+                <i class="fas fa-history"></i>
+                <span>ใช้งานล่าสุด</span>
+            </h2>
+            <div class="recent-ai-list" id="recentList">
+                <!-- Recent AI items will be inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
+<script>
+// AI Database - ทุก AI บนโลก 🌍
+const aiDatabase = [
+    {
+        id: 'chatgpt',
+        name: 'ChatGPT',
+        provider: 'OpenAI',
+        icon: 'fas fa-comment',
+        colorClass: 'chatgpt',
+        description: 'AI สนทนาที่ทรงพลังที่สุด พัฒนาโดย OpenAI รองรับหลายภาษาและงานหลากหลายรูปแบบ',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['สนทนา', 'เขียนโค้ด', 'แปลภาษา', 'สรุปข้อความ'],
+        webUrl: 'https://chat.openai.com/?q={prompt}',
+        mobileUrl: 'chatgpt://?q={prompt}',
+        fallbackUrl: 'https://chat.openai.com/?q={prompt}'
+    },
+    {
+        id: 'claude',
+        name: 'Claude',
+        provider: 'Anthropic',
+        icon: 'fas fa-brain',
+        colorClass: 'claude',
+        description: 'AI ที่ปลอดภัยและมีจริยธรรม พัฒนาโดย Anthropic เหมาะสำหรับงานเขียนและวิเคราะห์',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['เขียนเนื้อหา', 'วิเคราะห์', 'สรุปเอกสาร', 'ให้คำแนะนำ'],
+        webUrl: 'https://claude.ai/new?q={prompt}',
+        mobileUrl: 'claude://?q={prompt}',
+        fallbackUrl: 'https://claude.ai/new?q={prompt}'
+    },
+    {
+        id: 'gemini',
+        name: 'Gemini',
+        provider: 'Google',
+        icon: 'fas fa-gem',
+        colorClass: 'gemini',
+        description: 'AI จาก Google ที่ผสานการค้นหาและสร้างสรรค์ในตัวเดียว',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['ค้นหา', 'สร้างภาพ', 'เขียนโค้ด', 'แปลภาษา'],
+        webUrl: 'https://gemini.google.com/?q={prompt}',
+        mobileUrl: 'gemini://?q={prompt}',
+        fallbackUrl: 'https://gemini.google.com/?q={prompt}'
+    },
+    {
+        id: 'deepseek',
+        name: 'DeepSeek',
+        provider: 'DeepSeek AI',
+        icon: 'fas fa-search-deep',
+        colorClass: 'deepseek',
+        description: 'AI ฟรีที่มีความสามารถสูง รองรับ 128K context เหมาะสำหรับงานเขียนโค้ด',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'เว็บ', type: 'free' }
+        ],
+        features: ['เขียนโค้ด', 'แก้บั๊ก', 'สอนโปรแกรมมิ่ง', 'วิเคราะห์โค้ด'],
+        webUrl: 'https://chat.deepseek.com/?q={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'https://chat.deepseek.com/?q={prompt}'
+    },
+    {
+        id: 'perplexity',
+        name: 'Perplexity',
+        provider: 'Perplexity AI',
+        icon: 'fas fa-compass',
+        colorClass: 'perplexity',
+        description: 'AI ค้นหาข้อมูลแบบเรียลไทม์ พร้อมแหล่งอ้างอิง เหมาะสำหรับงานวิจัย',
+        badges: [
+            { text: 'ฟรี/จ่าย', type: 'paid' },
+            { text: 'มือถือ', type: 'mobile' }
+        ],
+        features: ['ค้นหา', 'วิจัย', 'แหล่งอ้างอิง', 'เรียลไทม์'],
+        webUrl: 'https://www.perplexity.ai/?q={prompt}',
+        mobileUrl: 'perplexity://?q={prompt}',
+        fallbackUrl: 'https://www.perplexity.ai/?q={prompt}'
+    },
+    {
+        id: 'stai',
+        name: 'ST Chat Bot AI',
+        provider: 'ST AI Router',
+        icon: 'fas fa-robot',
+        colorClass: 'stai',
+        description: 'AI หลายโหมดในตัวเดียว สร้างภาพ วิเคราะห์ภาพ สนทนา และเขียนโค้ด',
+        badges: [
+            { text: 'ฟรี', type: 'free' },
+            { text: 'หลายโหมด', type: 'free' }
+        ],
+        features: ['สร้างภาพ', 'วิเคราะห์ภาพ', 'สนทนา', 'เขียนโค้ด', 'เสียง'],
+        webUrl: 'st-chatbot.html?prompt={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'st-chatbot.html?prompt={prompt}'
+    },
+    {
+        id: 'copilot',
+        name: 'GitHub Copilot',
+        provider: 'Microsoft',
+        icon: 'fas fa-code',
+        colorClass: 'copilot',
+        description: 'AI สำหรับช่วยเขียนโค้ดโดยเฉพาะ ติดตั้งใน VS Code และ IDE อื่นๆ',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'สำหรับ Dev', type: 'paid' }
+        ],
+        features: ['เขียนโค้ด', 'Auto Complete', 'แก้บั๊ก', 'รีเฟคเตอร์'],
+        webUrl: 'https://github.com/features/copilot',
+        mobileUrl: null,
+        fallbackUrl: 'https://github.com/features/copilot'
+    },
+    {
+        id: 'midjourney',
+        name: 'Midjourney',
+        provider: 'Midjourney',
+        icon: 'fas fa-palette',
+        colorClass: 'midjourney',
+        description: 'AI สร้างภาพศิลปะที่สวยงาม รองรับสไตล์หลากหลาย',
+        badges: [
+            { text: 'จ่าย', type: 'paid' },
+            { text: 'สร้างภาพ', type: 'paid' }
+        ],
+        features: ['สร้างภาพ', 'ศิลปะ', 'ดีไซน์', 'ภาพเหมือน'],
+        webUrl: 'https://www.midjourney.com/',
+        mobileUrl: null,
+        fallbackUrl: 'https://www.midjourney.com/'
+    },
+    {
+        id: 'local',
+        name: 'AI ฝั่งเซิร์ฟเวอร์',
+        provider: 'Local / Self-hosted',
+        icon: 'fas fa-server',
+        colorClass: 'local',
+        description: 'ติดตั้งและใช้งาน AI บนเซิร์ฟเวอร์ของคุณเอง',
+        badges: [
+            { text: 'โลคอล', type: 'local' },
+            { text: 'ส่วนตัว', type: 'local' }
+        ],
+        features: ['ส่วนตัว', 'ปลอดภัย', 'ปรับแต่งได้', 'ไร้ข้อจำกัด'],
+        webUrl: 'http://localhost:3000/?prompt={prompt}',
+        mobileUrl: null,
+        fallbackUrl: 'http://localhost:3000/?prompt={prompt}'
+    }
+];
+
+// State
+let currentTheme = 'dark';
+let recentAIs = JSON.parse(localStorage.getItem('st_ai_router_recent') || '[]');
+let selectedAI = null;
+let currentPrompt = '';
+
+// DOM Elements
+const promptInput = document.getElementById('promptInput');
+const aiGrid = document.getElementById('aiGrid');
+const recentSection = document.getElementById('recentSection');
+const recentList = document.getElementById('recentList');
+const loading = document.getElementById('loading');
+const confirmationModal = document.getElementById('confirmationModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalText = document.getElementById('modalText');
+const themeToggle = document.getElementById('themeToggle');
+const clearBtn = document.getElementById('clearBtn');
+const searchBtn = document.getElementById('searchBtn');
+const infoBtn = document.getElementById('infoBtn');
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    // Load theme
+    const savedTheme = localStorage.getItem('st_ai_router_theme');
+    if (savedTheme === 'light') {
+        setTheme('light');
+    }
+    
+    // Render AI cards
+    renderAICards();
+    
+    // Render recent AIs
+    renderRecentAIs();
+    
+    // Add event listeners
+    promptInput.addEventListener('input', function() {
+        currentPrompt = this.value.trim();
+        updateSearchButton();
+    });
+    
+    themeToggle.addEventListener('click', toggleTheme);
+    clearBtn.addEventListener('click', clearPrompt);
+    searchBtn.addEventListener('click', searchForAI);
+    infoBtn.addEventListener('click', showInfo);
+    
+    // Auto-focus input
+    setTimeout(() => {
+        promptInput.focus();
+        promptInput.value = '';
+        currentPrompt = '';
+        updateSearchButton();
+    }, 500);
+    
+    // Show welcome message
+    setTimeout(() => {
+        showToast('ยินดีต้อนรับสู่ ST AI Router! พิมพ์คำถามแล้วเลือก AI ที่ต้องการ', 'info', 4000);
+    }, 1000);
+});
+
+// Render AI Cards
+function renderAICards() {
+    aiGrid.innerHTML = '';
+    
+    aiDatabase.forEach(ai => {
+        const card = createAICard(ai);
+        aiGrid.appendChild(card);
+    });
+}
+
+// Create AI Card
+function createAICard(ai) {
+    const card = document.createElement('div');
+    card.className = 'ai-card';
+    card.dataset.aiId = ai.id;
+    
+    // Build badges HTML
+    const badgesHTML = ai.badges.map(badge => 
+        `<span class="ai-badge badge-${badge.type}">${badge.text}</span>`
+    ).join('');
+    
+    // Build features HTML
+    const featuresHTML = ai.features.map(feature => 
+        `<span class="ai-feature">${feature}</span>`
+    ).join('');
+    
+    // Determine device support
+    const hasMobile = ai.mobileUrl !== null;
+    const deviceIndicator = hasMobile ? 
+        '<div class="device-indicator"><i class="fas fa-mobile-alt"></i><span>เว็บ/แอป</span></div>' :
+        '<div class="device-indicator"><i class="fas fa-desktop"></i><span>เว็บ</span></div>';
+    
+    card.innerHTML = `
+        <div class="ai-card-header">
+            <div class="ai-icon ${ai.colorClass}">
+                <i class="${ai.icon}"></i>
+            </div>
+            <div class="ai-info">
+                <div class="ai-name">${ai.name}</div>
+                <div class="ai-provider">โดย ${ai.provider}</div>
+                <div class="ai-badges">${badgesHTML}</div>
+            </div>
+        </div>
+        <div class="ai-description">${ai.description}</div>
+        <div class="ai-features">${featuresHTML}</div>
+        <div class="ai-action">
+            <button class="open-btn" onclick="selectAI('${ai.id}')">
+                <i class="fas fa-external-link-alt"></i>
+                เปิด ${ai.name}
+            </button>
+            ${deviceIndicator}
+        </div>
+    `;
+    
+    return card;
+}
+
+// Select AI
+function selectAI(aiId) {
+    currentPrompt = promptInput.value.trim();
+    
+    if (!currentPrompt) {
+        showToast('กรุณาพิมพ์คำถามก่อนเลือก AI', 'error', 3000);
+        promptInput.focus();
+        return;
+    }
+    
+    const ai = aiDatabase.find(a => a.id === aiId);
+    if (!ai) return;
+    
+    selectedAI = ai;
+    
+    // Update modal content
+    modalTitle.innerHTML = `<i class="${ai.icon}"></i> <span>เปิด ${ai.name}</span>`;
+    
+    // Truncate prompt for display
+    const displayPrompt = currentPrompt.length > 50 ? 
+        currentPrompt.substring(0, 50) + '...' : currentPrompt;
+    
+    modalText.innerHTML = `
+        คุณต้องการเปิด <strong>${ai.name}</strong> ด้วยคำถาม:<br><br>
+        <em>"${displayPrompt}"</em><br><br>
+        ${ai.mobileUrl ? '📱 <small>หากมีแอปจะเปิดแอปทันที</small>' : '🖥️ <small>จะเปิดในเว็บเบราว์เซอร์</small>'}
+    `;
+    
+    // Show confirmation modal
+    confirmationModal.classList.add('active');
+}
+
+// Confirm opening AI
+function confirmOpenAI() {
+    if (!selectedAI || !currentPrompt) {
+        showToast('เกิดข้อผิดพลาด กรุณาลองอีกครั้ง', 'error', 3000);
+        return;
+    }
+    
+    closeModal();
+    
+    // Add to recent
+    addToRecent(selectedAI);
+    
+    // Show loading
+    loading.classList.add('active');
+    
+    // Prepare URL with prompt
+    const encodedPrompt = encodeURIComponent(currentPrompt);
+    const webUrl = selectedAI.webUrl.replace('{prompt}', encodedPrompt);
+    const mobileUrl = selectedAI.mobileUrl ? 
+        selectedAI.mobileUrl.replace('{prompt}', encodedPrompt) : null;
+    
+    // Check if on mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Open AI
+    setTimeout(() => {
+        openAI(selectedAI, webUrl, mobileUrl, isMobile);
+    }, 1000);
+}
+
+// Open AI with proper routing
+function openAI(ai, webUrl, mobileUrl, isMobile) {
+    if (isMobile && mobileUrl) {
+        // Try to open mobile app first
+        const timeout = 2000;
+        const start = Date.now();
+        
+        // Create iframe for app launch
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = mobileUrl;
+        document.body.appendChild(iframe);
+        
+        // Check if app opened
+        window.addEventListener('blur', function onBlur() {
+            window.removeEventListener('blur', onBlur);
+            
+            // Hide loading
+            loading.classList.remove('active');
+            
+            // Show success message
+            showToast(`เปิดแอป ${ai.name} สำเร็จ!`, 'success', 3000);
+            
+            // Clear prompt
+            clearPrompt();
+            
+            // Remove iframe
+            setTimeout(() => {
+                if (iframe.parentNode) {
+                    iframe.parentNode.removeChild(iframe);
+                }
+            }, 1000);
+        });
+        
+        // Fallback to web if app not installed
+        setTimeout(() => {
+            if (Date.now() - start < timeout + 100) {
+                // Open web version
+                window.open(webUrl, '_blank');
+                
+                // Hide loading
+                loading.classList.remove('active');
+                
+                // Show info message
+                showToast(`เปิดเว็บ ${ai.name} (ไม่มีแอปติดตั้ง)`, 'info', 3000);
+                
+                // Clear prompt
+                clearPrompt();
+                
+                // Remove iframe
+                if (iframe.parentNode) {
+                    iframe.parentNode.removeChild(iframe);
+                }
+            }
+        }, timeout);
+    } else {
+        // Desktop or no mobile app - open web
+        window.open(webUrl, '_blank');
+        
+        // Hide loading
+        loading.classList.remove('active');
+        
+        // Show success message
+        showToast(`เปิด ${ai.name} ในเบราว์เซอร์แล้ว!`, 'success', 3000);
+        
+        // Clear prompt
+        clearPrompt();
+    }
+}
+
+// Add AI to recent list
+function addToRecent(ai) {
+    // Remove if already exists
+    recentAIs = recentAIs.filter(item => item.id !== ai.id);
+    
+    // Add to beginning
+    recentAIs.unshift({
+        id: ai.id,
+        name: ai.name,
+        icon: ai.icon,
+        colorClass: ai.colorClass,
+        timestamp: Date.now()
+    });
+    
+    // Keep only last 5
+    recentAIs = recentAIs.slice(0, 5);
+    
+    // Save to localStorage
+    localStorage.setItem('st_ai_router_recent', JSON.stringify(recentAIs));
+    
+    // Update UI
+    renderRecentAIs();
+}
+
+// Render recent AIs
+function renderRecentAIs() {
+    if (recentAIs.length === 0) {
+        recentSection.style.display = 'none';
+        return;
+    }
+    
+    recentSection.style.display = 'block';
+    recentList.innerHTML = '';
+    
+    recentAIs.forEach(item => {
+        const ai = aiDatabase.find(a => a.id === item.id);
+        if (!ai) return;
+        
+        const recentItem = document.createElement('div');
+        recentItem.className = 'recent-ai-item';
+        recentItem.onclick = () => selectAI(item.id);
+        
+        recentItem.innerHTML = `
+            <div class="recent-ai-icon ${ai.colorClass}">
+                <i class="${ai.icon}"></i>
+            </div>
+            <div class="recent-ai-name">${ai.name}</div>
+        `;
+        
+        recentList.appendChild(recentItem);
+    });
+}
+
+// Search for relevant AI
+function searchForAI() {
+    const query = promptInput.value.trim().toLowerCase();
+    
+    if (!query) {
+        showToast('กรุณาพิมพ์คำถามก่อนค้นหา', 'error', 3000);
+        return;
+    }
+    
+    // Find relevant AI based on query
+    const relevantAIs = aiDatabase.filter(ai => {
+        const searchText = (ai.name + ' ' + ai.description + ' ' + ai.features.join(' ')).toLowerCase();
+        return searchText.includes(query) || 
+               ai.features.some(feature => feature.toLowerCase().includes(query));
+    });
+    
+    if (relevantAIs.length === 0) {
+        showToast('ไม่พบ AI ที่เหมาะกับคำถามนี้', 'info', 3000);
+        return;
+    }
+    
+    // Highlight relevant AIs
+    document.querySelectorAll('.ai-card').forEach(card => {
+        const aiId = card.dataset.aiId;
+        const isRelevant = relevantAIs.some(ai => ai.id === aiId);
+        
+        card.classList.toggle('active', isRelevant);
+        
+        if (isRelevant) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    });
+    
+    // Show recommendation
+    if (relevantAIs.length > 0) {
+        const recommendedAI = relevantAIs[0];
+        showToast(`แนะนำ: ${recommendedAI.name} - ${recommendedAI.description.substring(0, 60)}...`, 'info', 4000);
+    }
+}
+
+// Update search button state
+function updateSearchButton() {
+    const hasText = currentPrompt.length > 0;
+    searchBtn.disabled = !hasText;
+    searchBtn.innerHTML = hasText ? 
+        `<i class="fas fa-search"></i> ค้นหา AI (${currentPrompt.length} ตัวอักษร)` :
+        `<i class="fas fa-search"></i> ค้นหา AI`;
+    
+    searchBtn.style.opacity = hasText ? '1' : '0.7';
+    searchBtn.style.cursor = hasText ? 'pointer' : 'not-allowed';
+}
+
+// Clear prompt
+function clearPrompt() {
+    promptInput.value = '';
+    currentPrompt = '';
+    updateSearchButton();
+    promptInput.focus();
+    
+    // Remove highlights
+    document.querySelectorAll('.ai-card').forEach(card => {
+        card.classList.remove('active');
+    });
+    
+    showToast('ล้างคำถามแล้ว', 'info', 2000);
+}
+
+// Close modal
+function closeModal() {
+    confirmationModal.classList.remove('active');
+}
+
+// Set theme
+function setTheme(theme) {
+    currentTheme = theme;
+    if (theme === 'light') {
+        document.body.classList.add('light-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        themeToggle.title = 'เปลี่ยนเป็นโหมดมืด';
+    } else {
+        document.body.classList.remove('light-mode');
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        themeToggle.title = 'เปลี่ยนเป็นโหมดสว่าง';
+    }
+    localStorage.setItem('st_ai_router_theme', theme);
+}
+
+// Toggle theme
+function toggleTheme() {
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+}
+
+// Show info
+function showInfo() {
+    const aiCount = aiDatabase.length;
+    const mobileCount = aiDatabase.filter(ai => ai.mobileUrl).length;
+    
+    modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> <span>เกี่ยวกับ ST AI Router</span>`;
+    modalText.innerHTML = `
+        <strong>ST AI Router</strong> คือระบบกลางสำหรับเข้าถึง AI ทุกตัวบนโลก 🌍<br><br>
+        
+        📊 <strong>สถิติ:</strong><br>
+        • AI ทั้งหมด: ${aiCount} ตัว<br>
+        • รองรับแอปมือถือ: ${mobileCount} ตัว<br>
+        • ฟรีใช้งาน: ${aiDatabase.filter(ai => ai.badges.some(b => b.text === 'ฟรี')).length} ตัว<br><br>
+        
+        🚀 <strong>วิธีใช้งาน:</strong><br>
+        1. พิมพ์คำถามของคุณ<br>
+        2. เลือก AI ที่ต้องการ<br>
+        3. ระบบจะเปิดไปยังแพลตฟอร์มนั้นทันที<br>
+        4. ถ้าเป็นมือถือและมีแอป → จะเปิดแอปทันที<br><br>
+        
+        🔒 <strong>ความปลอดภัย:</strong><br>
+        • ไม่เก็บข้อมูลคำถาม<br>
+        • ไม่แชร์ข้อมูลส่วนตัว<br>
+        • เปิดผ่านลิงก์อย่างถูกต้อง<br><br>
+        
+        <small>เวอร์ชัน 1.0.0 | พัฒนาโดย ST AI Team</small>
+    `;
+    
+    confirmationModal.classList.add('active');
+}
+
+// Show toast notification
+function showToast(message, type = 'info', duration = 3000) {
+    Toastify({
+        text: message,
+        duration: duration,
+        gravity: "top",
+        position: "right",
+        backgroundColor: type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' :
+                        type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' :
+                        'linear-gradient(135deg, #3b82f6, #2563eb)',
+        className: `toastify ${type}`,
+        stopOnFocus: true
+    }).showToast();
+}
+
+// Example prompts for demo
+function insertExamplePrompt(example) {
+    promptInput.value = example;
+    currentPrompt = example;
+    updateSearchButton();
+    promptInput.focus();
+    
+    showToast('ใส่ตัวอย่างคำถามแล้ว ลองค้นหา AI ที่เหมาะดู!', 'info', 3000);
+}
+
+// Add some example buttons (optional)
+document.addEventListener('DOMContentLoaded', function() {
+    // Add example prompts section
+    const inputSection = document.querySelector('.input-section');
+    const exampleSection = document.createElement('div');
+    exampleSection.className = 'example-section';
+    exampleSection.style.marginTop = '16px';
+    exampleSection.innerHTML = `
+        <div style="font-size: 14px; color: var(--dark-text-secondary); margin-bottom: 8px;">
+            <i class="fas fa-lightbulb"></i> ตัวอย่างคำถาม:
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="example-btn" onclick="insertExamplePrompt('ช่วยเขียนโค้ด Python สำหรับระบบล็อกอิน')">
+                เขียนโค้ด Python
+            </button>
+            <button class="example-btn" onclick="insertExamplePrompt('ออกแบบโลโก้สำหรับร้านกาแฟ')">
+                ออกแบบโลโก้
+            </button>
+            <button class="example-btn" onclick="insertExamplePrompt('สรุปข่าวเทคโนโลยีวันนี้')">
+                สรุปข่าว
+            </button>
+        </div>
+    `;
+    
+    // Add CSS for example buttons
+    const style = document.createElement('style');
+    style.textContent = `
+        .example-btn {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--dark-border);
+            color: var(--dark-text-secondary);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        body.light-mode .example-btn {
+            background: rgba(226, 232, 240, 0.7);
+            border-color: var(--light-border);
+            color: var(--light-text-secondary);
+        }
+        .example-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+    `;
+    document.head.appendChild(style);
+    
+    inputSection.appendChild(exampleSection);
+});
+</script>
+</body>
+</html>
