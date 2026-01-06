@@ -520,117 +520,7 @@ body.light-mode .search-result-category {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-}
-
-/* Input Section */
-.input-section {
-    background: var(--dark-card);
-    padding: 24px;
-    box-shadow: var(--shadow-md);
-    border-bottom: 1px solid var(--dark-border);
-    transition: var(--transition);
-}
-
-body.light-mode .input-section {
-    background: var(--light-card);
-    border-bottom-color: var(--light-border);
-}
-
-.input-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: var(--dark-text);
-}
-
-body.light-mode .input-label {
-    color: var(--light-text);
-}
-
-.input-label i {
-    color: var(--primary);
-    font-size: 20px;
-}
-
-.input-wrapper {
-    position: relative;
-    margin-bottom: 8px;
-}
-
-.prompt-input {
-    width: 100%;
-    background: rgba(30, 41, 59, 0.8);
-    border: 2px solid var(--dark-border);
-    border-radius: var(--radius-md);
-    padding: 18px 20px;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--dark-text);
-    outline: none;
-    resize: none;
-    min-height: 120px;
-    max-height: 200px;
-    transition: var(--transition);
-}
-
-body.light-mode .prompt-input {
-    background: rgba(226, 232, 240, 0.8);
-    border-color: var(--light-border);
-    color: var(--light-text);
-}
-
-.prompt-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-}
-
-.input-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    margin-top: 16px;
-}
-
-.action-btn {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    border: none;
-    color: white;
-    padding: 12px 24px;
-    border-radius: var(--radius-md);
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: var(--transition);
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-}
-
-.action-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
-}
-
-.action-btn.secondary {
-    background: rgba(30, 41, 59, 0.8);
-    border: 1px solid var(--dark-border);
-    color: var(--dark-text-secondary);
-}
-
-body.light-mode .action-btn.secondary {
-    background: rgba(226, 232, 240, 0.8);
-    border-color: var(--light-border);
-    color: var(--light-text-secondary);
-}
-
-.action-btn.secondary:hover {
-    background: var(--dark-border);
-    border-color: var(--primary);
-    color: var(--primary);
+    padding-top: 0;
 }
 
 /* AI Categories */
@@ -1204,50 +1094,6 @@ body.light-mode .filter-btn {
     color: white;
 }
 
-/* Example Prompts */
-.example-section {
-    margin-top: 16px;
-}
-
-.example-prompt-label {
-    font-size: 14px;
-    color: var(--dark-text-secondary);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.example-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.example-btn {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid var(--dark-border);
-    color: var(--dark-text-secondary);
-    padding: 6px 12px;
-    border-radius: var(--radius-sm);
-    font-size: 12px;
-    cursor: pointer;
-    transition: var(--transition);
-    white-space: nowrap;
-}
-
-body.light-mode .example-btn {
-    background: rgba(226, 232, 240, 0.7);
-    border-color: var(--light-border);
-    color: var(--light-text-secondary);
-}
-
-.example-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    transform: translateY(-1px);
-}
-
 /* Empty State */
 .empty-state {
     text-align: center;
@@ -1333,20 +1179,6 @@ body.light-mode ::-webkit-scrollbar-track {
         gap: 24px;
     }
     
-    .input-section {
-        padding: 20px;
-    }
-    
-    .prompt-input {
-        min-height: 100px;
-        padding: 16px;
-    }
-    
-    .action-btn {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-    
     .modal {
         padding: 24px;
     }
@@ -1391,15 +1223,6 @@ body.light-mode ::-webkit-scrollbar-track {
     
     .modal-btn {
         width: 100%;
-    }
-    
-    .action-btn {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .input-actions {
-        flex-direction: column;
     }
     
     .dropdown-item {
@@ -1455,10 +1278,6 @@ body.light-mode ::-webkit-scrollbar-track {
         font-size: 16px;
     }
     
-    .input-section {
-        padding: 16px;
-    }
-    
     .categories-container {
         padding: 16px;
         gap: 20px;
@@ -1500,7 +1319,7 @@ body.light-mode ::-webkit-scrollbar-track {
         </div>
         <div class="modal-body">
             <p class="modal-text" id="modalText">
-                คุณต้องการเปิด ChatGPT ด้วยคำถาม: "ตัวอย่างคำถาม" ใช่หรือไม่?
+                คุณต้องการเปิด AI นี้ใช่หรือไม่?
             </p>
         </div>
         <div class="modal-actions">
@@ -1538,110 +1357,60 @@ body.light-mode ::-webkit-scrollbar-track {
     </div>
     
     <!-- Quick Stats -->
-    <div class="quick-stats">
-        <div class="stat-item">
-            <i class="fas fa-robot"></i>
-            <span>ทั้งหมด <span class="stat-value" id="totalAI">0</span> AI</span>
-        </div>
-        <div class="stat-item">
-            <i class="fas fa-mobile-alt"></i>
-            <span>รองรับมือถือ <span class="stat-value" id="mobileAI">0</span> ตัว</span>
-        </div>
-        <div class="stat-item">
-            <i class="fas fa-tags"></i>
-            <span><span class="stat-value" id="totalCategories">0</span> หมวดหมู่</span>
-        </div>
+<div class="quick-stats">
+    <div class="stat-item">
+        <i class="fas fa-robot"></i>
+        <span>ทั้งหมด <span class="stat-value" id="totalAI">0</span> AI</span>
     </div>
-    
-    <!-- Search Dropdown -->
-    <div class="search-dropdown">
-        <div class="search-wrapper">
-            <input type="text" class="search-input" id="searchInput" placeholder="ค้นหา AI (พิมพ์แล้วกด Enter หรือคลิกค้นหา)...">
-            <button class="search-btn" id="searchBtn">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        <div class="search-results" id="searchResults">
-            <!-- Search results will be inserted here -->
-        </div>
+    <div class="stat-item">
+        <i class="fas fa-mobile-alt"></i>
+        <span>รองรับมือถือ <span class="stat-value" id="mobileAI">0</span> ตัว</span>
     </div>
-    
-    <!-- Category Dropdown -->
-    <div class="category-dropdown">
-        <div class="dropdown-header" id="dropdownHeader">
-            <span id="dropdownTitle">เลือกหมวดหมู่ AI...</span>
-            <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="dropdown-menu" id="dropdownMenu">
-            <!-- Dropdown items will be generated by JavaScript -->
-        </div>
+    <div class="stat-item">
+        <i class="fas fa-tags"></i>
+        <span><span class="stat-value" id="totalCategories">0</span> หมวดหมู่</span>
     </div>
-    
-    <!-- Filter Buttons -->
-    <div class="filter-buttons" id="filterButtons">
-        <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
-        <button class="filter-btn" data-filter="free">ฟรี</button>
-        <button class="filter-btn" data-filter="mobile">รองรับแอป</button>
-        <button class="filter-btn" data-filter="recent">ใช้งานล่าสุด</button>
+</div>
+
+<!-- Search Dropdown -->
+<div class="search-dropdown">
+    <div class="search-wrapper">
+        <input type="text" class="search-input" id="searchInput" placeholder="ค้นหา AI (พิมพ์แล้วกด Enter หรือคลิกค้นหา)...">
+        <button class="search-btn" id="searchBtn">
+            <i class="fas fa-search"></i>
+        </button>
     </div>
-    
-    <!-- Main Content -->
-    <div class="content">
-        <!-- Input Section -->
-        <div class="input-section">
-            <div class="input-label">
-                <i class="fas fa-question-circle"></i>
-                <span>คุณต้องการถามอะไรกับ AI?</span>
-            </div>
-            <div class="input-wrapper">
-                <textarea 
-                    class="prompt-input" 
-                    id="promptInput" 
-                    placeholder="พิมพ์คำถามหรือคำสั่งที่นี่... เช่น 'ช่วยเขียนโค้ด Python สำหรับระบบล็อกอิน', 'ออกแบบโลโก้สำหรับร้านกาแฟ', 'สรุปข่าววันนี้'"
-                ></textarea>
-            </div>
-            <div class="input-actions">
-                <button class="action-btn secondary" id="clearBtn">
-                    <i class="fas fa-eraser"></i>
-                    ล้าง
-                </button>
-                <button class="action-btn" id="sendBtn">
-                    <i class="fas fa-paper-plane"></i>
-                    ส่งคำถาม
-                </button>
-            </div>
-            
-            <!-- Example Prompts -->
-            <div class="example-section">
-                <div class="example-prompt-label">
-                    <i class="fas fa-lightbulb"></i>
-                    <span>ตัวอย่างคำถาม:</span>
-                </div>
-                <div class="example-buttons">
-                    <button class="example-btn" onclick="insertExamplePrompt('ช่วยเขียนโค้ด Python สำหรับระบบล็อกอิน')">
-                        เขียนโค้ด Python
-                    </button>
-                    <button class="example-btn" onclick="insertExamplePrompt('ออกแบบโลโก้สำหรับร้านกาแฟ')">
-                        ออกแบบโลโก้
-                    </button>
-                    <button class="example-btn" onclick="insertExamplePrompt('สรุปข่าวเทคโนโลยีวันนี้')">
-                        สรุปข่าว
-                    </button>
-                    <button class="example-btn" onclick="insertExamplePrompt('ช่วยเขียนอีเมลตอบรับลูกค้า')">
-                        เขียนอีเมล
-                    </button>
-                    <button class="example-btn" onclick="insertExamplePrompt('สร้างพรีเซนต์เทชั่นเกี่ยวกับ AI')">
-                        สร้างพรีเซนต์
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- AI Categories Container -->
-        <div class="categories-container" id="categoriesContainer">
-            <!-- Category sections will be inserted here by JavaScript -->
-        </div>
+    <div class="search-results" id="searchResults">
+        <!-- Search results will be inserted here -->
     </div>
+</div>
+
+<!-- Category Dropdown -->
+<div class="category-dropdown">
+    <div class="dropdown-header" id="dropdownHeader">
+        <span id="dropdownTitle">เลือกหมวดหมู่ AI...</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="dropdown-menu" id="dropdownMenu">
+        <!-- Dropdown items will be generated by JavaScript -->
+    </div>
+</div>
+
+<!-- Filter Buttons -->
+<div class="filter-buttons" id="filterButtons">
+    <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+    <button class="filter-btn" data-filter="free">ฟรี</button>
+    <button class="filter-btn" data-filter="mobile">รองรับแอป</button>
+    <button class="filter-btn" data-filter="recent">ใช้งานล่าสุด</button>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+    <!-- AI Categories Container -->
+    <div class="categories-container" id="categoriesContainer">
+        <!-- Category sections will be inserted here by JavaScript -->
+    </div>
+</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
@@ -1668,9 +1437,9 @@ const aiCategories = [
                     { text: 'มือถือ', type: 'mobile' }
                 ],
                 features: ['สนทนา', 'เขียนโค้ด', 'แปลภาษา', 'สรุปข้อความ'],
-                webUrl: 'https://chat.openai.com/?q={prompt}',
-                mobileUrl: 'chatgpt://?q={prompt}',
-                fallbackUrl: 'https://chat.openai.com/?q={prompt}'
+                webUrl: 'https://chat.openai.com/',
+                mobileUrl: 'chatgpt://',
+                fallbackUrl: 'https://chat.openai.com/'
             },
             {
                 id: 'claude',
@@ -1685,9 +1454,9 @@ const aiCategories = [
                     { text: 'มือถือ', type: 'mobile' }
                 ],
                 features: ['เขียนเนื้อหา', 'วิเคราะห์', 'สรุปเอกสาร', 'ให้คำแนะนำ'],
-                webUrl: 'https://claude.ai/new?q={prompt}',
-                mobileUrl: 'claude://?q={prompt}',
-                fallbackUrl: 'https://claude.ai/new?q={prompt}'
+                webUrl: 'https://claude.ai/',
+                mobileUrl: 'claude://',
+                fallbackUrl: 'https://claude.ai/'
             },
             {
                 id: 'gemini',
@@ -1702,9 +1471,9 @@ const aiCategories = [
                     { text: 'มือถือ', type: 'mobile' }
                 ],
                 features: ['ค้นหา', 'สร้างภาพ', 'เขียนโค้ด', 'แปลภาษา'],
-                webUrl: 'https://gemini.google.com/?q={prompt}',
-                mobileUrl: 'gemini://?q={prompt}',
-                fallbackUrl: 'https://gemini.google.com/?q={prompt}'
+                webUrl: 'https://gemini.google.com/',
+                mobileUrl: 'gemini://',
+                fallbackUrl: 'https://gemini.google.com/'
             },
             {
                 id: 'deepseek',
@@ -1719,9 +1488,9 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['เขียนโค้ด', 'แก้บั๊ก', 'สอนโปรแกรมมิ่ง', 'วิเคราะห์โค้ด'],
-                webUrl: 'https://chat.deepseek.com/?q={prompt}',
+                webUrl: 'https://chat.deepseek.com/',
                 mobileUrl: null,
-                fallbackUrl: 'https://chat.deepseek.com/?q={prompt}'
+                fallbackUrl: 'https://chat.deepseek.com/'
             },
             {
                 id: 'xai-grok',
@@ -1736,9 +1505,9 @@ const aiCategories = [
                     { text: 'ทวีตเตอร์', type: 'mobile' }
                 ],
                 features: ['สนทนา', 'อัปเดตล่าสุด', 'มีอารมณ์ขัน', 'ค้นหา'],
-                webUrl: 'https://grok.x.ai/?q={prompt}',
-                mobileUrl: 'twitter://search?q={prompt}',
-                fallbackUrl: 'https://grok.x.ai/?q={prompt}'
+                webUrl: 'https://grok.x.ai/',
+                mobileUrl: 'twitter://',
+                fallbackUrl: 'https://grok.x.ai/'
             },
             {
                 id: 'meta-ai',
@@ -1753,9 +1522,9 @@ const aiCategories = [
                     { text: 'มือถือ', type: 'mobile' }
                 ],
                 features: ['สนทนา', 'สร้างภาพ', 'ค้นหา', 'โซเชียล'],
-                webUrl: 'https://www.meta.ai/?q={prompt}',
-                mobileUrl: 'fb://search?q={prompt}',
-                fallbackUrl: 'https://www.meta.ai/?q={prompt}'
+                webUrl: 'https://www.meta.ai/',
+                mobileUrl: 'fb://',
+                fallbackUrl: 'https://www.meta.ai/'
             },
             {
                 id: 'ms-copilot',
@@ -1770,9 +1539,9 @@ const aiCategories = [
                     { text: 'มือถือ', type: 'mobile' }
                 ],
                 features: ['Office', 'Windows', 'ค้นหา', 'สร้างภาพ'],
-                webUrl: 'https://copilot.microsoft.com/?q={prompt}',
-                mobileUrl: 'bing://?q={prompt}',
-                fallbackUrl: 'https://copilot.microsoft.com/?q={prompt}'
+                webUrl: 'https://copilot.microsoft.com/',
+                mobileUrl: 'bing://',
+                fallbackUrl: 'https://copilot.microsoft.com/'
             },
             {
                 id: 'perplexity',
@@ -1787,9 +1556,9 @@ const aiCategories = [
                     { text: 'มือถือ', type: 'mobile' }
                 ],
                 features: ['ค้นหา', 'วิจัย', 'แหล่งอ้างอิง', 'เรียลไทม์'],
-                webUrl: 'https://www.perplexity.ai/?q={prompt}',
-                mobileUrl: 'perplexity://?q={prompt}',
-                fallbackUrl: 'https://www.perplexity.ai/?q={prompt}'
+                webUrl: 'https://www.perplexity.ai/',
+                mobileUrl: 'perplexity://',
+                fallbackUrl: 'https://www.perplexity.ai/'
             }
         ]
     },
@@ -1813,7 +1582,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['ออกแบบอัตโนมัติ', 'เทมเพลต', 'ล้ำสมัย'],
-                webUrl: 'https://www.beautiful.ai/?prompt={prompt}',
+                webUrl: 'https://www.beautiful.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.beautiful.ai/'
             },
@@ -1830,7 +1599,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['สร้างเร็ว', 'เทมเพลต', 'ปรับแต่งได้'],
-                webUrl: 'https://gamma.app/create?prompt={prompt}',
+                webUrl: 'https://gamma.app/',
                 mobileUrl: null,
                 fallbackUrl: 'https://gamma.app/'
             },
@@ -1847,7 +1616,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['มืออาชีพ', 'เทมเพลต', 'แชร์ง่าย'],
-                webUrl: 'https://pitch.com/?prompt={prompt}',
+                webUrl: 'https://pitch.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://pitch.com/'
             },
@@ -1864,7 +1633,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['เร็ว', 'ง่าย', 'เทมเพลต'],
-                webUrl: 'https://plus.ai/create?prompt={prompt}',
+                webUrl: 'https://plus.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://plus.ai/'
             },
@@ -1881,7 +1650,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['น่าสนใจ', 'เทมเพลต', 'แอนิเมชัน'],
-                webUrl: 'https://www.popai.pro/?prompt={prompt}',
+                webUrl: 'https://www.popai.pro/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.popai.pro/'
             },
@@ -1898,7 +1667,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['อัตโนมัติ', 'เทมเพลต', 'สวยงาม'],
-                webUrl: 'https://www.presentation.ai/?prompt={prompt}',
+                webUrl: 'https://www.presentation.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.presentation.ai/'
             },
@@ -1915,7 +1684,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['เทมเพลต', 'ฟรี', 'หลากหลาย'],
-                webUrl: 'https://slidesgo.com/?prompt={prompt}',
+                webUrl: 'https://slidesgo.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://slidesgo.com/'
             },
@@ -1932,26 +1701,9 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['เรื่องเล่า', 'อินเทอร์แอคทีฟ', 'เทมเพลต'],
-                webUrl: 'https://tome.app/?prompt={prompt}',
+                webUrl: 'https://tome.app/',
                 mobileUrl: null,
                 fallbackUrl: 'https://tome.app/'
-            },
-            {
-                id: 'midjourney',
-                name: 'Midjourney',
-                provider: 'Midjourney',
-                icon: 'fas fa-palette',
-                logoUrl: 'https://cdn.midjourney.com/favicon.ico',
-                colorClass: 'midjourney',
-                description: 'AI สร้างภาพศิลปะที่สวยงามสำหรับสไลด์',
-                badges: [
-                    { text: 'จ่าย', type: 'paid' },
-                    { text: 'Discord', type: 'free' }
-                ],
-                features: ['สร้างภาพ', 'ศิลปะ', 'ดีไซน์', 'ภาพเหมือน'],
-                webUrl: 'https://www.midjourney.com/',
-                mobileUrl: null,
-                fallbackUrl: 'https://www.midjourney.com/'
             }
         ]
     },
@@ -1992,7 +1744,7 @@ const aiCategories = [
                     { text: 'เดสก์ท็อป', type: 'free' }
                 ],
                 features: ['IDE', 'เขียนโค้ด', 'แก้บั๊ก', 'รีเฟคเตอร์'],
-                webUrl: 'cursor://?prompt={prompt}',
+                webUrl: 'https://cursor.sh/',
                 mobileUrl: null,
                 fallbackUrl: 'https://cursor.sh/'
             },
@@ -2009,7 +1761,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['เขียนโค้ด', 'ตอบคำถาม', 'หลายภาษา', 'IDE'],
-                webUrl: 'https://askcodi.com/?prompt={prompt}',
+                webUrl: 'https://askcodi.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://askcodi.com/'
             },
@@ -2026,7 +1778,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['ความปลอดภัย', 'ตรวจสอบโค้ด', 'เขียนโค้ด'],
-                webUrl: 'https://www.codiga.io/?prompt={prompt}',
+                webUrl: 'https://www.codiga.io/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.codiga.io/'
             },
@@ -2043,7 +1795,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['เขียนโค้ด', 'แก้บั๊ก', 'รีเฟคเตอร์'],
-                webUrl: 'https://qodo.ai/?prompt={prompt}',
+                webUrl: 'https://qodo.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://qodo.ai/'
             },
@@ -2060,7 +1812,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['IDE ออนไลน์', 'เขียนโค้ด', 'หลายภาษา'],
-                webUrl: 'https://replit.com/?prompt={prompt}',
+                webUrl: 'https://replit.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://replit.com/'
             },
@@ -2077,7 +1829,7 @@ const aiCategories = [
                     { text: 'สำหรับ Dev', type: 'paid' }
                 ],
                 features: ['Auto Complete', 'เขียนโค้ด', 'หลายภาษา'],
-                webUrl: 'https://www.tabnine.com/?prompt={prompt}',
+                webUrl: 'https://www.tabnine.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.tabnine.com/'
             }
@@ -2088,22 +1840,22 @@ const aiCategories = [
         name: 'AI ช่วยเขียนอีเมล',
         icon: 'fas fa-envelope',
         colorClass: 'category-email',
-        description: 'AI สำหรับช่วยเขียนและจัดการอีเมล',
+        description: 'AI ช่วยเขียนและตอบอีเมลอย่างมืออาชีพ',
         ais: [
             {
                 id: 'clippit-ai',
                 name: 'Clippit.Ai',
                 provider: 'Clippit',
-                icon: 'fas fa-paperclip',
+                icon: 'fas fa-clipboard',
                 logoUrl: 'https://clippit.ai/favicon.ico',
                 colorClass: 'clippit',
-                description: 'AI ช่วยเขียนและตอบอีเมลอัตโนมัติ',
+                description: 'AI ช่วยเขียนอีเมลและเอกสาร',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เขียนอีเมล', 'ตอบอัตโนมัติ', 'หลายภาษา'],
-                webUrl: 'https://clippit.ai/?prompt={prompt}',
+                features: ['เขียนอีเมล', 'ร่างเอกสาร', 'ตรวจสอบ'],
+                webUrl: 'https://clippit.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://clippit.ai/'
             },
@@ -2114,13 +1866,13 @@ const aiCategories = [
                 icon: 'fas fa-calendar-day',
                 logoUrl: 'https://friday.app/favicon.ico',
                 colorClass: 'friday',
-                description: 'AI ช่วยจัดการอีเมลและงาน',
+                description: 'AI ผู้ช่วยอีเมลที่ชาญฉลาด',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['จัดการอีเมล', 'ตอบอัตโนมัติ', 'จัดลำดับ'],
-                webUrl: 'https://friday.app/?prompt={prompt}',
+                features: ['อีเมล', 'นัดหมาย', 'จัดการงาน'],
+                webUrl: 'https://friday.app/',
                 mobileUrl: null,
                 fallbackUrl: 'https://friday.app/'
             },
@@ -2129,17 +1881,17 @@ const aiCategories = [
                 name: 'Mailmaestro',
                 provider: 'Mailmaestro',
                 icon: 'fas fa-mail-bulk',
-                logoUrl: 'https://mailmaestro.ai/favicon.ico',
+                logoUrl: 'https://mailmaestro.com/favicon.ico',
                 colorClass: 'mailmaestro',
-                description: 'AI ช่วยเขียนอีเมลอย่างมืออาชีพ',
+                description: 'AI ช่วยเขียนและตอบอีเมลอัตโนมัติ',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['มืออาชีพ', 'หลายภาษา', 'เทมเพลต'],
-                webUrl: 'https://mailmaestro.ai/?prompt={prompt}',
+                features: ['เขียนอีเมล', 'ตอบอัตโนมัติ', 'ปรับแต่ง'],
+                webUrl: 'https://mailmaestro.com/',
                 mobileUrl: null,
-                fallbackUrl: 'https://mailmaestro.ai/'
+                fallbackUrl: 'https://mailmaestro.com/'
             },
             {
                 id: 'shortwave',
@@ -2148,13 +1900,13 @@ const aiCategories = [
                 icon: 'fas fa-wave-square',
                 logoUrl: 'https://shortwave.com/favicon.ico',
                 colorClass: 'shortwave',
-                description: 'AI ช่วยจัดการอีเมลอย่างชาญฉลาด',
+                description: 'Gmail ที่มี AI ช่วยจัดการอีเมล',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['จัดการอีเมล', 'ตอบอัตโนมัติ', 'จัดกลุ่ม'],
-                webUrl: 'https://shortwave.com/?prompt={prompt}',
+                features: ['Gmail', 'AI', 'จัดการอีเมล'],
+                webUrl: 'https://shortwave.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://shortwave.com/'
             },
@@ -2165,13 +1917,13 @@ const aiCategories = [
                 icon: 'fas fa-bolt',
                 logoUrl: 'https://superhuman.com/favicon.ico',
                 colorClass: 'superhuman',
-                description: 'AI ช่วยเขียนอีเมลที่เร็วเป็นพิเศษ',
+                description: 'AI ช่วยเขียนอีเมลที่เร็วสุดขีด',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เร็ว', 'เขียนอีเมล', 'ตอบอัตโนมัติ'],
-                webUrl: 'https://superhuman.com/?prompt={prompt}',
+                features: ['เร็ว', 'เขียนอีเมล', 'ปรับแต่ง'],
+                webUrl: 'https://superhuman.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://superhuman.com/'
             }
@@ -2182,56 +1934,56 @@ const aiCategories = [
         name: 'AI ช่วยสร้างภาพ',
         icon: 'fas fa-image',
         colorClass: 'category-image',
-        description: 'AI สำหรับสร้างและแก้ไขภาพ',
+        description: 'AI สร้างและแก้ไขภาพจากข้อความ',
         ais: [
-            {
-                id: 'dalle',
-                name: 'DALL·E',
-                provider: 'OpenAI',
-                icon: 'fas fa-paint-brush',
-                logoUrl: 'https://labs.openai.com/favicon.png',
-                colorClass: 'dalle',
-                description: 'AI สร้างภาพจากข้อความ พัฒนาโดย OpenAI',
-                badges: [
-                    { text: 'จ่าย', type: 'paid' },
-                    { text: 'เว็บ', type: 'free' }
-                ],
-                features: ['สร้างภาพ', 'จากข้อความ', 'หลายสไตล์'],
-                webUrl: 'https://labs.openai.com/?prompt={prompt}',
-                mobileUrl: null,
-                fallbackUrl: 'https://labs.openai.com/'
-            },
             {
                 id: 'adobe-firefly',
                 name: 'Adobe Firefly',
                 provider: 'Adobe',
                 icon: 'fas fa-fire',
-                logoUrl: 'https://www.adobe.com/content/dam/cc/icons/firefly-cc-app-icon.svg',
+                logoUrl: 'https://www.adobe.com/favicon.ico',
                 colorClass: 'firefly',
-                description: 'AI สร้างภาพจาก Adobe ผู้เชี่ยวชาญด้านครีเอทีฟ',
+                description: 'AI สร้างภาพจาก Adobe สำหรับนักออกแบบ',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['สร้างภาพ', 'แก้ไขภาพ', 'ครีเอทีฟ'],
-                webUrl: 'https://firefly.adobe.com/?prompt={prompt}',
+                features: ['สร้างภาพ', 'Adobe', 'นักออกแบบ'],
+                webUrl: 'https://www.adobe.com/sensei/generative-ai/firefly.html',
                 mobileUrl: null,
-                fallbackUrl: 'https://firefly.adobe.com/'
+                fallbackUrl: 'https://www.adobe.com/sensei/generative-ai/firefly.html'
             },
             {
-                id: 'flux',
-                name: 'FLUX.1',
-                provider: 'FLUX',
-                icon: 'fas fa-sync-alt',
-                logoUrl: 'https://flux.ai/favicon.ico',
-                colorClass: 'flux',
-                description: 'AI สร้างภาพคุณภาพสูง',
+                id: 'dalle',
+                name: 'DALL·E',
+                provider: 'OpenAI',
+                icon: 'fas fa-palette',
+                logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/240px-ChatGPT_logo.svg.png',
+                colorClass: 'dalle',
+                description: 'AI สร้างภาพจาก OpenAI ที่มีชื่อเสียง',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['คุณภาพสูง', 'หลายสไตล์', 'หลายรูปแบบ'],
-                webUrl: 'https://flux.ai/?prompt={prompt}',
+                features: ['สร้างภาพ', 'OpenAI', 'คุณภาพสูง'],
+                webUrl: 'https://labs.openai.com/',
+                mobileUrl: null,
+                fallbackUrl: 'https://labs.openai.com/'
+            },
+            {
+                id: 'flux1',
+                name: 'FLUX.1',
+                provider: 'Flux',
+                icon: 'fas fa-bolt',
+                logoUrl: 'https://flux.ai/favicon.ico',
+                colorClass: 'flux',
+                description: 'โมเดลสร้างภาพรุ่นล่าสุดจาก Flux',
+                badges: [
+                    { text: 'จ่าย', type: 'paid' },
+                    { text: 'เว็บ', type: 'free' }
+                ],
+                features: ['สร้างภาพ', 'รุ่นใหม่', 'คุณภาพสูง'],
+                webUrl: 'https://flux.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://flux.ai/'
             },
@@ -2239,33 +1991,50 @@ const aiCategories = [
                 id: 'ideogram',
                 name: 'Ideogram',
                 provider: 'Ideogram',
-                icon: 'fas fa-font',
+                icon: 'fas fa-shapes',
                 logoUrl: 'https://ideogram.ai/favicon.ico',
                 colorClass: 'ideogram',
-                description: 'AI สร้างภาพที่มีข้อความสวยงาม',
+                description: 'AI สร้างภาพพร้อมข้อความที่สวยงาม',
                 badges: [
                     { text: 'ฟรี', type: 'free' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ข้อความในภาพ', 'ศิลปะ', 'หลายสไตล์'],
-                webUrl: 'https://ideogram.ai/?prompt={prompt}',
+                features: ['ข้อความในภาพ', 'ฟรี', 'คุณภาพดี'],
+                webUrl: 'https://ideogram.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://ideogram.ai/'
+            },
+            {
+                id: 'midjourney',
+                name: 'Midjourney',
+                provider: 'Midjourney',
+                icon: 'fas fa-magic',
+                logoUrl: 'https://www.midjourney.com/favicon.ico',
+                colorClass: 'midjourney',
+                description: 'AI สร้างภาพศิลปะที่มีชื่อเสียง',
+                badges: [
+                    { text: 'จ่าย', type: 'paid' },
+                    { text: 'Discord', type: 'free' }
+                ],
+                features: ['ศิลปะ', 'Discord', 'คุณภาพสูง'],
+                webUrl: 'https://www.midjourney.com/',
+                mobileUrl: null,
+                fallbackUrl: 'https://www.midjourney.com/'
             },
             {
                 id: 'recraft',
                 name: 'Recraft',
                 provider: 'Recraft',
-                icon: 'fas fa-redo-alt',
+                icon: 'fas fa-vector-square',
                 logoUrl: 'https://recraft.ai/favicon.ico',
                 colorClass: 'recraft',
-                description: 'AI สร้างและแก้ไขภาพเวกเตอร์',
+                description: 'AI สร้างภาพและกราฟิกแบบเวกเตอร์',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เวกเตอร์', 'แก้ไขภาพ', 'หลายรูปแบบ'],
-                webUrl: 'https://recraft.ai/?prompt={prompt}',
+                features: ['เวกเตอร์', 'กราฟิก', 'ออกแบบ'],
+                webUrl: 'https://recraft.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://recraft.ai/'
             },
@@ -2275,42 +2044,42 @@ const aiCategories = [
                 provider: 'Stability AI',
                 icon: 'fas fa-atom',
                 logoUrl: 'https://stability.ai/favicon.ico',
-                colorClass: 'stability',
+                colorClass: 'stable',
                 description: 'AI สร้างภาพโอเพ่นซอร์สที่ทรงพลัง',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
-                    { text: 'เว็บ', type: 'free' }
+                    { text: 'ฟรี', type: 'free' },
+                    { text: 'โอเพ่นซอร์ส', type: 'free' }
                 ],
-                features: ['โอเพ่นซอร์ส', 'สร้างภาพ', 'ปรับแต่งได้'],
-                webUrl: 'https://stability.ai/?prompt={prompt}',
+                features: ['โอเพ่นซอร์ส', 'ปรับแต่งได้', 'ทรงพลัง'],
+                webUrl: 'https://stability.ai/stable-diffusion',
                 mobileUrl: null,
-                fallbackUrl: 'https://stability.ai/'
+                fallbackUrl: 'https://stability.ai/stable-diffusion'
             }
         ]
     },
     {
         id: 'excel',
         name: 'AI ช่วยทำ Excel',
-        icon: 'fas fa-file-excel',
+        icon: 'fas fa-table',
         colorClass: 'category-excel',
-        description: 'AI สำหรับช่วยทำงานกับสเปรดชีตและ Excel',
+        description: 'AI ช่วยวิเคราะห์และจัดการข้อมูลในสเปรดชีต',
         ais: [
             {
                 id: 'bricks',
                 name: 'Bricks',
                 provider: 'Bricks',
-                icon: 'fas fa-cubes',
-                logoUrl: 'https://bricks.ai/favicon.ico',
+                icon: 'fas fa-cube',
+                logoUrl: 'https://bricks.com/favicon.ico',
                 colorClass: 'bricks',
-                description: 'AI ช่วยทำงานกับสเปรดชีต',
+                description: 'AI ช่วยวิเคราะห์ข้อมูลในสเปรดชีต',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['สเปรดชีต', 'วิเคราะห์ข้อมูล', 'อัตโนมัติ'],
-                webUrl: 'https://bricks.ai/?prompt={prompt}',
+                features: ['วิเคราะห์ข้อมูล', 'Excel', 'สเปรดชีต'],
+                webUrl: 'https://bricks.com/',
                 mobileUrl: null,
-                fallbackUrl: 'https://bricks.ai/'
+                fallbackUrl: 'https://bricks.com/'
             },
             {
                 id: 'formula-bot',
@@ -2318,14 +2087,14 @@ const aiCategories = [
                 provider: 'Formula Bot',
                 icon: 'fas fa-square-root-alt',
                 logoUrl: 'https://formulabot.com/favicon.ico',
-                colorClass: 'formulabot',
-                description: 'AI ช่วยเขียนสูตร Excel',
+                colorClass: 'formula',
+                description: 'AI สร้างสูตร Excel จากคำอธิบาย',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['สูตร Excel', 'คำนวณ', 'วิเคราะห์'],
-                webUrl: 'https://formulabot.com/?prompt={prompt}',
+                features: ['สูตร Excel', 'อัตโนมัติ', 'วิเคราะห์'],
+                webUrl: 'https://formulabot.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://formulabot.com/'
             },
@@ -2333,16 +2102,16 @@ const aiCategories = [
                 id: 'gigasheet',
                 name: 'Gigasheet',
                 provider: 'Gigasheet',
-                icon: 'fas fa-table',
+                icon: 'fas fa-database',
                 logoUrl: 'https://gigasheet.com/favicon.ico',
                 colorClass: 'gigasheet',
-                description: 'AI ช่วยวิเคราะห์ข้อมูลจำนวนมาก',
+                description: 'สเปรดชีตขนาดใหญ่ที่มี AI ช่วยวิเคราะห์',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ข้อมูลใหญ่', 'วิเคราะห์', 'ประมวลผล'],
-                webUrl: 'https://gigasheet.com/?prompt={prompt}',
+                features: ['ข้อมูลขนาดใหญ่', 'วิเคราะห์', 'สเปรดชีต'],
+                webUrl: 'https://gigasheet.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://gigasheet.com/'
             },
@@ -2350,33 +2119,33 @@ const aiCategories = [
                 id: 'rows-ai',
                 name: 'Rows AI',
                 provider: 'Rows',
-                icon: 'fas fa-chart-bar',
+                icon: 'fas fa-border-all',
                 logoUrl: 'https://rows.com/favicon.ico',
                 colorClass: 'rows',
-                description: 'สเปรดชีตอัจฉริยะด้วย AI',
+                description: 'AI ช่วยวิเคราะห์และสร้างสูตร Excel',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['สเปรดชีต', 'วิเคราะห์', 'อัตโนมัติ'],
-                webUrl: 'https://rows.com/?prompt={prompt}',
+                features: ['วิเคราะห์', 'สูตร', 'Excel'],
+                webUrl: 'https://rows.com/ai',
                 mobileUrl: null,
-                fallbackUrl: 'https://rows.com/'
+                fallbackUrl: 'https://rows.com/ai'
             },
             {
                 id: 'sheetai',
                 name: 'SheetAI',
                 provider: 'SheetAI',
-                icon: 'fas fa-spreadsheet',
+                icon: 'fas fa-file-excel',
                 logoUrl: 'https://sheetai.app/favicon.ico',
                 colorClass: 'sheetai',
                 description: 'AI ช่วยทำงานกับ Google Sheets',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
-                    { text: 'เว็บ', type: 'free' }
+                    { text: 'จ่าย', type: 'paid' },
+                    { text: 'Google Sheets', type: 'free' }
                 ],
-                features: ['Google Sheets', 'สูตร', 'วิเคราะห์'],
-                webUrl: 'https://sheetai.app/?prompt={prompt}',
+                features: ['Google Sheets', 'AI', 'วิเคราะห์'],
+                webUrl: 'https://sheetai.app/',
                 mobileUrl: null,
                 fallbackUrl: 'https://sheetai.app/'
             }
@@ -2385,24 +2154,24 @@ const aiCategories = [
     {
         id: 'meeting',
         name: 'AI สรุปการประชุม',
-        icon: 'fas fa-video',
+        icon: 'fas fa-users',
         colorClass: 'category-meeting',
-        description: 'AI สำหรับช่วยสรุปและจัดการการประชุม',
+        description: 'AI บันทึกและสรุปการประชุมอัตโนมัติ',
         ais: [
             {
                 id: 'avoma',
                 name: 'Avoma',
                 provider: 'Avoma',
-                icon: 'fas fa-headphones',
+                icon: 'fas fa-headset',
                 logoUrl: 'https://avoma.com/favicon.ico',
                 colorClass: 'avoma',
-                description: 'AI สรุปการประชุมและวิเคราะห์',
+                description: 'AI ช่วยจัดการและสรุปการประชุมขาย',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['สรุปประชุม', 'วิเคราะห์', 'บันทึก'],
-                webUrl: 'https://avoma.com/?prompt={prompt}',
+                features: ['ประชุมขาย', 'บันทึก', 'วิเคราะห์'],
+                webUrl: 'https://avoma.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://avoma.com/'
             },
@@ -2412,14 +2181,14 @@ const aiCategories = [
                 provider: 'Equal Time',
                 icon: 'fas fa-balance-scale',
                 logoUrl: 'https://equaltime.ai/favicon.ico',
-                colorClass: 'equaltime',
-                description: 'AI ติดตามเวลาและสรุปการประชุม',
+                colorClass: 'equal',
+                description: 'AI วิเคราะห์เวลาในการพูดในที่ประชุม',
                 badges: [
-                    { text: 'ฟรี', type: 'free' },
+                    { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เวลา', 'สรุป', 'วิเคราะห์'],
-                webUrl: 'https://equaltime.ai/?prompt={prompt}',
+                features: ['วิเคราะห์เวลา', 'ที่ประชุม', 'ความเป็นธรรม'],
+                webUrl: 'https://equaltime.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://equaltime.ai/'
             },
@@ -2427,16 +2196,16 @@ const aiCategories = [
                 id: 'fathom',
                 name: 'Fathom',
                 provider: 'Fathom',
-                icon: 'fas fa-microphone',
+                icon: 'fas fa-water',
                 logoUrl: 'https://fathom.video/favicon.ico',
                 colorClass: 'fathom',
-                description: 'AI บันทึกและสรุปการประชุมอัตโนมัติ',
+                description: 'AI บันทึกและสรุปการประชุม Zoom',
                 badges: [
                     { text: 'ฟรี', type: 'free' },
-                    { text: 'เว็บ', type: 'free' }
+                    { text: 'Zoom', type: 'free' }
                 ],
-                features: ['บันทึก', 'สรุป', 'อัตโนมัติ'],
-                webUrl: 'https://fathom.video/?prompt={prompt}',
+                features: ['Zoom', 'บันทึก', 'สรุป'],
+                webUrl: 'https://fathom.video/',
                 mobileUrl: null,
                 fallbackUrl: 'https://fathom.video/'
             },
@@ -2444,33 +2213,33 @@ const aiCategories = [
                 id: 'fellow-app',
                 name: 'Fellow.App',
                 provider: 'Fellow',
-                icon: 'fas fa-users',
+                icon: 'fas fa-handshake',
                 logoUrl: 'https://fellow.app/favicon.ico',
                 colorClass: 'fellow',
-                description: 'AI จัดการและสรุปการประชุมทีม',
+                description: 'AI ช่วยจัดการวาระและบันทึกการประชุม',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ทีม', 'สรุป', 'จัดการ'],
-                webUrl: 'https://fellow.app/?prompt={prompt}',
+                features: ['วาระประชุม', 'บันทึก', 'จัดการ'],
+                webUrl: 'https://fellow.app/',
                 mobileUrl: null,
                 fallbackUrl: 'https://fellow.app/'
             },
             {
                 id: 'fireflies',
                 name: 'Fireflies',
-                provider: 'Fireflies',
+                provider: 'Fireflies.ai',
                 icon: 'fas fa-fire',
                 logoUrl: 'https://fireflies.ai/favicon.ico',
                 colorClass: 'fireflies',
-                description: 'AI บันทึกและถอดเทปการประชุม',
+                description: 'AI บันทึกเสียงและสรุปการประชุม',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ถอดเทป', 'บันทึก', 'สรุป'],
-                webUrl: 'https://fireflies.ai/?prompt={prompt}',
+                features: ['บันทึกเสียง', 'สรุป', 'ค้นหา'],
+                webUrl: 'https://fireflies.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://fireflies.ai/'
             },
@@ -2478,34 +2247,34 @@ const aiCategories = [
                 id: 'krisp',
                 name: 'Krisp',
                 provider: 'Krisp',
-                icon: 'fas fa-volume-mute',
+                icon: 'fas fa-microphone',
                 logoUrl: 'https://krisp.ai/favicon.ico',
                 colorClass: 'krisp',
-                description: 'AI ลดเสียงรบกวนและสรุปการประชุม',
+                description: 'AI ลดเสียงรบกวนและบันทึกการประชุม',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
-                    { text: 'เว็บ', type: 'free' }
+                    { text: 'เดสก์ท็อป', type: 'free' }
                 ],
-                features: ['ลดเสียง', 'สรุป', 'บันทึก'],
-                webUrl: 'https://krisp.ai/?prompt={prompt}',
+                features: ['ลดเสียงรบกวน', 'บันทึก', 'สรุป'],
+                webUrl: 'https://krisp.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://krisp.ai/'
             },
             {
                 id: 'otter',
                 name: 'Otter',
-                provider: 'Otter',
+                provider: 'Otter.ai',
                 icon: 'fas fa-otter',
                 logoUrl: 'https://otter.ai/favicon.ico',
                 colorClass: 'otter',
-                description: 'AI ถอดเทปและสรุปการประชุม',
+                description: 'AI บันทึกเสียงและทำเป็นข้อความ',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'มือถือ', type: 'mobile' }
                 ],
-                features: ['ถอดเทป', 'สรุป', 'บันทึก'],
-                webUrl: 'https://otter.ai/?prompt={prompt}',
-                mobileUrl: 'otter://?prompt={prompt}',
+                features: ['บันทึกเสียง', 'ข้อความ', 'สรุป'],
+                webUrl: 'https://otter.ai/',
+                mobileUrl: 'otterai://',
                 fallbackUrl: 'https://otter.ai/'
             }
         ]
@@ -2515,7 +2284,7 @@ const aiCategories = [
         name: 'AI ช่วยทำ Workflow / Automation',
         icon: 'fas fa-cogs',
         colorClass: 'category-workflow',
-        description: 'AI สำหรับช่วยสร้างและจัดการเวิร์กโฟลว์อัตโนมัติ',
+        description: 'AI ช่วยสร้างและจัดการ workflow อัตโนมัติ',
         ais: [
             {
                 id: 'integrately',
@@ -2524,13 +2293,13 @@ const aiCategories = [
                 icon: 'fas fa-link',
                 logoUrl: 'https://integrately.com/favicon.ico',
                 colorClass: 'integrately',
-                description: 'AI ช่วยสร้างอัตโนมัติระหว่างแอป',
+                description: 'AI ช่วยสร้าง workflow อัตโนมัติระหว่างแอป',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['อัตโนมัติ', 'เชื่อมต่อ', 'เวิร์กโฟลว์'],
-                webUrl: 'https://integrately.com/?prompt={prompt}',
+                features: ['อัตโนมัติ', 'เชื่อมต่อแอป', 'workflow'],
+                webUrl: 'https://integrately.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://integrately.com/'
             },
@@ -2538,16 +2307,16 @@ const aiCategories = [
                 id: 'make',
                 name: 'Make',
                 provider: 'Make',
-                icon: 'fas fa-tools',
+                icon: 'fas fa-puzzle-piece',
                 logoUrl: 'https://www.make.com/favicon.ico',
                 colorClass: 'make',
-                description: 'สร้างเวิร์กโฟลว์อัตโนมัติด้วย AI',
+                description: 'แพลตฟอร์มสร้าง workflow อัตโนมัติด้วย AI',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['อัตโนมัติ', 'เวิร์กโฟลว์', 'หลายแอป'],
-                webUrl: 'https://www.make.com/?prompt={prompt}',
+                features: ['workflow', 'อัตโนมัติ', 'ภาพ'],
+                webUrl: 'https://www.make.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.make.com/'
             },
@@ -2558,13 +2327,13 @@ const aiCategories = [
                 icon: 'fas fa-calendar-week',
                 logoUrl: 'https://monday.com/favicon.ico',
                 colorClass: 'monday',
-                description: 'จัดการเวิร์กโฟลว์ทีมด้วย AI',
+                description: 'แพลตฟอร์มจัดการงานที่มี AI ช่วย',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ทีม', 'เวิร์กโฟลว์', 'จัดการ'],
-                webUrl: 'https://monday.com/?prompt={prompt}',
+                features: ['จัดการงาน', 'AI', 'workflow'],
+                webUrl: 'https://monday.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://monday.com/'
             },
@@ -2572,16 +2341,16 @@ const aiCategories = [
                 id: 'n8n',
                 name: 'n8n',
                 provider: 'n8n',
-                icon: 'fas fa-network-wired',
+                icon: 'fas fa-infinity',
                 logoUrl: 'https://n8n.io/favicon.ico',
                 colorClass: 'n8n',
-                description: 'เวิร์กโฟลว์อัตโนมัติโอเพ่นซอร์ส',
+                description: 'workflow automation โอเพ่นซอร์ส',
                 badges: [
-                    { text: 'ฟรี/โอเพ่นซอร์ส', type: 'free' },
+                    { text: 'โอเพ่นซอร์ส', type: 'free' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['โอเพ่นซอร์ส', 'อัตโนมัติ', 'เวิร์กโฟลว์'],
-                webUrl: 'https://n8n.io/?prompt={prompt}',
+                features: ['โอเพ่นซอร์ส', 'workflow', 'อัตโนมัติ'],
+                webUrl: 'https://n8n.io/',
                 mobileUrl: null,
                 fallbackUrl: 'https://n8n.io/'
             },
@@ -2592,13 +2361,13 @@ const aiCategories = [
                 icon: 'fas fa-tasks',
                 logoUrl: 'https://www.wrike.com/favicon.ico',
                 colorClass: 'wrike',
-                description: 'จัดการเวิร์กโฟลว์และโครงการด้วย AI',
+                description: 'เครื่องมือจัดการงานและ workflow',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['โครงการ', 'เวิร์กโฟลว์', 'ทีม'],
-                webUrl: 'https://www.wrike.com/?prompt={prompt}',
+                features: ['จัดการงาน', 'workflow', 'AI'],
+                webUrl: 'https://www.wrike.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.wrike.com/'
             },
@@ -2609,13 +2378,13 @@ const aiCategories = [
                 icon: 'fas fa-bolt',
                 logoUrl: 'https://zapier.com/favicon.ico',
                 colorClass: 'zapier',
-                description: 'สร้างอัตโนมัติระหว่างแอปด้วย AI',
+                description: 'ผู้นำด้าน workflow automation',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['อัตโนมัติ', 'เชื่อมต่อ', 'หลายแอป'],
-                webUrl: 'https://zapier.com/?prompt={prompt}',
+                features: ['อัตโนมัติ', 'หลายแอป', 'workflow'],
+                webUrl: 'https://zapier.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://zapier.com/'
             }
@@ -2626,7 +2395,7 @@ const aiCategories = [
         name: 'AI ช่วยเขียนบทความ',
         icon: 'fas fa-newspaper',
         colorClass: 'category-article',
-        description: 'AI สำหรับช่วยเขียนบทความและเนื้อหา',
+        description: 'AI ช่วยเขียนและแก้ไขบทความ, เนื้อหา',
         ais: [
             {
                 id: 'copy-ai',
@@ -2640,8 +2409,8 @@ const aiCategories = [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เขียนเนื้อหา', 'การตลาด', 'หลายภาษา'],
-                webUrl: 'https://www.copy.ai/?prompt={prompt}',
+                features: ['เขียนเนื้อหา', 'การตลาด', 'โฆษณา'],
+                webUrl: 'https://www.copy.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.copy.ai/'
             },
@@ -2657,25 +2426,25 @@ const aiCategories = [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'มือถือ', type: 'mobile' }
                 ],
-                features: ['ตรวจสอบ', 'ปรับปรุง', 'หลายภาษา'],
-                webUrl: 'https://www.grammarly.com/?prompt={prompt}',
-                mobileUrl: 'grammarly://?prompt={prompt}',
+                features: ['ตรวจสอบ', 'แก้ไข', 'ภาษาอังกฤษ'],
+                webUrl: 'https://www.grammarly.com/',
+                mobileUrl: 'grammarly://',
                 fallbackUrl: 'https://www.grammarly.com/'
             },
             {
                 id: 'jasper',
                 name: 'Jasper',
                 provider: 'Jasper',
-                icon: 'fas fa-pen-nib',
+                icon: 'fas fa-feather-alt',
                 logoUrl: 'https://www.jasper.ai/favicon.ico',
                 colorClass: 'jasper',
-                description: 'AI ช่วยเขียนเนื้อหาแบบครบวงจร',
+                description: 'AI ช่วยเขียนเนื้อหาและบทความ',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เขียนเนื้อหา', 'บล็อก', 'โซเชียล'],
-                webUrl: 'https://www.jasper.ai/?prompt={prompt}',
+                features: ['เขียนบทความ', 'เนื้อหา', 'การตลาด'],
+                webUrl: 'https://www.jasper.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.jasper.ai/'
             },
@@ -2688,11 +2457,11 @@ const aiCategories = [
                 colorClass: 'jotbot',
                 description: 'AI ช่วยเขียนและสรุปเอกสาร',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['เขียน', 'สรุป', 'เอกสาร'],
-                webUrl: 'https://jotbot.ai/?prompt={prompt}',
+                webUrl: 'https://jotbot.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://jotbot.ai/'
             },
@@ -2703,13 +2472,13 @@ const aiCategories = [
                 icon: 'fas fa-atom',
                 logoUrl: 'https://quarkle.ai/favicon.ico',
                 colorClass: 'quarkle',
-                description: 'AI ช่วยเขียนเนื้อหาเชิงสร้างสรรค์',
+                description: 'AI ช่วยเขียนเนื้อหาทางวิทยาศาสตร์',
                 badges: [
-                    { text: 'ฟรี', type: 'free' },
+                    { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['สร้างสรรค์', 'เนื้อหา', 'หลายรูปแบบ'],
-                webUrl: 'https://quarkle.ai/?prompt={prompt}',
+                features: ['วิทยาศาสตร์', 'วิชาการ', 'บทความ'],
+                webUrl: 'https://quarkle.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://quarkle.ai/'
             },
@@ -2717,16 +2486,16 @@ const aiCategories = [
                 id: 'quillbot',
                 name: 'Quillbot',
                 provider: 'Quillbot',
-                icon: 'fas fa-feather-alt',
+                icon: 'fas fa-quote-right',
                 logoUrl: 'https://quillbot.com/favicon.ico',
                 colorClass: 'quillbot',
-                description: 'AI ช่วยเขียนใหม่และปรับปรุง',
+                description: 'AI ช่วยเขียนใหม่และสรุปบทความ',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เขียนใหม่', 'ปรับปรุง', 'ตรวจสอบ'],
-                webUrl: 'https://quillbot.com/?prompt={prompt}',
+                features: ['เขียนใหม่', 'สรุป', 'พาราฟเรส'],
+                webUrl: 'https://quillbot.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://quillbot.com/'
             },
@@ -2737,13 +2506,13 @@ const aiCategories = [
                 icon: 'fas fa-keyboard',
                 logoUrl: 'https://rytr.me/favicon.ico',
                 colorClass: 'rytr',
-                description: 'AI ช่วยเขียนเนื้อหาแบบเร็ว',
+                description: 'AI ช่วยเขียนเนื้อหาในราคาประหยัด',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เร็ว', 'เขียนเนื้อหา', 'หลายภาษา'],
-                webUrl: 'https://rytr.me/?prompt={prompt}',
+                features: ['เขียนเนื้อหา', 'ราคาประหยัด', 'หลายภาษา'],
+                webUrl: 'https://rytr.me/',
                 mobileUrl: null,
                 fallbackUrl: 'https://rytr.me/'
             },
@@ -2751,16 +2520,16 @@ const aiCategories = [
                 id: 'sudowrite',
                 name: 'Sudowrite',
                 provider: 'Sudowrite',
-                icon: 'fas fa-tree',
+                icon: 'fas fa-pen-fancy',
                 logoUrl: 'https://www.sudowrite.com/favicon.ico',
                 colorClass: 'sudowrite',
-                description: 'AI ช่วยเขียนเรื่องราวและนิยาย',
+                description: 'AI ช่วยเขียนนิยายและเรื่องราว',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เรื่องราว', 'นิยาย', 'สร้างสรรค์'],
-                webUrl: 'https://www.sudowrite.com/?prompt={prompt}',
+                features: ['เขียนนิยาย', 'เรื่องราว', 'สร้างสรรค์'],
+                webUrl: 'https://www.sudowrite.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.sudowrite.com/'
             },
@@ -2768,7 +2537,7 @@ const aiCategories = [
                 id: 'writesonic',
                 name: 'Writesonic',
                 provider: 'Writesonic',
-                icon: 'fas fa-volume-up',
+                icon: 'fas fa-sonic',
                 logoUrl: 'https://writesonic.com/favicon.ico',
                 colorClass: 'writesonic',
                 description: 'AI ช่วยเขียนเนื้อหาและการตลาด',
@@ -2776,8 +2545,8 @@ const aiCategories = [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เขียนเนื้อหา', 'การตลาด', 'หลายภาษา'],
-                webUrl: 'https://writesonic.com/?prompt={prompt}',
+                features: ['การตลาด', 'เนื้อหา', 'SEO'],
+                webUrl: 'https://writesonic.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://writesonic.com/'
             }
@@ -2788,7 +2557,7 @@ const aiCategories = [
         name: 'AI ช่วยจัดตาราง / ช่วยทำงาน',
         icon: 'fas fa-calendar-alt',
         colorClass: 'category-schedule',
-        description: 'AI สำหรับช่วยจัดการตารางเวลาและงาน',
+        description: 'AI ช่วยจัดการเวลาและจัดตารางงาน',
         ais: [
             {
                 id: 'calendly',
@@ -2803,7 +2572,7 @@ const aiCategories = [
                     { text: 'เว็บ', type: 'free' }
                 ],
                 features: ['นัดหมาย', 'ตารางเวลา', 'อัตโนมัติ'],
-                webUrl: 'https://calendly.com/?prompt={prompt}',
+                webUrl: 'https://calendly.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://calendly.com/'
             },
@@ -2814,13 +2583,13 @@ const aiCategories = [
                 icon: 'fas fa-clock',
                 logoUrl: 'https://www.getclockwise.com/favicon.ico',
                 colorClass: 'clockwise',
-                description: 'AI ช่วยจัดเวลาการทำงานอย่างมีประสิทธิภาพ',
+                description: 'AI ช่วยจัดตารางการประชุมอัตโนมัติ',
                 badges: [
-                    { text: 'ฟรี', type: 'free' },
+                    { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เวลา', 'ประสิทธิภาพ', 'ตาราง'],
-                webUrl: 'https://www.getclockwise.com/?prompt={prompt}',
+                features: ['ประชุม', 'ตารางเวลา', 'อัตโนมัติ'],
+                webUrl: 'https://www.getclockwise.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.getclockwise.com/'
             },
@@ -2828,16 +2597,16 @@ const aiCategories = [
                 id: 'motion',
                 name: 'Motion',
                 provider: 'Motion',
-                icon: 'fas fa-bolt',
+                icon: 'fas fa-project-diagram',
                 logoUrl: 'https://www.usemotion.com/favicon.ico',
                 colorClass: 'motion',
-                description: 'AI ช่วยวางแผนและจัดการเวลา',
+                description: 'AI ช่วยวางแผนและจัดการตารางงาน',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['วางแผน', 'เวลา', 'จัดการ'],
-                webUrl: 'https://www.usemotion.com/?prompt={prompt}',
+                features: ['วางแผน', 'ตารางงาน', 'จัดการ'],
+                webUrl: 'https://www.usemotion.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.usemotion.com/'
             },
@@ -2848,13 +2617,13 @@ const aiCategories = [
                 icon: 'fas fa-shield-alt',
                 logoUrl: 'https://reclaim.ai/favicon.ico',
                 colorClass: 'reclaim',
-                description: 'AI ช่วยปกป้องเวลาและจัดตาราง',
+                description: 'AI ช่วยปกป้องเวลาและจัดตารางงาน',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ปกป้องเวลา', 'ตาราง', 'จัดการ'],
-                webUrl: 'https://reclaim.ai/?prompt={prompt}',
+                features: ['ปกป้องเวลา', 'ตารางงาน', 'สมดุลชีวิต'],
+                webUrl: 'https://reclaim.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://reclaim.ai/'
             },
@@ -2863,34 +2632,34 @@ const aiCategories = [
                 name: 'Taskade',
                 provider: 'Taskade',
                 icon: 'fas fa-tasks',
-                logoUrl: 'https://www.taskade.com/favicon.ico',
+                logoUrl: 'https://taskade.com/favicon.ico',
                 colorClass: 'taskade',
-                description: 'AI ช่วยจัดการงานและตารางเวลา',
+                description: 'AI ช่วยจัดการงานและโปรเจกต์',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
-                    { text: 'มือถือ', type: 'mobile' }
+                    { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['งาน', 'ตาราง', 'จัดการ'],
-                webUrl: 'https://www.taskade.com/?prompt={prompt}',
-                mobileUrl: 'taskade://?prompt={prompt}',
-                fallbackUrl: 'https://www.taskade.com/'
+                features: ['จัดการงาน', 'โปรเจกต์', 'ความร่วมมือ'],
+                webUrl: 'https://taskade.com/',
+                mobileUrl: null,
+                fallbackUrl: 'https://taskade.com/'
             },
             {
                 id: 'trevor-ai',
                 name: 'Trevor AI',
                 provider: 'Trevor',
-                icon: 'fas fa-user-tie',
-                logoUrl: 'https://www.trevorai.com/favicon.ico',
+                icon: 'fas fa-calendar-plus',
+                logoUrl: 'https://trevorai.com/favicon.ico',
                 colorClass: 'trevor',
-                description: 'AI ผู้ช่วยส่วนตัวจัดการเวลาและงาน',
+                description: 'AI ผู้ช่วยส่วนตัวสำหรับจัดการเวลา',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ผู้ช่วย', 'เวลา', 'งาน'],
-                webUrl: 'https://www.trevorai.com/?prompt={prompt}',
+                features: ['ผู้ช่วยส่วนตัว', 'จัดการเวลา', 'วางแผน'],
+                webUrl: 'https://trevorai.com/',
                 mobileUrl: null,
-                fallbackUrl: 'https://www.trevorai.com/'
+                fallbackUrl: 'https://trevorai.com/'
             }
         ]
     },
@@ -2899,7 +2668,7 @@ const aiCategories = [
         name: 'AI ช่วยบันทึก / จัดการข้อมูล',
         icon: 'fas fa-sticky-note',
         colorClass: 'category-notes',
-        description: 'AI สำหรับช่วยบันทึกและจัดการข้อมูล',
+        description: 'AI ช่วยบันทึก จัดการ และค้นหาข้อมูล',
         ais: [
             {
                 id: 'mem',
@@ -2908,13 +2677,13 @@ const aiCategories = [
                 icon: 'fas fa-brain',
                 logoUrl: 'https://mem.ai/favicon.ico',
                 colorClass: 'mem',
-                description: 'AI ช่วยบันทึกและค้นหาข้อมูลส่วนตัว',
+                description: 'AI ช่วยบันทึกและจัดการความรู้',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['บันทึก', 'ค้นหา', 'ส่วนตัว'],
-                webUrl: 'https://mem.ai/?prompt={prompt}',
+                features: ['บันทึก', 'จัดการความรู้', 'ค้นหา'],
+                webUrl: 'https://mem.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://mem.ai/'
             },
@@ -2922,17 +2691,17 @@ const aiCategories = [
                 id: 'notion',
                 name: 'Notion',
                 provider: 'Notion',
-                icon: 'fas fa-cube',
+                icon: 'fas fa-boxes',
                 logoUrl: 'https://www.notion.so/favicon.ico',
                 colorClass: 'notion',
-                description: 'แพลตฟอร์มทำงานทั้งหมดที่มี AI ช่วย',
+                description: 'พื้นที่ทำงานที่มี AI ช่วยจัดการข้อมูล',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'มือถือ', type: 'mobile' }
                 ],
-                features: ['บันทึก', 'จัดการ', 'หลายฟังก์ชัน'],
-                webUrl: 'https://www.notion.so/?prompt={prompt}',
-                mobileUrl: 'notion://?prompt={prompt}',
+                features: ['จัดการข้อมูล', 'พื้นที่ทำงาน', 'หลายฟีเจอร์'],
+                webUrl: 'https://www.notion.so/',
+                mobileUrl: 'notion://',
                 fallbackUrl: 'https://www.notion.so/'
             },
             {
@@ -2942,13 +2711,13 @@ const aiCategories = [
                 icon: 'fas fa-book',
                 logoUrl: 'https://tettra.com/favicon.ico',
                 colorClass: 'tettra',
-                description: 'AI ช่วยจัดการความรู้ของทีม',
+                description: 'AI ช่วยจัดการความรู้ในทีม',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ความรู้', 'ทีม', 'จัดการ'],
-                webUrl: 'https://tettra.com/?prompt={prompt}',
+                features: ['จัดการความรู้', 'ทีม', 'เอกสาร'],
+                webUrl: 'https://tettra.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://tettra.com/'
             }
@@ -2959,22 +2728,22 @@ const aiCategories = [
         name: 'AI ช่วยสร้างวิดีโอ',
         icon: 'fas fa-video',
         colorClass: 'category-video',
-        description: 'AI สำหรับช่วยสร้างและแก้ไขวิดีโอ',
+        description: 'AI ช่วยสร้างและแก้ไขวิดีโอ',
         ais: [
             {
                 id: 'descript',
                 name: 'Descript',
                 provider: 'Descript',
-                icon: 'fas fa-file-audio',
+                icon: 'fas fa-film',
                 logoUrl: 'https://www.descript.com/favicon.ico',
                 colorClass: 'descript',
-                description: 'AI ช่วยแก้ไขวิดีโอผ่านข้อความ',
+                description: 'AI ช่วยแก้ไขวิดีโอด้วยข้อความ',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
-                    { text: 'เว็บ', type: 'free' }
+                    { text: 'เดสก์ท็อป', type: 'free' }
                 ],
                 features: ['แก้ไขวิดีโอ', 'ข้อความ', 'เสียง'],
-                webUrl: 'https://www.descript.com/?prompt={prompt}',
+                webUrl: 'https://www.descript.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.descript.com/'
             },
@@ -2982,16 +2751,16 @@ const aiCategories = [
                 id: 'haiper-ai',
                 name: 'Haiper AI',
                 provider: 'Haiper',
-                icon: 'fas fa-film',
+                icon: 'fas fa-play-circle',
                 logoUrl: 'https://haiper.ai/favicon.ico',
                 colorClass: 'haiper',
-                description: 'AI สร้างวิดีโอคุณภาพสูง',
+                description: 'AI สร้างวิดีโอจากข้อความ',
                 badges: [
                     { text: 'ฟรี', type: 'free' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['สร้างวิดีโอ', 'คุณภาพสูง', 'หลายรูปแบบ'],
-                webUrl: 'https://haiper.ai/?prompt={prompt}',
+                features: ['สร้างวิดีโอ', 'ข้อความ', 'AI'],
+                webUrl: 'https://haiper.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://haiper.ai/'
             },
@@ -2999,33 +2768,33 @@ const aiCategories = [
                 id: 'invideo-ai',
                 name: 'Invideo AI',
                 provider: 'Invideo',
-                icon: 'fas fa-play-circle',
+                icon: 'fas fa-video-slash',
                 logoUrl: 'https://invideo.io/favicon.ico',
                 colorClass: 'invideo',
-                description: 'AI สร้างวิดีโอจากข้อความ',
+                description: 'AI สร้างวิดีโอจากข้อความอย่างง่าย',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['สร้างวิดีโอ', 'ข้อความ', 'เทมเพลต'],
-                webUrl: 'https://invideo.io/?prompt={prompt}',
+                features: ['สร้างวิดีโอ', 'ง่าย', 'ข้อความ'],
+                webUrl: 'https://invideo.io/ai',
                 mobileUrl: null,
-                fallbackUrl: 'https://invideo.io/'
+                fallbackUrl: 'https://invideo.io/ai'
             },
             {
                 id: 'kling',
                 name: 'Kling',
                 provider: 'Kling',
-                icon: 'fas fa-bolt',
+                icon: 'fas fa-music',
                 logoUrl: 'https://kling.ai/favicon.ico',
                 colorClass: 'kling',
-                description: 'AI สร้างวิดีโอสั้นคุณภาพสูง',
+                description: 'AI สร้างวิดีโอสำหรับโซเชียลมีเดีย',
                 badges: [
-                    { text: 'ฟรี', type: 'free' },
+                    { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['วิดีโอสั้น', 'คุณภาพ', 'เร็ว'],
-                webUrl: 'https://kling.ai/?prompt={prompt}',
+                features: ['วิดีโอสั้น', 'โซเชียลมีเดีย', 'สร้างสรรค์'],
+                webUrl: 'https://kling.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://kling.ai/'
             },
@@ -3033,7 +2802,7 @@ const aiCategories = [
                 id: 'krea-ai',
                 name: 'Krea AI',
                 provider: 'Krea',
-                icon: 'fas fa-palette',
+                icon: 'fas fa-paint-brush',
                 logoUrl: 'https://krea.ai/favicon.ico',
                 colorClass: 'krea',
                 description: 'AI สร้างภาพและวิดีโอศิลปะ',
@@ -3041,8 +2810,8 @@ const aiCategories = [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ศิลปะ', 'วิดีโอ', 'ภาพ'],
-                webUrl: 'https://krea.ai/?prompt={prompt}',
+                features: ['ศิลปะ', 'วิดีโอ', 'สร้างภาพ'],
+                webUrl: 'https://krea.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://krea.ai/'
             },
@@ -3050,16 +2819,16 @@ const aiCategories = [
                 id: 'ltx-studio',
                 name: 'LTX Studio',
                 provider: 'Lightricks',
-                icon: 'fas fa-video',
+                icon: 'fas fa-theater-masks',
                 logoUrl: 'https://ltx.studio/favicon.ico',
                 colorClass: 'ltx',
-                description: 'AI สร้างและแก้ไขวิดีโออย่างมืออาชีพ',
+                description: 'AI สตูดิโอสร้างวิดีโอแบบมืออาชีพ',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
-                    { text: 'เว็บ', type: 'free' }
+                    { text: 'เดสก์ท็อป', type: 'free' }
                 ],
-                features: ['มืออาชีพ', 'แก้ไข', 'หลายฟังก์ชัน'],
-                webUrl: 'https://ltx.studio/?prompt={prompt}',
+                features: ['สตูดิโอ', 'มืออาชีพ', 'วิดีโอ'],
+                webUrl: 'https://ltx.studio/',
                 mobileUrl: null,
                 fallbackUrl: 'https://ltx.studio/'
             },
@@ -3067,16 +2836,16 @@ const aiCategories = [
                 id: 'luma-ai',
                 name: 'Luma AI',
                 provider: 'Luma',
-                icon: 'fas fa-sun',
+                icon: 'fas fa-cube',
                 logoUrl: 'https://lumalabs.ai/favicon.ico',
                 colorClass: 'luma',
-                description: 'AI สร้างวิดีโอ 3D และภาพยนตร์',
+                description: 'AI สร้างวิดีโอ 3D และ NeRF',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['3D', 'ภาพยนตร์', 'วิดีโอ'],
-                webUrl: 'https://lumalabs.ai/?prompt={prompt}',
+                features: ['3D', 'NeRF', 'วิดีโอ'],
+                webUrl: 'https://lumalabs.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://lumalabs.ai/'
             },
@@ -3092,8 +2861,8 @@ const aiCategories = [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ง่าย', 'สร้างวิดีโอ', 'แก้ไข'],
-                webUrl: 'https://pika.art/?prompt={prompt}',
+                features: ['สร้างวิดีโอ', 'ง่าย', 'แก้ไข'],
+                webUrl: 'https://pika.art/',
                 mobileUrl: null,
                 fallbackUrl: 'https://pika.art/'
             },
@@ -3101,16 +2870,16 @@ const aiCategories = [
                 id: 'runway',
                 name: 'Runway',
                 provider: 'Runway',
-                icon: 'fas fa-film',
+                icon: 'fas fa-running',
                 logoUrl: 'https://runwayml.com/favicon.ico',
                 colorClass: 'runway',
-                description: 'แพลตฟอร์ม AI สร้างวิดีโอแบบครบวงจร',
+                description: 'AI สร้างและแก้ไขวิดีโอระดับมืออาชีพ',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ครบวงจร', 'สร้างวิดีโอ', 'หลายฟังก์ชัน'],
-                webUrl: 'https://runwayml.com/?prompt={prompt}',
+                features: ['มืออาชีพ', 'แก้ไขวิดีโอ', 'หลายฟีเจอร์'],
+                webUrl: 'https://runwayml.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://runwayml.com/'
             },
@@ -3121,13 +2890,13 @@ const aiCategories = [
                 icon: 'fas fa-film',
                 logoUrl: 'https://openai.com/favicon.ico',
                 colorClass: 'sora',
-                description: 'AI สร้างวิดีโอคุณภาพสูงจาก OpenAI',
+                description: 'AI สร้างวิดีโอจาก OpenAI',
                 badges: [
                     { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['คุณภาพสูง', 'จาก OpenAI', 'หลายรูปแบบ'],
-                webUrl: 'https://openai.com/sora?prompt={prompt}',
+                features: ['สร้างวิดีโอ', 'OpenAI', 'คุณภาพสูง'],
+                webUrl: 'https://openai.com/sora',
                 mobileUrl: null,
                 fallbackUrl: 'https://openai.com/sora'
             }
@@ -3138,25 +2907,8 @@ const aiCategories = [
         name: 'AI ออกแบบกราฟิก',
         icon: 'fas fa-paint-brush',
         colorClass: 'category-design',
-        description: 'AI สำหรับช่วยออกแบบกราฟิกและ UI/UX',
+        description: 'AI ช่วยออกแบบกราฟิกและอินเทอร์เฟซ',
         ais: [
-            {
-                id: 'canva',
-                name: 'Canva',
-                provider: 'Canva',
-                icon: 'fas fa-object-group',
-                logoUrl: 'https://static.canva.com/static/images/android-chrome-192x192.png',
-                colorClass: 'canva',
-                description: 'แพลตฟอร์มออกแบบด้วย AI',
-                badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
-                    { text: 'มือถือ', type: 'mobile' }
-                ],
-                features: ['ออกแบบ', 'หลายรูปแบบ', 'เทมเพลต'],
-                webUrl: 'https://canva.com/?prompt={prompt}',
-                mobileUrl: 'canva://?prompt={prompt}',
-                fallbackUrl: 'https://canva.com/'
-            },
             {
                 id: 'autodraw',
                 name: 'AutoDraw',
@@ -3164,30 +2916,47 @@ const aiCategories = [
                 icon: 'fas fa-magic',
                 logoUrl: 'https://www.autodraw.com/favicon.ico',
                 colorClass: 'autodraw',
-                description: 'AI ช่วยวาดรูปอัตโนมัติ',
+                description: 'AI ช่วยวาดรูปจากลายเส้นหยาบ',
                 badges: [
                     { text: 'ฟรี', type: 'free' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['วาดรูป', 'อัตโนมัติ', 'ง่าย'],
-                webUrl: 'https://www.autodraw.com/?prompt={prompt}',
+                features: ['วาดรูป', 'Google', 'ง่าย'],
+                webUrl: 'https://www.autodraw.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.autodraw.com/'
+            },
+            {
+                id: 'canva',
+                name: 'Canva',
+                provider: 'Canva',
+                icon: 'fas fa-object-group',
+                logoUrl: 'https://www.canva.com/favicon.ico',
+                colorClass: 'canva',
+                description: 'แพลตฟอร์มออกแบบที่มี AI ช่วย',
+                badges: [
+                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'มือถือ', type: 'mobile' }
+                ],
+                features: ['ออกแบบ', 'เทมเพลต', 'หลายฟีเจอร์'],
+                webUrl: 'https://www.canva.com/',
+                mobileUrl: 'canva://',
+                fallbackUrl: 'https://www.canva.com/'
             },
             {
                 id: 'design-com',
                 name: 'Design.com',
                 provider: 'Design.com',
-                icon: 'fas fa-paint-roller',
+                icon: 'fas fa-laptop',
                 logoUrl: 'https://design.com/favicon.ico',
                 colorClass: 'designcom',
-                description: 'AI ช่วยออกแบบกราฟิกและโลโก้',
+                description: 'AI ช่วยออกแบบเว็บไซต์และกราฟิก',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['กราฟิก', 'โลโก้', 'ออกแบบ'],
-                webUrl: 'https://design.com/?prompt={prompt}',
+                features: ['ออกแบบเว็บ', 'กราฟิก', 'AI'],
+                webUrl: 'https://design.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://design.com/'
             },
@@ -3195,16 +2964,16 @@ const aiCategories = [
                 id: 'framer',
                 name: 'Framer',
                 provider: 'Framer',
-                icon: 'fas fa-laptop-code',
+                icon: 'fas fa-code',
                 logoUrl: 'https://framer.com/favicon.ico',
                 colorClass: 'framer',
-                description: 'AI ช่วยออกแบบเว็บไซต์และ UI',
+                description: 'AI ช่วยออกแบบและสร้างเว็บไซต์',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['เว็บไซต์', 'UI/UX', 'ออกแบบ'],
-                webUrl: 'https://framer.com/?prompt={prompt}',
+                features: ['ออกแบบเว็บ', 'สร้างเว็บ', 'ไม่ต้องโค้ด'],
+                webUrl: 'https://framer.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://framer.com/'
             },
@@ -3212,7 +2981,7 @@ const aiCategories = [
                 id: 'microsoft-designer',
                 name: 'Microsoft Designer',
                 provider: 'Microsoft',
-                icon: 'fas fa-paint-brush',
+                icon: 'fas fa-paint-roller',
                 logoUrl: 'https://designer.microsoft.com/favicon.ico',
                 colorClass: 'msdesigner',
                 description: 'AI ช่วยออกแบบกราฟิกจาก Microsoft',
@@ -3220,8 +2989,8 @@ const aiCategories = [
                     { text: 'ฟรี', type: 'free' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['กราฟิก', 'ออกแบบ', 'เทมเพลต'],
-                webUrl: 'https://designer.microsoft.com/?prompt={prompt}',
+                features: ['ออกแบบกราฟิก', 'Microsoft', 'ฟรี'],
+                webUrl: 'https://designer.microsoft.com/',
                 mobileUrl: null,
                 fallbackUrl: 'https://designer.microsoft.com/'
             },
@@ -3232,13 +3001,13 @@ const aiCategories = [
                 icon: 'fas fa-magic',
                 logoUrl: 'https://uizard.io/favicon.ico',
                 colorClass: 'uizard',
-                description: 'AI ช่วยออกแบบ UI จากภาพร่าง',
+                description: 'AI แปลงภาพร่างเป็นดีไซน์',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['UI/UX', 'ภาพร่าง', 'ออกแบบ'],
-                webUrl: 'https://uizard.io/?prompt={prompt}',
+                features: ['แปลงภาพร่าง', 'ออกแบบ', 'UI/UX'],
+                webUrl: 'https://uizard.io/',
                 mobileUrl: null,
                 fallbackUrl: 'https://uizard.io/'
             }
@@ -3249,24 +3018,24 @@ const aiCategories = [
         name: 'AI ช่วยนำเสนอข้อมูลภาพ',
         icon: 'fas fa-chart-bar',
         colorClass: 'category-dataviz',
-        description: 'AI สำหรับช่วยสร้างการแสดงข้อมูลแบบภาพ',
+        description: 'AI ช่วยสร้างและการนำเสนอข้อมูลภาพ',
         ais: [
             {
                 id: 'deckpilot',
                 name: 'Deckpilot',
                 provider: 'Deckpilot',
-                icon: 'fas fa-rocket',
-                logoUrl: 'https://deckpilot.ai/favicon.ico',
+                icon: 'fas fa-plane',
+                logoUrl: 'https://deckpilot.com/favicon.ico',
                 colorClass: 'deckpilot',
-                description: 'AI ช่วยสร้างพรีเซนต์ข้อมูล',
+                description: 'AI ช่วยสร้างพรีเซนต์ข้อมูลภาพ',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['พรีเซนต์', 'ข้อมูล', 'กราฟ'],
-                webUrl: 'https://deckpilot.ai/?prompt={prompt}',
+                features: ['ข้อมูลภาพ', 'พรีเซนต์', 'กราฟิก'],
+                webUrl: 'https://deckpilot.com/',
                 mobileUrl: null,
-                fallbackUrl: 'https://deckpilot.ai/'
+                fallbackUrl: 'https://deckpilot.com/'
             },
             {
                 id: 'flourish',
@@ -3275,13 +3044,13 @@ const aiCategories = [
                 icon: 'fas fa-chart-line',
                 logoUrl: 'https://flourish.studio/favicon.ico',
                 colorClass: 'flourish',
-                description: 'AI ช่วยสร้างภาพข้อมูลที่สวยงาม',
+                description: 'AI ช่วยสร้างการแสดงข้อมูลภาพ',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['ภาพข้อมูล', 'กราฟ', 'สวยงาม'],
-                webUrl: 'https://flourish.studio/?prompt={prompt}',
+                features: ['ข้อมูลภาพ', 'แบบโต้ตอบ', 'กราฟิก'],
+                webUrl: 'https://flourish.studio/',
                 mobileUrl: null,
                 fallbackUrl: 'https://flourish.studio/'
             },
@@ -3292,13 +3061,13 @@ const aiCategories = [
                 icon: 'fas fa-chart-pie',
                 logoUrl: 'https://julius.ai/favicon.ico',
                 colorClass: 'julius',
-                description: 'AI ช่วยวิเคราะห์และแสดงข้อมูล',
+                description: 'AI วิเคราะห์และสร้างภาพข้อมูล',
                 badges: [
-                    { text: 'ฟรี/จ่าย', type: 'paid' },
+                    { text: 'จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['วิเคราะห์', 'ข้อมูล', 'แสดงผล'],
-                webUrl: 'https://julius.ai/?prompt={prompt}',
+                features: ['วิเคราะห์ข้อมูล', 'ภาพข้อมูล', 'กราฟ'],
+                webUrl: 'https://julius.ai/',
                 mobileUrl: null,
                 fallbackUrl: 'https://julius.ai/'
             },
@@ -3314,8 +3083,8 @@ const aiCategories = [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
                     { text: 'เว็บ', type: 'free' }
                 ],
-                features: ['อินโฟกราฟิก', 'ภาพข้อมูล', 'ออกแบบ'],
-                webUrl: 'https://www.visme.co/?prompt={prompt}',
+                features: ['อินโฟกราฟิก', 'ภาพข้อมูล', 'กราฟิก'],
+                webUrl: 'https://www.visme.co/',
                 mobileUrl: null,
                 fallbackUrl: 'https://www.visme.co/'
             },
@@ -3326,14 +3095,14 @@ const aiCategories = [
                 icon: 'fas fa-database',
                 logoUrl: 'https://zingdata.com/favicon.ico',
                 colorClass: 'zing',
-                description: 'AI ช่วยวิเคราะห์และแสดงข้อมูลแบบเรียลไทม์',
+                description: 'AI วิเคราะห์ข้อมูลและสร้างภาพบนมือถือ',
                 badges: [
                     { text: 'ฟรี/จ่าย', type: 'paid' },
-                    { text: 'เว็บ', type: 'free' }
+                    { text: 'มือถือ', type: 'mobile' }
                 ],
-                features: ['เรียลไทม์', 'วิเคราะห์', 'แสดงผล'],
-                webUrl: 'https://zingdata.com/?prompt={prompt}',
-                mobileUrl: null,
+                features: ['วิเคราะห์ข้อมูล', 'มือถือ', 'ภาพข้อมูล'],
+                webUrl: 'https://zingdata.com/',
+                mobileUrl: 'zingdata://',
                 fallbackUrl: 'https://zingdata.com/'
             }
         ]
@@ -3352,15 +3121,12 @@ let searchResults = [];
 let isSearchOpen = false;
 
 // DOM Elements
-const promptInput = document.getElementById('promptInput');
 const categoriesContainer = document.getElementById('categoriesContainer');
 const loading = document.getElementById('loading');
 const confirmationModal = document.getElementById('confirmationModal');
 const modalTitle = document.getElementById('modalTitle');
 const modalText = document.getElementById('modalText');
 const themeToggle = document.getElementById('themeToggle');
-const clearBtn = document.getElementById('clearBtn');
-const sendBtn = document.getElementById('sendBtn');
 const infoBtn = document.getElementById('infoBtn');
 const settingsBtn = document.getElementById('settingsBtn');
 const totalAISpan = document.getElementById('totalAI');
@@ -3391,20 +3157,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderDropdown();
     
     // Add event listeners
-    promptInput.addEventListener('input', function() {
-        currentPrompt = this.value.trim();
-        updateSendButton();
-    });
-    
     themeToggle.addEventListener('click', toggleTheme);
-    clearBtn.addEventListener('click', clearPrompt);
-    sendBtn.addEventListener('click', function() {
-        if (selectedAI) {
-            confirmOpenAI();
-        } else {
-            searchForAI();
-        }
-    });
     infoBtn.addEventListener('click', showInfo);
     settingsBtn.addEventListener('click', showSettings);
     
@@ -3446,14 +3199,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setActiveFilter(filter);
         });
     });
-    
-    // Auto-focus input
-    setTimeout(() => {
-        promptInput.focus();
-        promptInput.value = '';
-        currentPrompt = '';
-        updateSendButton();
-    }, 500);
     
     // Show welcome message
     setTimeout(() => {
@@ -3603,8 +3348,6 @@ function closeSearchResults() {
 }
 
 function selectAIFromSearch(aiId) {
-    currentPrompt = promptInput.value.trim();
-    
     // Find AI
     let selectedAIObject = null;
     for (const category of aiCategories) {
@@ -3622,13 +3365,8 @@ function selectAIFromSearch(aiId) {
     // Update modal content
     modalTitle.innerHTML = `<i class="${selectedAI.icon}"></i> <span>เปิด ${selectedAI.name}</span>`;
     
-    // Truncate prompt for display
-    const displayPrompt = currentPrompt.length > 50 ? 
-        currentPrompt.substring(0, 50) + '...' : currentPrompt;
-    
     modalText.innerHTML = `
-        คุณต้องการเปิด <strong>${selectedAI.name}</strong> ด้วยคำถาม:<br><br>
-        <em>"${displayPrompt}"</em><br><br>
+        คุณต้องการเปิด <strong>${selectedAI.name}</strong> ใช่หรือไม่?<br><br>
         ${selectedAI.mobileUrl ? '📱 <small>หากมีแอปจะเปิดแอปทันที</small>' : '🖥️ <small>จะเปิดในเว็บเบราว์เซอร์</small>'}
     `;
     
@@ -3895,8 +3633,6 @@ function setActiveFilter(filter) {
 
 // Select AI from card
 function selectAI(aiId) {
-    currentPrompt = promptInput.value.trim();
-    
     // Find AI
     let selectedAIObject = null;
     for (const category of aiCategories) {
@@ -3909,24 +3645,13 @@ function selectAI(aiId) {
     
     if (!selectedAIObject) return;
     
-    if (!currentPrompt) {
-        showToast('กรุณาพิมพ์คำถามก่อนเลือก AI', 'error', 3000);
-        promptInput.focus();
-        return;
-    }
-    
     selectedAI = selectedAIObject;
     
     // Update modal content
     modalTitle.innerHTML = `<i class="${selectedAI.icon}"></i> <span>เปิด ${selectedAI.name}</span>`;
     
-    // Truncate prompt for display
-    const displayPrompt = currentPrompt.length > 50 ? 
-        currentPrompt.substring(0, 50) + '...' : currentPrompt;
-    
     modalText.innerHTML = `
-        คุณต้องการเปิด <strong>${selectedAI.name}</strong> ด้วยคำถาม:<br><br>
-        <em>"${displayPrompt}"</em><br><br>
+        คุณต้องการเปิด <strong>${selectedAI.name}</strong> ใช่หรือไม่?<br><br>
         ${selectedAI.mobileUrl ? '📱 <small>หากมีแอปจะเปิดแอปทันที</small>' : '🖥️ <small>จะเปิดในเว็บเบราว์เซอร์</small>'}
     `;
     
@@ -3936,7 +3661,7 @@ function selectAI(aiId) {
 
 // Confirm opening AI
 function confirmOpenAI() {
-    if (!selectedAI || !currentPrompt) {
+    if (!selectedAI) {
         showToast('เกิดข้อผิดพลาด กรุณาลองอีกครั้ง', 'error', 3000);
         return;
     }
@@ -3949,11 +3674,9 @@ function confirmOpenAI() {
     // Show loading
     loading.classList.add('active');
     
-    // Prepare URL with prompt
-    const encodedPrompt = encodeURIComponent(currentPrompt);
-    const webUrl = selectedAI.webUrl.replace('{prompt}', encodedPrompt);
-    const mobileUrl = selectedAI.mobileUrl ? 
-        selectedAI.mobileUrl.replace('{prompt}', encodedPrompt) : null;
+    // Prepare URL
+    const webUrl = selectedAI.webUrl;
+    const mobileUrl = selectedAI.mobileUrl;
     
     // Check if on mobile
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -3987,9 +3710,6 @@ function openAI(ai, webUrl, mobileUrl, isMobile) {
             // Show success message
             showToast(`เปิดแอป ${ai.name} สำเร็จ!`, 'success', 3000);
             
-            // Clear prompt
-            clearPrompt();
-            
             // Remove iframe
             setTimeout(() => {
                 if (iframe.parentNode) {
@@ -4010,9 +3730,6 @@ function openAI(ai, webUrl, mobileUrl, isMobile) {
                 // Show info message
                 showToast(`เปิดเว็บ ${ai.name} (ไม่มีแอปติดตั้ง)`, 'info', 3000);
                 
-                // Clear prompt
-                clearPrompt();
-                
                 // Remove iframe
                 if (iframe.parentNode) {
                     iframe.parentNode.removeChild(iframe);
@@ -4028,9 +3745,6 @@ function openAI(ai, webUrl, mobileUrl, isMobile) {
         
         // Show success message
         showToast(`เปิด ${ai.name} ในเบราว์เซอร์แล้ว!`, 'success', 3000);
-        
-        // Clear prompt
-        clearPrompt();
     }
 }
 
@@ -4054,82 +3768,6 @@ function addToRecent(ai) {
     
     // Save to localStorage
     localStorage.setItem('st_ai_router_recent', JSON.stringify(recentAIs));
-}
-
-// Search for relevant AI
-function searchForAI() {
-    const query = promptInput.value.trim().toLowerCase();
-    
-    if (!query) {
-        showToast('กรุณาพิมพ์คำถามก่อนค้นหา', 'error', 3000);
-        return;
-    }
-    
-    // Find relevant AI based on query
-    const relevantAIs = [];
-    aiCategories.forEach(category => {
-        category.ais.forEach(ai => {
-            const searchText = (ai.name + ' ' + ai.description + ' ' + ai.features.join(' ')).toLowerCase();
-            if (searchText.includes(query) || 
-                ai.features.some(feature => feature.toLowerCase().includes(query))) {
-                relevantAIs.push({ ai, categoryId: category.id });
-            }
-        });
-    });
-    
-    if (relevantAIs.length === 0) {
-        showToast('ไม่พบ AI ที่เหมาะกับคำถามนี้', 'info', 3000);
-        return;
-    }
-    
-    // Highlight relevant AIs
-    document.querySelectorAll('.ai-card').forEach(card => {
-        const aiId = card.dataset.aiId;
-        const isRelevant = relevantAIs.some(item => item.ai.id === aiId);
-        
-        card.classList.toggle('active', isRelevant);
-        
-        if (isRelevant) {
-            // Scroll to first relevant category
-            const relevantItem = relevantAIs.find(item => item.ai.id === aiId);
-            if (relevantItem) {
-                setActiveCategory(relevantItem.categoryId);
-            }
-        }
-    });
-    
-    // Show recommendation
-    if (relevantAIs.length > 0) {
-        const recommendedAI = relevantAIs[0].ai;
-        showToast(`แนะนำ: ${recommendedAI.name} - ${recommendedAI.description.substring(0, 60)}...`, 'info', 4000);
-    }
-}
-
-// Update send button state
-function updateSendButton() {
-    const hasText = currentPrompt.length > 0;
-    sendBtn.disabled = !hasText;
-    sendBtn.innerHTML = hasText ? 
-        `<i class="fas fa-paper-plane"></i> ส่งคำถาม (${currentPrompt.length} ตัวอักษร)` :
-        `<i class="fas fa-paper-plane"></i> ส่งคำถาม`;
-    
-    sendBtn.style.opacity = hasText ? '1' : '0.7';
-    sendBtn.style.cursor = hasText ? 'pointer' : 'not-allowed';
-}
-
-// Clear prompt
-function clearPrompt() {
-    promptInput.value = '';
-    currentPrompt = '';
-    updateSendButton();
-    promptInput.focus();
-    
-    // Remove highlights
-    document.querySelectorAll('.ai-card').forEach(card => {
-        card.classList.remove('active');
-    });
-    
-    showToast('ล้างคำถามแล้ว', 'info', 2000);
 }
 
 // Close modal
@@ -4182,13 +3820,12 @@ function showInfo() {
         • ฟรีใช้งาน: ${freeCount} ตัว<br><br>
         
         🚀 <strong>วิธีใช้งาน:</strong><br>
-        1. พิมพ์คำถามของคุณ<br>
-        2. ค้นหา AI จากช่องค้นหาด้านบน<br>
-        3. หรือเลือกหมวดหมู่จากเมนูดรอปดาวน์<br>
-        4. เลือก AI ที่ต้องการ<br>
-        5. ระบบจะเปิดไปยังแพลตฟอร์มนั้นทันที<br><br>
+        1. ค้นหา AI จากช่องค้นหาด้านบน<br>
+        2. หรือเลือกหมวดหมู่จากเมนูดรอปดาวน์<br>
+        3. เลือก AI ที่ต้องการ<br>
+        4. ระบบจะเปิดไปยังแพลตฟอร์มนั้นทันที<br><br>
         
-        🔍 <strong>ฟีเจอร์ใหม่:</strong><br>
+        🔍 <strong>ฟีเจอร์:</strong><br>
         • ช่องค้นหา AI ที่ด้านบน<br>
         • เมนูดรอปดาวน์เลือกหมวดหมู่ง่ายขึ้น<br>
         • ใช้โลโก้จริงของ AI แต่ละตัว<br>
@@ -4197,9 +3834,8 @@ function showInfo() {
         • บันทึก AI ที่ใช้งานล่าสุด<br><br>
         
         🔒 <strong>ความปลอดภัย:</strong><br>
-        • ไม่เก็บข้อมูลคำถาม<br>
-        • ไม่แชร์ข้อมูลส่วนตัว<br>
-        • เปิดผ่านลิงก์อย่างถูกต้อง<br><br>
+        • เปิดผ่านลิงก์อย่างถูกต้อง<br>
+        • ข้อมูลทั้งหมดเก็บในอุปกรณ์คุณ<br><br>
         
         <small>เวอร์ชัน 3.0.0 | พัฒนาโดย ST AI Team</small>
     `;
@@ -4224,8 +3860,7 @@ function showSettings() {
         
         📱 <strong>การแสดงผล:</strong><br>
         • รองรับอุปกรณ์ทุกขนาดอัตโนมัติ<br>
-        • ปรับเลย์เอาต์ตามหน้าจอ<br>
-        • คีย์บอร์ดมือถือรองรับเต็มรูปแบบ<br><br>
+        • ปรับเลย์เอาต์ตามหน้าจอ<br><br>
         
         💾 <strong>ข้อมูล:</strong><br>
         • บันทึกธีมที่เลือก<br>
@@ -4253,16 +3888,6 @@ function clearRecentHistory() {
     renderCategories();
 }
 
-// Insert example prompt
-function insertExamplePrompt(example) {
-    promptInput.value = example;
-    currentPrompt = example;
-    updateSendButton();
-    promptInput.focus();
-    
-    showToast('ใส่ตัวอย่างคำถามแล้ว ลองค้นหา AI ที่เหมาะดู!', 'info', 3000);
-}
-
 // Show toast notification
 function showToast(message, type = 'info', duration = 3000) {
     Toastify({
@@ -4287,12 +3912,6 @@ document.addEventListener('keydown', function(e) {
         searchInput.select();
     }
     
-    // Ctrl/Cmd + / to focus prompt
-    if ((e.ctrlKey || e.metaKey) && e.key === '/') {
-        e.preventDefault();
-        promptInput.focus();
-    }
-    
     // Escape to clear or close modal
     if (e.key === 'Escape') {
         if (confirmationModal.classList.contains('active')) {
@@ -4302,8 +3921,6 @@ document.addEventListener('keydown', function(e) {
             searchInput.value = '';
         } else if (isDropdownOpen) {
             closeDropdown();
-        } else if (currentPrompt) {
-            clearPrompt();
         }
     }
 });
