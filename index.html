@@ -1,1296 +1,1097 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ST AI Router - Gateway to All AI Assistants</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css">
-<style>
-:root {
-    --primary: #8b5cf6;
-    --primary-dark: #7c3aed;
-    --secondary: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-    --info: #3b82f6;
-    --chat: #3b82f6;
-    --slide: #8b5cf6;
-    --code: #10b981;
-    --email: #ec4899;
-    --image: #f59e0b;
-    --excel: #06b6d4;
-    --meeting: #6366f1;
-    --workflow: #84cc16;
-    --article: #ef4444;
-    --schedule: #14b8a6;
-    --notes: #8b5cf6;
-    --video: #f97316;
-    --design: #06b6d4;
-    --dataviz: #ec4899;
-    --dark-bg: #0f172a;
-    --dark-card: #1e293b;
-    --dark-border: #334155;
-    --dark-text: #f1f5f9;
-    --dark-text-secondary: #94a3b8;
-    --light-bg: #f8fafc;
-    --light-card: #ffffff;
-    --light-border: #e2e8f0;
-    --light-text: #1e293b;
-    --light-text-secondary: #64748b;
-    --sidebar-width: 280px;
-    --header-height: 70px;
-    --input-height: 56px;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-full: 9999px;
-    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Kanit', sans-serif;
-}
-
-body {
-    background: var(--dark-bg);
-    color: var(--dark-text);
-    height: 100vh;
-    overflow: hidden;
-    transition: var(--transition);
-}
-
-body.light-mode {
-    background: var(--light-bg);
-    color: var(--light-text);
-}
-
-/* Main Layout */
-.main-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-}
-
-/* Header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--dark-border);
-    position: relative;
-    background: var(--dark-card);
-    z-index: 100;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-
-body.light-mode .header {
-    border-bottom-color: var(--light-border);
-    background: var(--light-card);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: white;
-    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-    animation: float 3s ease-in-out infinite;
-    flex-shrink: 0;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo h1 {
-    font-size: 28px;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1.2;
-}
-
-.logo-subtitle {
-    font-size: 14px;
-    color: var(--dark-text-secondary);
-    font-weight: 400;
-}
-
-body.light-mode .logo-subtitle {
-    color: var(--light-text-secondary);
-}
-
-.header-actions {
-    display: flex;
-    gap: 12px;
-    flex-shrink: 0;
-}
-
-.icon-btn {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid var(--dark-border);
-    color: var(--dark-text-secondary);
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 18px;
-}
-
-body.light-mode .icon-btn {
-    background: rgba(226, 232, 240, 0.7);
-    border-color: var(--light-border);
-    color: var(--light-text-secondary);
-}
-
-.icon-btn:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* Dropdown Menu */
-.category-dropdown {
-    width: 100%;
-    position: relative;
-    padding: 0 24px;
-    background: var(--dark-card);
-    border-bottom: 1px solid var(--dark-border);
-    z-index: 50;
-}
-
-body.light-mode .category-dropdown {
-    background: var(--light-card);
-    border-bottom-color: var(--light-border);
-}
-
-.dropdown-header {
-    width: 100%;
-    background: rgba(30, 41, 59, 0.8);
-    border: 2px solid var(--dark-border);
-    border-radius: var(--radius-md);
-    padding: 16px 20px;
-    font-size: 16px;
-    color: var(--dark-text);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: var(--transition);
-    margin: 16px 0;
-}
-
-body.light-mode .dropdown-header {
-    background: rgba(226, 232, 240, 0.8);
-    border-color: var(--light-border);
-    color: var(--light-text);
-}
-
-.dropdown-header:hover {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-}
-
-.dropdown-header i {
-    transition: transform 0.3s ease;
-}
-
-.dropdown-header.open i {
-    transform: rotate(180deg);
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 24px;
-    right: 24px;
-    background: var(--dark-card);
-    border: 2px solid var(--dark-border);
-    border-radius: var(--radius-md);
-    margin-top: 4px;
-    max-height: 500px;
-    overflow-y: auto;
-    display: none;
-    flex-direction: column;
-    z-index: 100;
-    box-shadow: var(--shadow-lg);
-}
-
-body.light-mode .dropdown-menu {
-    background: var(--light-card);
-    border-color: var(--light-border);
-}
-
-.dropdown-menu.show {
-    display: flex;
-}
-
-.dropdown-item {
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    cursor: pointer;
-    transition: var(--transition);
-    border-bottom: 1px solid var(--dark-border);
-    color: var(--dark-text);
-    text-decoration: none;
-}
-
-body.light-mode .dropdown-item {
-    border-bottom-color: var(--light-border);
-    color: var(--light-text);
-}
-
-.dropdown-item:last-child {
-    border-bottom: none;
-}
-
-.dropdown-item:hover {
-    background: rgba(139, 92, 246, 0.1);
-}
-
-.dropdown-item.active {
-    background: rgba(139, 92, 246, 0.2);
-    border-left: 4px solid var(--primary);
-}
-
-.dropdown-item-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: white;
-    flex-shrink: 0;
-}
-
-.dropdown-item-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.dropdown-item-title {
-    font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 4px;
-}
-
-.dropdown-item-desc {
-    font-size: 12px;
-    color: var(--dark-text-secondary);
-    line-height: 1.4;
-}
-
-body.light-mode .dropdown-item-desc {
-    color: var(--light-text-secondary);
-}
-
-.dropdown-item-count {
-    background: rgba(30, 41, 59, 0.7);
-    color: var(--dark-text-secondary);
-    padding: 4px 10px;
-    border-radius: var(--radius-full);
-    font-size: 12px;
-    font-weight: 500;
-    margin-left: 8px;
-    flex-shrink: 0;
-}
-
-body.light-mode .dropdown-item-count {
-    background: rgba(226, 232, 240, 0.7);
-    color: var(--light-text-secondary);
-}
-
-/* Search Dropdown */
-.search-dropdown {
-    position: relative;
-    margin: 0 24px 16px;
-}
-
-.search-wrapper {
-    position: relative;
-}
-
-.search-input {
-    width: 100%;
-    background: rgba(30, 41, 59, 0.8);
-    border: 2px solid var(--dark-border);
-    border-radius: var(--radius-md);
-    padding: 16px 50px 16px 20px;
-    font-size: 16px;
-    color: var(--dark-text);
-    outline: none;
-    transition: var(--transition);
-}
-
-body.light-mode .search-input {
-    background: rgba(226, 232, 240, 0.8);
-    border-color: var(--light-border);
-    color: var(--light-text);
-}
-
-.search-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-}
-
-.search-btn {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    border: none;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 18px;
-    transition: var(--transition);
-}
-
-.search-btn:hover {
-    transform: translateY(-50%) scale(1.05);
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-}
-
-.search-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--dark-card);
-    border: 2px solid var(--dark-border);
-    border-radius: var(--radius-md);
-    margin-top: 8px;
-    max-height: 400px;
-    overflow-y: auto;
-    display: none;
-    flex-direction: column;
-    z-index: 200;
-    box-shadow: var(--shadow-lg);
-}
-
-body.light-mode .search-results {
-    background: var(--light-card);
-    border-color: var(--light-border);
-}
-
-.search-results.show {
-    display: flex;
-}
-
-.search-result-item {
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: var(--transition);
-    border-bottom: 1px solid var(--dark-border);
-    color: var(--dark-text);
-    text-decoration: none;
-}
-
-body.light-mode .search-result-item {
-    border-bottom-color: var(--light-border);
-    color: var(--light-text);
-}
-
-.search-result-item:last-child {
-    border-bottom: none;
-}
-
-.search-result-item:hover {
-    background: rgba(139, 92, 246, 0.1);
-}
-
-.search-result-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: white;
-    flex-shrink: 0;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: white;
-    padding: 4px;
-}
-
-.search-result-content {
-    flex: 1;
-    min-width: 0;
-}
-
-.search-result-name {
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 2px;
-    color: var(--dark-text);
-}
-
-body.light-mode .search-result-name {
-    color: var(--light-text);
-}
-
-.search-result-provider {
-    font-size: 11px;
-    color: var(--dark-text-secondary);
-}
-
-body.light-mode .search-result-provider {
-    color: var(--light-text-secondary);
-}
-
-.search-result-category {
-    background: rgba(30, 41, 59, 0.7);
-    color: var(--dark-text-secondary);
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
-    font-size: 10px;
-    font-weight: 500;
-    margin-left: 8px;
-    flex-shrink: 0;
-}
-
-body.light-mode .search-result-category {
-    background: rgba(226, 232, 240, 0.7);
-    color: var(--light-text-secondary);
-}
-
-.no-results {
-    padding: 20px;
-    text-align: center;
-    color: var(--dark-text-secondary);
-    font-size: 14px;
-}
-
-/* Main Content */
-.content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-/* AI Categories */
-.categories-container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-}
-
-.category-section {
-    background: var(--dark-card);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    border: 1px solid var(--dark-border);
-    transition: var(--transition);
-}
-
-body.light-mode .category-section {
-    background: var(--light-card);
-    border-color: var(--light-border);
-}
-
-.category-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--dark-border);
-}
-
-body.light-mode .category-header {
-    border-bottom-color: var(--light-border);
-}
-
-.category-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: white;
-    flex-shrink: 0;
-}
-
-.category-chat { background: linear-gradient(135deg, var(--chat), #2563eb); }
-.category-slide { background: linear-gradient(135deg, var(--slide), var(--primary-dark)); }
-.category-code { background: linear-gradient(135deg, var(--code), #059669); }
-.category-email { background: linear-gradient(135deg, var(--email), #db2777); }
-.category-image { background: linear-gradient(135deg, var(--image), #d97706); }
-.category-excel { background: linear-gradient(135deg, var(--excel), #0891b2); }
-.category-meeting { background: linear-gradient(135deg, var(--meeting), #4f46e5); }
-.category-workflow { background: linear-gradient(135deg, var(--workflow), #65a30d); }
-.category-article { background: linear-gradient(135deg, var(--article), #dc2626); }
-.category-schedule { background: linear-gradient(135deg, var(--schedule), #0d9488); }
-.category-notes { background: linear-gradient(135deg, var(--notes), var(--primary-dark)); }
-.category-video { background: linear-gradient(135deg, var(--video), #ea580c); }
-.category-design { background: linear-gradient(135deg, var(--design), #0891b2); }
-.category-dataviz { background: linear-gradient(135deg, var(--dataviz), #db2777); }
-
-.category-title {
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--dark-text);
-    line-height: 1.3;
-}
-
-body.light-mode .category-title {
-    color: var(--light-text);
-}
-
-.category-count {
-    background: rgba(30, 41, 59, 0.7);
-    color: var(--dark-text-secondary);
-    padding: 4px 12px;
-    border-radius: var(--radius-full);
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: auto;
-    flex-shrink: 0;
-}
-
-body.light-mode .category-count {
-    background: rgba(226, 232, 240, 0.7);
-    color: var(--light-text-secondary);
-}
-
-/* AI Grid */
-.ai-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    margin-top: 8px;
-}
-
-.ai-card {
-    background: var(--dark-card);
-    border: 1px solid var(--dark-border);
-    border-radius: var(--radius-lg);
-    padding: 20px;
-    cursor: pointer;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-body.light-mode .ai-card {
-    background: var(--light-card);
-    border-color: var(--light-border);
-}
-
-.ai-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--primary);
-    box-shadow: var(--shadow-lg);
-}
-
-.ai-card.active {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(30, 41, 59, 0.8));
-}
-
-body.light-mode .ai-card.active {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(255, 255, 255, 0.9));
-}
-
-.ai-card-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-}
-
-.ai-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: white;
-    flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: white;
-    padding: 8px;
-}
-
-.ai-icon-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 8px;
-}
-
-.ai-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.ai-name {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--dark-text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-body.light-mode .ai-name {
-    color: var(--light-text);
-}
-
-.ai-provider {
-    font-size: 13px;
-    color: var(--dark-text-secondary);
-    font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-body.light-mode .ai-provider {
-    color: var(--light-text-secondary);
-}
-
-.ai-badges {
-    display: flex;
-    gap: 4px;
-    margin-top: 4px;
-    flex-wrap: wrap;
-}
-
-.ai-badge {
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: var(--radius-full);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-}
-
-.badge-free {
-    background: rgba(16, 185, 129, 0.2);
-    color: var(--secondary);
-}
-
-.badge-paid {
-    background: rgba(139, 92, 246, 0.2);
-    color: var(--primary);
-}
-
-.badge-local {
-    background: rgba(239, 68, 68, 0.2);
-    color: var(--danger);
-}
-
-.badge-mobile {
-    background: rgba(59, 130, 246, 0.2);
-    color: var(--info);
-}
-
-.ai-description {
-    font-size: 13px;
-    color: var(--dark-text-secondary);
-    line-height: 1.5;
-    margin-bottom: 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    flex: 1;
-}
-
-body.light-mode .ai-description {
-    color: var(--light-text-secondary);
-}
-
-.ai-action {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--dark-border);
-}
-
-body.light-mode .ai-action {
-    border-top-color: var(--light-border);
-}
-
-.open-btn {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    border-radius: var(--radius-md);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: var(--transition);
-    flex: 1;
-    justify-content: center;
-    white-space: nowrap;
-}
-
-.open-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-}
-
-.open-btn.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.open-btn.disabled:hover {
-    transform: none;
-    box-shadow: none;
-}
-
-.device-indicator {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-    color: var(--dark-text-secondary);
-    margin-left: 8px;
-    flex-shrink: 0;
-}
-
-/* Modal */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.95);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    padding: 20px;
-    backdrop-filter: blur(10px);
-}
-
-.modal-overlay.active {
-    display: flex;
-}
-
-.modal {
-    background: var(--dark-card);
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    max-width: 500px;
-    width: 100%;
-    border: 1px solid var(--dark-border);
-    box-shadow: var(--shadow-lg);
-    animation: modalSlide 0.3s ease-out;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-body.light-mode .modal {
-    background: var(--light-card);
-    border-color: var(--light-border);
-}
-
-@keyframes modalSlide {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-.modal-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--dark-text);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-body.light-mode .modal-title {
-    color: var(--light-text);
-}
-
-.close-modal {
-    background: transparent;
-    border: none;
-    color: var(--dark-text-secondary);
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 20px;
-    transition: var(--transition);
-}
-
-.close-modal:hover {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--danger);
-}
-
-.modal-body {
-    margin-bottom: 24px;
-}
-
-.modal-text {
-    color: var(--dark-text-secondary);
-    line-height: 1.6;
-    font-size: 16px;
-}
-
-body.light-mode .modal-text {
-    color: var(--light-text-secondary);
-}
-
-.modal-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-}
-
-.modal-btn {
-    padding: 12px 24px;
-    border-radius: var(--radius-md);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    border: none;
-}
-
-.modal-btn.primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-}
-
-.modal-btn.secondary {
-    background: transparent;
-    border: 1px solid var(--dark-border);
-    color: var(--dark-text-secondary);
-}
-
-body.light-mode .modal-btn.secondary {
-    border-color: var(--light-border);
-    color: var(--light-text-secondary);
-}
-
-.modal-btn:hover {
-    transform: translateY(-2px);
-}
-
-/* Loading */
-.loading {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.95);
-    z-index: 3000;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-    backdrop-filter: blur(10px);
-}
-
-.loading.active {
-    display: flex;
-}
-
-.spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid rgba(139, 92, 246, 0.1);
-    border-top: 4px solid var(--primary);
-    border-right: 4px solid var(--primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.loading-text {
-    font-size: 18px;
-    color: var(--dark-text);
-    font-weight: 500;
-}
-
-/* Quick Stats */
-.quick-stats {
-    display: flex;
-    gap: 16px;
-    padding: 16px 24px;
-    background: var(--dark-card);
-    border-bottom: 1px solid var(--dark-border);
-    flex-wrap: wrap;
-}
-
-body.light-mode .quick-stats {
-    background: var(--light-card);
-    border-bottom-color: var(--light-border);
-}
-
-.stat-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: var(--dark-text-secondary);
-}
-
-body.light-mode .stat-item {
-    color: var(--light-text-secondary);
-}
-
-.stat-value {
-    font-weight: 600;
-    color: var(--primary);
-}
-
-/* Filter Buttons */
-.filter-buttons {
-    display: flex;
-    gap: 8px;
-    padding: 16px 24px;
-    background: var(--dark-card);
-    border-bottom: 1px solid var(--dark-border);
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-body.light-mode .filter-buttons {
-    background: var(--light-card);
-    border-bottom-color: var(--light-border);
-}
-
-.filter-buttons::-webkit-scrollbar {
-    display: none;
-}
-
-.filter-btn {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid var(--dark-border);
-    color: var(--dark-text-secondary);
-    padding: 6px 12px;
-    border-radius: var(--radius-full);
-    font-size: 12px;
-    cursor: pointer;
-    transition: var(--transition);
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-body.light-mode .filter-btn {
-    background: rgba(226, 232, 240, 0.7);
-    border-color: var(--light-border);
-    color: var(--light-text-secondary);
-}
-
-.filter-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.filter-btn.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-}
-
-/* Empty State */
-.empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--dark-text-secondary);
-}
-
-.empty-state i {
-    font-size: 48px;
-    margin-bottom: 16px;
-    opacity: 0.5;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(30, 41, 59, 0.2);
-    border-radius: 4px;
-}
-
-body.light-mode ::-webkit-scrollbar-track {
-    background: rgba(226, 232, 240, 0.2);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-    .ai-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-}
-
-@media (max-width: 992px) {
-    .ai-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    }
-    
-    .category-title {
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .header {
-        padding: 16px;
-        flex-direction: column;
-        gap: 16px;
-        align-items: flex-start;
-    }
-    
-    .header-actions {
-        align-self: flex-end;
-        margin-top: -60px;
-    }
-    
-    .logo h1 {
-        font-size: 24px;
-    }
-    
-    .ai-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 12px;
-    }
-    
-    .category-section {
-        padding: 20px;
-    }
-    
-    .categories-container {
-        padding: 20px;
-        gap: 24px;
-    }
-    
-    .category-dropdown {
-        padding: 0 16px;
-    }
-    
-    .dropdown-header {
-        padding: 14px 16px;
-        font-size: 15px;
-    }
-    
-    .dropdown-menu {
-        left: 16px;
-        right: 16px;
-    }
-    
-    .search-dropdown {
-        margin: 0 16px 12px;
-    }
-}
-
-@media (max-width: 576px) {
-    .ai-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .category-title {
-        font-size: 18px;
-    }
-    
-    .category-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-    
-    .modal-actions {
-        flex-direction: column;
-    }
-    
-    .modal-btn {
-        width: 100%;
-    }
-    
-    .dropdown-item {
-        padding: 12px 16px;
-    }
-    
-    .dropdown-item-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 16px;
-    }
-    
-    .dropdown-item-title {
-        font-size: 14px;
-    }
-    
-    .dropdown-item-desc {
-        font-size: 11px;
-    }
-    
-    .search-result-item {
-        padding: 10px 12px;
-    }
-    
-    .search-result-icon {
-        width: 30px;
-        height: 30px;
-    }
-}
-
-@media (max-width: 400px) {
-    .header {
-        padding: 12px;
-    }
-    
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-    
-    .logo h1 {
-        font-size: 20px;
-    }
-    
-    .logo-subtitle {
-        font-size: 12px;
-    }
-    
-    .icon-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
-    
-    .categories-container {
-        padding: 16px;
-        gap: 20px;
-    }
-    
-    .category-section {
-        padding: 16px;
-    }
-    
-    .quick-stats, .filter-buttons {
-        padding: 12px 16px;
-    }
-    
-    .stat-item {
-        font-size: 12px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST AI Router - Gateway to All AI Assistants</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #c4b5fd;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --chat: #3b82f6;
+            --slide: #8b5cf6;
+            --code: #10b981;
+            --email: #ec4899;
+            --image: #f59e0b;
+            --excel: #06b6d4;
+            --meeting: #6366f1;
+            --workflow: #84cc16;
+            --article: #ef4444;
+            --schedule: #14b8a6;
+            --notes: #8b5cf6;
+            --video: #f97316;
+            --design: #06b6d4;
+            --dataviz: #ec4899;
+            
+            /* Dark Theme */
+            --dark-bg: #0f172a;
+            --dark-bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --dark-card: #1e293b;
+            --dark-card-hover: #2d3748;
+            --dark-border: #334155;
+            --dark-border-light: #475569;
+            --dark-text: #f1f5f9;
+            --dark-text-secondary: #94a3b8;
+            --dark-text-muted: #64748b;
+            
+            /* Light Theme */
+            --light-bg: #f8fafc;
+            --light-bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --light-card: #ffffff;
+            --light-card-hover: #f1f5f9;
+            --light-border: #e2e8f0;
+            --light-border-dark: #cbd5e1;
+            --light-text: #1e293b;
+            --light-text-secondary: #64748b;
+            --light-text-muted: #94a3b8;
+            
+            /* Glass Effect */
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            
+            /* Animation */
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --shadow-primary: 0 10px 30px rgba(139, 92, 246, 0.3);
+            
+            /* Border Radius */
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-full: 9999px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            
+            /* Typography */
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+            --font-size-2xl: 32px;
+            --font-size-3xl: 40px;
+            
+            /* Layout */
+            --header-height: 80px;
+            --sidebar-width: 280px;
+            --max-width: 1400px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background: var(--dark-bg-gradient);
+            color: var(--dark-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgFloat 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-50px, -50px) scale(1.1); }
+        }
+
+        body.light-mode {
+            background: var(--light-bg-gradient);
+            color: var(--light-text);
+        }
+
+        body.light-mode::before {
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        /* Header - Modern Glass Effect */
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg) var(--spacing-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--glass-shadow);
+            animation: slideDown 0.6s ease-out;
+            position: sticky;
+            top: var(--spacing-lg);
+            z-index: 1000;
+            transition: var(--transition-smooth);
+        }
+
+        .header:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            color: white;
+            box-shadow: var(--shadow-primary);
+            animation: float 3s ease-in-out infinite, rotate 20s linear infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--dark-text-secondary);
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        body.light-mode .logo-subtitle {
+            color: var(--light-text-secondary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--dark-text);
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            font-size: var(--font-size-lg);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .icon-btn:hover::before {
+            left: 100%;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--shadow-primary);
+        }
+
+        body.light-mode .icon-btn {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: var(--light-border);
+            color: var(--light-text);
+        }
+
+        body.light-mode .icon-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-lg);
+            color: white;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--dark-text-secondary);
+            font-weight: 500;
+        }
+
+        body.light-mode .stat-label {
+            color: var(--light-text-secondary);
+        }
+
+        /* Search Bar */
+        .search-container {
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        .search-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border);
+            border-radius: var(--radius-full);
+            padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-lg) 60px;
+            font-size: var(--font-size-lg);
+            color: var(--dark-text);
+            outline: none;
+            transition: var(--transition-bounce);
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-primary);
+            transform: scale(1.02);
+        }
+
+        .search-input::placeholder {
+            color: var(--dark-text-secondary);
+            opacity: 0.7;
+        }
+
+        body.light-mode .search-input {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: var(--light-border);
+            color: var(--light-text);
+        }
+
+        body.light-mode .search-input::placeholder {
+            color: var(--light-text-secondary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: var(--spacing-lg);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: var(--font-size-lg);
+            pointer-events: none;
+        }
+
+        .search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: var(--shadow-xl);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .search-results.show {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .search-result-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-base);
+            color: white;
+            flex-shrink: 0;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: white;
+            padding: 8px;
+        }
+
+        .search-result-content {
+            flex: 1;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            font-size: var(--font-size-base);
+            margin-bottom: 2px;
+            color: var(--dark-text);
+        }
+
+        .search-result-provider {
+            font-size: var(--font-size-sm);
+            color: var(--dark-text-secondary);
+        }
+
+        .search-result-category {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            overflow-x: auto;
+            padding: var(--spacing-sm) 0;
+            scrollbar-width: none;
+            animation: fadeIn 0.8s ease-out 0.6s both;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-tab {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--dark-text-secondary);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .filter-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-primary);
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+            animation: fadeIn 0.8s ease-out 0.8s both;
+        }
+
+        .category-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            transition: var(--transition-bounce);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--dark-text);
+            line-height: 1.2;
+        }
+
+        .category-count {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+            padding: 4px 16px;
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .category-description {
+            color: var(--dark-text-secondary);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .ai-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-card:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .ai-card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .ai-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-lg);
+            color: white;
+            flex-shrink: 0;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: white;
+            padding: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ai-info {
+            flex: 1;
+        }
+
+        .ai-name {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 2px;
+        }
+
+        .ai-provider {
+            font-size: var(--font-size-sm);
+            color: var(--dark-text-secondary);
+        }
+
+        .ai-badges {
+            display: flex;
+            gap: var(--spacing-xs);
+            margin-top: var(--spacing-xs);
+        }
+
+        .ai-badge {
+            font-size: var(--font-size-xs);
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-free {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--secondary);
+        }
+
+        .badge-paid {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+        }
+
+        .badge-mobile {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--info);
+        }
+
+        .ai-description {
+            font-size: var(--font-size-sm);
+            color: var(--dark-text-secondary);
+            line-height: 1.5;
+            margin-bottom: var(--spacing-md);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .ai-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .open-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            transition: var(--transition-bounce);
+            flex: 1;
+            justify-content: center;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+
+        .device-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: var(--font-size-xs);
+            color: var(--dark-text-secondary);
+            margin-left: var(--spacing-sm);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: var(--spacing-lg);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            max-width: 500px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .modal-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .modal-body {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .modal-text {
+            color: var(--dark-text-secondary);
+            line-height: 1.6;
+            font-size: var(--font-size-base);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            border: none;
+            min-width: 120px;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .modal-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        .modal-btn.secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Loading */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .loading.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(139, 92, 246, 0.1);
+            border-top: 4px solid var(--primary);
+            border-right: 4px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: var(--font-size-lg);
+            color: var(--dark-text);
+            font-weight: 500;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--dark-text-secondary);
+            font-size: var(--font-size-sm);
+            margin-top: auto;
+            animation: fadeIn 0.8s ease-out 1s both;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .ai-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: var(--spacing-md);
+                gap: var(--spacing-lg);
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                padding: var(--spacing-md);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal {
+                padding: var(--spacing-lg);
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: var(--font-size-xl);
+            }
+            
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                font-size: var(--font-size-lg);
+            }
+            
+            .search-input {
+                padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) 50px;
+                font-size: var(--font-size-base);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-full);
+            transition: var(--transition-smooth);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(139, 92, 246, 0.3);
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
@@ -1308,7 +1109,7 @@ body.light-mode ::-webkit-scrollbar-track {
                 <i class="fas fa-rocket"></i>
                 <span id="modalTitle">ยืนยันการเปิด AI</span>
             </h2>
-            <button class="close-modal" onclick="closeModal()">
+            <button class="modal-btn secondary" onclick="closeModal()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -1327,7 +1128,7 @@ body.light-mode ::-webkit-scrollbar-track {
 <!-- Main Container -->
 <div class="main-container">
     <!-- Header -->
-    <div class="header">
+    <header class="header">
         <div class="logo">
             <div class="logo-icon">
                 <i class="fas fa-satellite-dish"></i>
@@ -1349,63 +1150,86 @@ body.light-mode ::-webkit-scrollbar-track {
                 <i class="fas fa-cog"></i>
             </button>
         </div>
+    </header>
+    
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-value" id="totalAI">0</div>
+                <div class="stat-label">AI ทั้งหมด</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-value" id="mobileAI">0</div>
+                <div class="stat-label">รองรับแอป</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-tags"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-value" id="totalCategories">0</div>
+                <div class="stat-label">หมวดหมู่</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-value" id="freeAI">0</div>
+                <div class="stat-label">ฟรีใช้งาน</div>
+            </div>
+        </div>
     </div>
     
-    <!-- Quick Stats -->
-    <div class="quick-stats">
-        <div class="stat-item">
-            <i class="fas fa-robot"></i>
-            <span>ทั้งหมด <span class="stat-value" id="totalAI">0</span> AI</span>
-        </div>
-        <div class="stat-item">
-            <i class="fas fa-mobile-alt"></i>
-            <span>รองรับมือถือ <span class="stat-value" id="mobileAI">0</span> ตัว</span>
-        </div>
-        <div class="stat-item">
-            <i class="fas fa-tags"></i>
-            <span><span class="stat-value" id="totalCategories">0</span> หมวดหมู่</span>
-        </div>
-    </div>
-    
-    <!-- Search Dropdown -->
-    <div class="search-dropdown">
+    <!-- Search -->
+    <div class="search-container">
         <div class="search-wrapper">
-            <input type="text" class="search-input" id="searchInput" placeholder="ค้นหา AI ...">
-            <button class="search-btn" id="searchBtn">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        <div class="search-results" id="searchResults">
-            <!-- Search results will be inserted here -->
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="ค้นหา AI ที่คุณต้องการ...">
+            <div class="search-results" id="searchResults"></div>
         </div>
     </div>
     
-    <!-- Category Dropdown -->
-    <div class="category-dropdown">
-        <div class="dropdown-header" id="dropdownHeader">
-            <span id="dropdownTitle">เลือกหมวดหมู่ AI...</span>
-            <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="dropdown-menu" id="dropdownMenu">
-            <!-- Dropdown items will be generated by JavaScript -->
-        </div>
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-filter="all">
+            <i class="fas fa-th-large"></i> ทั้งหมด
+        </button>
+        <button class="filter-tab" data-filter="free">
+            <i class="fas fa-gift"></i> ฟรี
+        </button>
+        <button class="filter-tab" data-filter="mobile">
+            <i class="fas fa-mobile-alt"></i> แอปมือถือ
+        </button>
+        <button class="filter-tab" data-filter="recent">
+            <i class="fas fa-history"></i> ล่าสุด
+        </button>
+        <button class="filter-tab" data-filter="popular">
+            <i class="fas fa-fire"></i> ยอดนิยม
+        </button>
     </div>
     
-    <!-- Filter Buttons -->
-    <div class="filter-buttons" id="filterButtons">
-        <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
-        <button class="filter-btn" data-filter="free">ฟรี</button>
-        <button class="filter-btn" data-filter="mobile">รองรับแอป</button>
-        <button class="filter-btn" data-filter="recent">ใช้งานล่าสุด</button>
-    </div>
+    <!-- Categories Grid -->
+    <div class="categories-grid" id="categoriesGrid"></div>
     
-    <!-- Main Content -->
-    <div class="content">
-        <!-- AI Categories Container -->
-        <div class="categories-container" id="categoriesContainer">
-            <!-- Category sections will be inserted here by JavaScript -->
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 ST AI Router. All rights reserved.</p>
+        <p style="opacity: 0.6; margin-top: 8px; font-size: 12px;">
+            Gateway to All AI Assistants - Powered by AI Technology
+        </p>
+    </footer>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
@@ -1415,11 +1239,8 @@ body.light-mode ::-webkit-scrollbar-track {
 let currentTheme = 'dark';
 let recentAIs = JSON.parse(localStorage.getItem('st_ai_router_recent') || '[]');
 let selectedAI = null;
-let activeCategory = 'all';
 let activeFilter = 'all';
-let isDropdownOpen = false;
 let searchResults = [];
-let isSearchOpen = false;
 
 // DOM Elements
 const loading = document.getElementById('loading');
@@ -1432,13 +1253,11 @@ const settingsBtn = document.getElementById('settingsBtn');
 const totalAISpan = document.getElementById('totalAI');
 const mobileAISpan = document.getElementById('mobileAI');
 const totalCategoriesSpan = document.getElementById('totalCategories');
-const dropdownHeader = document.getElementById('dropdownHeader');
-const dropdownMenu = document.getElementById('dropdownMenu');
-const dropdownTitle = document.getElementById('dropdownTitle');
+const freeAISpan = document.getElementById('freeAI');
 const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
 const searchResultsDiv = document.getElementById('searchResults');
-const categoriesContainer = document.getElementById('categoriesContainer');
+const filterTabs = document.getElementById('filterTabs');
+const categoriesGrid = document.getElementById('categoriesGrid');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
@@ -1454,16 +1273,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Render categories
     renderCategories();
     
-    // Render dropdown
-    renderDropdown();
-    
     // Add event listeners
     themeToggle.addEventListener('click', toggleTheme);
     infoBtn.addEventListener('click', showInfo);
     settingsBtn.addEventListener('click', showSettings);
-    
-    // Dropdown toggle
-    dropdownHeader.addEventListener('click', toggleDropdown);
     
     // Search functionality
     searchInput.addEventListener('input', function() {
@@ -1476,34 +1289,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    searchBtn.addEventListener('click', function() {
-        performSearch(searchInput.value.trim());
+    // Filter tabs
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            activeFilter = this.dataset.filter;
+            renderCategories();
+        });
     });
     
-    // Close dropdowns when clicking outside
+    // Close search results when clicking outside
     document.addEventListener('click', function(event) {
-        // Close category dropdown
-        if (!dropdownHeader.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            closeDropdown();
-        }
-        
-        // Close search results
         if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
             closeSearchResults();
         }
     });
     
-    // Add filter button listeners
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const filter = this.dataset.filter;
-            setActiveFilter(filter);
-        });
-    });
-    
-    // Show welcome message
+    // Show welcome message with smooth animation
     setTimeout(() => {
-        showToast('ยินดีต้อนรับสู่ ST AI Router! ค้นหา AI ตามหมวดหมู่หรือใช้ช่องค้นหา', 'info', 4000);
+        showToast('🚀 ยินดีต้อนรับสู่ ST AI Router! ค้นพบ AI มากมายในที่เดียว', 'info', 4000);
     }, 1000);
 });
 
@@ -1511,36 +1316,20 @@ document.addEventListener('DOMContentLoaded', function() {
 function calculateStats() {
     let totalAI = 0;
     let mobileAI = 0;
+    let freeAI = 0;
     
     aiCategories.forEach(category => {
         totalAI += category.ais.length;
         mobileAI += category.ais.filter(ai => ai.mobileUrl !== null).length;
+        freeAI += category.ais.filter(ai => 
+            ai.badges.some(badge => badge.text === 'ฟรี' || badge.type === 'free')
+        ).length;
     });
     
-    totalAISpan.textContent = totalAI;
-    mobileAISpan.textContent = mobileAI;
-    totalCategoriesSpan.textContent = aiCategories.length;
-}
-
-// Toggle dropdown
-function toggleDropdown() {
-    if (isDropdownOpen) {
-        closeDropdown();
-    } else {
-        openDropdown();
-    }
-}
-
-function openDropdown() {
-    dropdownMenu.classList.add('show');
-    dropdownHeader.classList.add('open');
-    isDropdownOpen = true;
-}
-
-function closeDropdown() {
-    dropdownMenu.classList.remove('show');
-    dropdownHeader.classList.remove('open');
-    isDropdownOpen = false;
+    totalAISpan.textContent = totalAI.toLocaleString();
+    mobileAISpan.textContent = mobileAI.toLocaleString();
+    totalCategoriesSpan.textContent = aiCategories.length.toLocaleString();
+    freeAISpan.textContent = freeAI.toLocaleString();
 }
 
 // Search functionality
@@ -1553,33 +1342,14 @@ function performSearch(query) {
     searchResults = [];
     const searchTerm = query.toLowerCase();
     
-    // Search through all AIs
     aiCategories.forEach(category => {
         category.ais.forEach(ai => {
             const searchText = (ai.name + ' ' + ai.provider + ' ' + ai.description + ' ' + ai.features.join(' ')).toLowerCase();
             if (searchText.includes(searchTerm) || 
-                category.name.toLowerCase().includes(searchTerm) ||
-                category.description.toLowerCase().includes(searchTerm)) {
+                category.name.toLowerCase().includes(searchTerm)) {
                 searchResults.push({ ai, category });
             }
         });
-    });
-    
-    // Sort by relevance
-    searchResults.sort((a, b) => {
-        const aNameMatch = a.ai.name.toLowerCase().includes(searchTerm);
-        const bNameMatch = b.ai.name.toLowerCase().includes(searchTerm);
-        
-        if (aNameMatch && !bNameMatch) return -1;
-        if (!aNameMatch && bNameMatch) return 1;
-        
-        const aProviderMatch = a.ai.provider.toLowerCase().includes(searchTerm);
-        const bProviderMatch = b.ai.provider.toLowerCase().includes(searchTerm);
-        
-        if (aProviderMatch && !bProviderMatch) return -1;
-        if (!aProviderMatch && bProviderMatch) return 1;
-        
-        return 0;
     });
     
     renderSearchResults();
@@ -1589,50 +1359,33 @@ function renderSearchResults() {
     searchResultsDiv.innerHTML = '';
     
     if (searchResults.length === 0) {
-        searchResultsDiv.innerHTML = '<div class="no-results">ไม่พบ AI ที่ตรงกับการค้นหา</div>';
+        searchResultsDiv.innerHTML = `
+            <div style="padding: 32px; text-align: center; color: var(--dark-text-secondary);">
+                <i class="fas fa-search" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5;"></i>
+                <div style="font-weight: 500;">ไม่พบ AI ที่ตรงกับการค้นหา</div>
+                <div style="font-size: 12px; margin-top: 4px;">ลองค้นหาด้วยคำอื่นดูสิ!</div>
+            </div>
+        `;
         searchResultsDiv.classList.add('show');
-        isSearchOpen = true;
         return;
     }
     
     searchResults.forEach(result => {
-        const item = document.createElement('a');
+        const item = document.createElement('div');
         item.className = 'search-result-item';
-        item.href = '#';
-        item.onclick = (e) => {
-            e.preventDefault();
+        item.onclick = () => {
             selectAIFromSearch(result.ai.id);
             closeSearchResults();
             searchInput.value = '';
         };
         
-        // Determine badge color based on category
-        let badgeColor = '';
-        switch(result.category.id) {
-            case 'chat': badgeColor = '#3b82f6'; break;
-            case 'slide': badgeColor = '#8b5cf6'; break;
-            case 'code': badgeColor = '#10b981'; break;
-            case 'email': badgeColor = '#ec4899'; break;
-            case 'image': badgeColor = '#f59e0b'; break;
-            case 'excel': badgeColor = '#06b6d4'; break;
-            case 'meeting': badgeColor = '#6366f1'; break;
-            case 'workflow': badgeColor = '#84cc16'; break;
-            case 'article': badgeColor = '#ef4444'; break;
-            case 'schedule': badgeColor = '#14b8a6'; break;
-            case 'notes': badgeColor = '#8b5cf6'; break;
-            case 'video': badgeColor = '#f97316'; break;
-            case 'design': badgeColor = '#06b6d4'; break;
-            case 'dataviz': badgeColor = '#ec4899'; break;
-            default: badgeColor = '#6b7280';
-        }
-        
         item.innerHTML = `
-            <div class="search-result-icon" style="${result.ai.logoUrl ? `background-image: url('${result.ai.logoUrl}'); background-color: white;` : `background: ${badgeColor};`}">
+            <div class="search-result-icon" style="${result.ai.logoUrl ? `background-image: url('${result.ai.logoUrl}');` : ''}">
                 ${!result.ai.logoUrl ? `<i class="${result.ai.icon}"></i>` : ''}
             </div>
             <div class="search-result-content">
                 <div class="search-result-name">${result.ai.name}</div>
-                <div class="search-result-provider">โดย ${result.ai.provider} • ${result.category.name}</div>
+                <div class="search-result-provider">${result.ai.provider}</div>
             </div>
             <div class="search-result-category">${result.category.name}</div>
         `;
@@ -1640,120 +1393,17 @@ function renderSearchResults() {
     });
     
     searchResultsDiv.classList.add('show');
-    isSearchOpen = true;
 }
 
 function closeSearchResults() {
     searchResultsDiv.classList.remove('show');
-    isSearchOpen = false;
-}
-
-function selectAIFromSearch(aiId) {
-    // Find AI
-    let selectedAIObject = null;
-    for (const category of aiCategories) {
-        const ai = category.ais.find(a => a.id === aiId);
-        if (ai) {
-            selectedAIObject = ai;
-            break;
-        }
-    }
-    
-    if (!selectedAIObject) return;
-    
-    selectedAI = selectedAIObject;
-    
-    // Update modal content
-    modalTitle.innerHTML = `<i class="${selectedAI.icon}"></i> <span>เปิด ${selectedAI.name}</span>`;
-    modalText.innerHTML = `
-        คุณต้องการเปิด <strong>${selectedAI.name}</strong> ใช่หรือไม่?<br><br>
-        ${selectedAI.mobileUrl ? '📱 <small>หากมีแอปจะเปิดแอปทันที</small>' : '🖥️ <small>จะเปิดในเว็บเบราว์เซอร์</small>'}
-    `;
-    
-    // Show confirmation modal
-    confirmationModal.classList.add('active');
-}
-
-// Render Dropdown
-function renderDropdown() {
-    dropdownMenu.innerHTML = '';
-    
-    // All categories item
-    const allItem = document.createElement('a');
-    allItem.className = 'dropdown-item' + (activeCategory === 'all' ? ' active' : '');
-    allItem.href = '#';
-    allItem.onclick = (e) => {
-        e.preventDefault();
-        setActiveCategory('all');
-        closeDropdown();
-    };
-    
-    allItem.innerHTML = `
-        <div class="dropdown-item-icon" style="background: linear-gradient(135deg, #8b5cf6, #10b981);">
-            <i class="fas fa-th-large"></i>
-        </div>
-        <div class="dropdown-item-content">
-            <div class="dropdown-item-title">ทั้งหมด</div>
-            <div class="dropdown-item-desc">แสดง AI ทั้งหมดทุกหมวดหมู่</div>
-        </div>
-        <div class="dropdown-item-count" id="allCount">0</div>
-    `;
-    dropdownMenu.appendChild(allItem);
-    
-    // Category items
-    aiCategories.forEach(category => {
-        const item = document.createElement('a');
-        item.className = 'dropdown-item' + (activeCategory === category.id ? ' active' : '');
-        item.href = '#';
-        item.onclick = (e) => {
-            e.preventDefault();
-            setActiveCategory(category.id);
-            closeDropdown();
-        };
-        
-        item.innerHTML = `
-            <div class="dropdown-item-icon ${category.colorClass}">
-                <i class="${category.icon}"></i>
-            </div>
-            <div class="dropdown-item-content">
-                <div class="dropdown-item-title">${category.name}</div>
-                <div class="dropdown-item-desc">${category.description}</div>
-            </div>
-            <div class="dropdown-item-count" id="count-${category.id}">${category.ais.length}</div>
-        `;
-        dropdownMenu.appendChild(item);
-    });
-    
-    // Update counts
-    document.getElementById('allCount').textContent = aiCategories.reduce((total, cat) => total + cat.ais.length, 0);
 }
 
 // Render Categories
 function renderCategories() {
-    categoriesContainer.innerHTML = '';
-    
-    // Update dropdown title
-    if (activeCategory === 'all') {
-        dropdownTitle.textContent = 'เลือกหมวดหมู่ AI...';
-    } else {
-        const activeCat = aiCategories.find(cat => cat.id === activeCategory);
-        if (activeCat) {
-            dropdownTitle.textContent = activeCat.name;
-        }
-    }
-    
-    // Show recent AIs if filter is recent
-    if (activeFilter === 'recent' && recentAIs.length > 0) {
-        const recentSection = createRecentSection();
-        categoriesContainer.appendChild(recentSection);
-        return;
-    }
+    categoriesGrid.innerHTML = '';
     
     aiCategories.forEach(category => {
-        if (activeCategory !== 'all' && activeCategory !== category.id) {
-            return;
-        }
-        
         // Filter AIs based on active filter
         let filteredAIs = category.ais;
         if (activeFilter === 'free') {
@@ -1762,132 +1412,105 @@ function renderCategories() {
             );
         } else if (activeFilter === 'mobile') {
             filteredAIs = category.ais.filter(ai => ai.mobileUrl !== null);
+        } else if (activeFilter === 'recent') {
+            const recentIds = recentAIs.map(r => r.id);
+            filteredAIs = category.ais.filter(ai => recentIds.includes(ai.id));
+        } else if (activeFilter === 'popular') {
+            // Sort by name for popular (demo)
+            filteredAIs = [...category.ais].sort((a, b) => a.name.localeCompare(b.name));
         }
         
-        if (filteredAIs.length === 0) {
-            return;
-        }
+        if (filteredAIs.length === 0 && activeFilter !== 'all') return;
         
-        const categorySection = createCategorySection(category, filteredAIs);
-        categoriesContainer.appendChild(categorySection);
+        const categoryCard = document.createElement('div');
+        categoryCard.className = 'category-card';
+        categoryCard.onclick = () => toggleCategory(categoryCard, category.id);
+        
+        const aiCardsHTML = filteredAIs.map(ai => createAICardHTML(ai)).join('');
+        
+        categoryCard.innerHTML = `
+            <div class="category-header">
+                <div class="category-icon" style="background: linear-gradient(135deg, ${getCategoryColor(category.id)});">
+                    <i class="${category.icon}"></i>
+                </div>
+                <h2 class="category-title">${category.name}</h2>
+                <div class="category-count">${filteredAIs.length} AI</div>
+            </div>
+            <p class="category-description">${category.description}</p>
+            <div class="ai-grid">${aiCardsHTML}</div>
+        `;
+        
+        categoriesGrid.appendChild(categoryCard);
     });
     
-    // If no categories found
-    if (categoriesContainer.children.length === 0) {
-        const emptyState = document.createElement('div');
-        emptyState.className = 'empty-state';
-        emptyState.innerHTML = `
-            <i class="fas fa-robot"></i>
-            <h3>ไม่พบ AI ในหมวดหมู่นี้</h3>
-            <p>ลองเปลี่ยนฟิลเตอร์หรือเลือกหมวดหมู่อื่น</p>
-        `;
-        categoriesContainer.appendChild(emptyState);
+    // Add animation to cards
+    document.querySelectorAll('.category-card').forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
+}
+
+function getCategoryColor(categoryId) {
+    const colors = {
+        'chat': '#3b82f6, #2563eb',
+        'slide': '#8b5cf6, #7c3aed',
+        'code': '#10b981, #059669',
+        'email': '#ec4899, #db2777',
+        'image': '#f59e0b, #d97706',
+        'excel': '#06b6d4, #0891b2',
+        'meeting': '#6366f1, #4f46e5',
+        'workflow': '#84cc16, #65a30d',
+        'article': '#ef4444, #dc2626',
+        'schedule': '#14b8a6, #0d9488',
+        'notes': '#8b5cf6, #7c3aed',
+        'video': '#f97316, #ea580c',
+        'design': '#06b6d4, #0891b2',
+        'dataviz': '#ec4899, #db2777'
+    };
+    return colors[categoryId] || '#8b5cf6, #7c3aed';
+}
+
+function toggleCategory(card, categoryId) {
+    const aiGrid = card.querySelector('.ai-grid');
+    const isHidden = aiGrid.style.display === 'none';
+    
+    if (isHidden) {
+        aiGrid.style.display = 'grid';
+        card.style.height = 'auto';
+    } else {
+        aiGrid.style.display = 'none';
+        card.style.height = '200px';
     }
 }
 
-// Create Recent Section
-function createRecentSection() {
-    const section = document.createElement('div');
-    section.className = 'category-section';
-    
-    // Get AI details from recent list
-    const recentAIObjects = [];
-    recentAIs.forEach(recent => {
-        for (const category of aiCategories) {
-            const ai = category.ais.find(a => a.id === recent.id);
-            if (ai) {
-                recentAIObjects.push(ai);
-                break;
-            }
-        }
-    });
-    
-    const aiCardsHTML = recentAIObjects.map(ai => createAICardHTML(ai)).join('');
-    
-    section.innerHTML = `
-        <div class="category-header">
-            <div class="category-icon" style="background: linear-gradient(135deg, #f59e0b, #ea580c);">
-                <i class="fas fa-history"></i>
-            </div>
-            <div>
-                <h2 class="category-title">ใช้งานล่าสุด</h2>
-                <p style="color: var(--dark-text-secondary); font-size: 14px; margin-top: 4px;">
-                    AI ที่คุณใช้งานล่าสุด
-                </p>
-            </div>
-            <div class="category-count">${recentAIObjects.length} AI</div>
-        </div>
-        <div class="ai-grid">
-            ${aiCardsHTML}
-        </div>
-    `;
-    
-    return section;
-}
-
-// Create Category Section
-function createCategorySection(category, ais) {
-    const section = document.createElement('div');
-    section.className = 'category-section';
-    section.id = `category-${category.id}`;
-    
-    // Build AI cards
-    const aiCardsHTML = ais.map(ai => createAICardHTML(ai)).join('');
-    
-    section.innerHTML = `
-        <div class="category-header">
-            <div class="category-icon ${category.colorClass}">
-                <i class="${category.icon}"></i>
-            </div>
-            <div>
-                <h2 class="category-title">${category.name}</h2>
-                <p style="color: var(--dark-text-secondary); font-size: 14px; margin-top: 4px;">
-                    ${category.description}
-                </p>
-            </div>
-            <div class="category-count">${ais.length} AI</div>
-        </div>
-        <div class="ai-grid">
-            ${aiCardsHTML}
-        </div>
-    `;
-    
-    return section;
-}
-
-// Create AI Card HTML
 function createAICardHTML(ai) {
-    // Build badges HTML
     const badgesHTML = ai.badges.map(badge => 
         `<span class="ai-badge badge-${badge.type}">${badge.text}</span>`
     ).join('');
     
-    // Determine device support
     const hasMobile = ai.mobileUrl !== null;
     const deviceIndicator = hasMobile ? 
-        '<div class="device-indicator"><i class="fas fa-mobile-alt"></i><span>เว็บ/แอป</span></div>' :
+        '<div class="device-indicator"><i class="fas fa-mobile-alt"></i><span>แอป</span></div>' :
         '<div class="device-indicator"><i class="fas fa-desktop"></i><span>เว็บ</span></div>';
     
-    // Create icon HTML with logo
     const iconHTML = ai.logoUrl ? 
         `<div class="ai-icon" style="background-image: url('${ai.logoUrl}');"></div>` :
         `<div class="ai-icon" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));"><i class="${ai.icon}"></i></div>`;
     
     return `
-        <div class="ai-card" data-ai-id="${ai.id}">
+        <div class="ai-card" onclick="selectAI('${ai.id}')">
             <div class="ai-card-header">
                 ${iconHTML}
                 <div class="ai-info">
                     <div class="ai-name">${ai.name}</div>
-                    <div class="ai-provider">โดย ${ai.provider}</div>
+                    <div class="ai-provider">${ai.provider}</div>
                     <div class="ai-badges">${badgesHTML}</div>
                 </div>
             </div>
             <div class="ai-description">${ai.description}</div>
             <div class="ai-action">
-                <button class="open-btn" onclick="selectAI('${ai.id}')">
+                <button class="open-btn" onclick="event.stopPropagation(); selectAI('${ai.id}')">
                     <i class="fas fa-external-link-alt"></i>
-                    เปิด ${ai.name}
+                    เปิด
                 </button>
                 ${deviceIndicator}
             </div>
@@ -1895,45 +1518,8 @@ function createAICardHTML(ai) {
     `;
 }
 
-// Set active category
-function setActiveCategory(categoryId) {
-    activeCategory = categoryId;
-    
-    // Update dropdown items
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    
-    if (categoryId === 'all') {
-        document.querySelectorAll('.dropdown-item')[0].classList.add('active');
-    } else {
-        const item = document.querySelector(`.dropdown-item[onclick*="${categoryId}"]`);
-        if (item) item.classList.add('active');
-    }
-    
-    // Render categories
-    renderCategories();
-    
-    // Scroll to top
-    categoriesContainer.scrollTop = 0;
-}
-
-// Set active filter
-function setActiveFilter(filter) {
-    activeFilter = filter;
-    
-    // Update filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === filter);
-    });
-    
-    // Render categories
-    renderCategories();
-}
-
-// Select AI from card
+// AI Selection
 function selectAI(aiId) {
-    // Find AI
     let selectedAIObject = null;
     for (const category of aiCategories) {
         const ai = category.ais.find(a => a.id === aiId);
@@ -1947,18 +1533,24 @@ function selectAI(aiId) {
     
     selectedAI = selectedAIObject;
     
-    // Update modal content
-    modalTitle.innerHTML = `<i class="${selectedAI.icon}"></i> <span>เปิด ${selectedAI.name}</span>`;
+    modalTitle.innerHTML = `<i class="${selectedAI.icon}"></i> <span>${selectedAI.name}</span>`;
     modalText.innerHTML = `
         คุณต้องการเปิด <strong>${selectedAI.name}</strong> ใช่หรือไม่?<br><br>
-        ${selectedAI.mobileUrl ? '📱 <small>หากมีแอปจะเปิดแอปทันที</small>' : '🖥️ <small>จะเปิดในเว็บเบราว์เซอร์</small>'}
+        <div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 8px; margin: 12px 0;">
+            <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+            ${selectedAI.mobileUrl ? 
+                '📱 <small>จะพยายามเปิดแอปมือถือก่อน หากไม่มีจะเปิดเว็บแทน</small>' : 
+                '🖥️ <small>จะเปิดในเว็บเบราว์เซอร์</small>'}
+        </div>
     `;
     
-    // Show confirmation modal
     confirmationModal.classList.add('active');
 }
 
-// Confirm opening AI
+function selectAIFromSearch(aiId) {
+    selectAI(aiId);
+}
+
 function confirmOpenAI() {
     if (!selectedAI) {
         showToast('เกิดข้อผิดพลาด กรุณาลองอีกครั้ง', 'error', 3000);
@@ -1966,131 +1558,91 @@ function confirmOpenAI() {
     }
     
     closeModal();
+    loading.classList.add('active');
     
     // Add to recent
     addToRecent(selectedAI);
     
-    // Show loading
-    loading.classList.add('active');
-    
-    // Check if on mobile
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    // Open AI
     setTimeout(() => {
-        openAI(selectedAI, selectedAI.webUrl, selectedAI.mobileUrl, isMobile);
-    }, 500);
+        openAI(selectedAI);
+    }, 800);
 }
 
-// Open AI with proper routing
-function openAI(ai, webUrl, mobileUrl, isMobile) {
-    if (isMobile && mobileUrl) {
-        // Try to open mobile app first
+function openAI(ai) {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile && ai.mobileUrl) {
         const timeout = 1500;
         const start = Date.now();
         
-        // Create iframe for app launch
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
-        iframe.src = mobileUrl;
+        iframe.src = ai.mobileUrl;
         document.body.appendChild(iframe);
         
-        // Check if app opened
         window.addEventListener('blur', function onBlur() {
             window.removeEventListener('blur', onBlur);
-            
-            // Hide loading
             loading.classList.remove('active');
-            
-            // Show success message
-            showToast(`เปิดแอป ${ai.name} สำเร็จ!`, 'success', 3000);
-            
-            // Remove iframe
-            setTimeout(() => {
-                if (iframe.parentNode) {
-                    iframe.parentNode.removeChild(iframe);
-                }
-            }, 1000);
+            showToast(`เปิดแอป ${ai.name} สำเร็จ! 🚀`, 'success', 3000);
+            setTimeout(() => iframe.parentNode?.removeChild(iframe), 1000);
         });
         
-        // Fallback to web if app not installed
         setTimeout(() => {
             if (Date.now() - start < timeout + 100) {
-                // Open web version
-                window.open(webUrl, '_blank');
-                
-                // Hide loading
+                window.open(ai.webUrl, '_blank');
                 loading.classList.remove('active');
-                
-                // Show info message
-                showToast(`เปิดเว็บ ${ai.name} (ไม่มีแอปติดตั้ง)`, 'info', 3000);
-                
-                // Remove iframe
-                if (iframe.parentNode) {
-                    iframe.parentNode.removeChild(iframe);
-                }
+                showToast(`เปิดเว็บ ${ai.name} แล้ว! 🌐`, 'info', 3000);
+                iframe.parentNode?.removeChild(iframe);
             }
         }, timeout);
     } else {
-        // Desktop or no mobile app - open web
-        window.open(webUrl, '_blank');
-        
-        // Hide loading
+        window.open(ai.webUrl, '_blank');
         loading.classList.remove('active');
-        
-        // Show success message
-        showToast(`เปิด ${ai.name} ในเบราว์เซอร์แล้ว!`, 'success', 3000);
+        showToast(`เปิด ${ai.name} สำเร็จ! 🎉`, 'success', 3000);
     }
 }
 
-// Add AI to recent list
 function addToRecent(ai) {
-    // Remove if already exists
     recentAIs = recentAIs.filter(item => item.id !== ai.id);
-    
-    // Add to beginning
     recentAIs.unshift({
         id: ai.id,
         name: ai.name,
-        icon: ai.icon,
-        colorClass: ai.colorClass,
-        logoUrl: ai.logoUrl,
         timestamp: Date.now()
     });
-    
-    // Keep only last 5
-    recentAIs = recentAIs.slice(0, 5);
-    
-    // Save to localStorage
+    recentAIs = recentAIs.slice(0, 10);
     localStorage.setItem('st_ai_router_recent', JSON.stringify(recentAIs));
 }
 
-// Close modal
+// Modal
 function closeModal() {
     confirmationModal.classList.remove('active');
 }
 
-// Set theme
+// Theme
 function setTheme(theme) {
     currentTheme = theme;
     if (theme === 'light') {
         document.body.classList.add('light-mode');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
         themeToggle.title = 'เปลี่ยนเป็นโหมดมืด';
+        document.body.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.7)');
+        document.body.style.setProperty('--glass-border', 'rgba(0, 0, 0, 0.1)');
     } else {
         document.body.classList.remove('light-mode');
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
         themeToggle.title = 'เปลี่ยนเป็นโหมดสว่าง';
+        document.body.style.setProperty('--glass-bg', 'rgba(30, 41, 59, 0.7)');
+        document.body.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.1)');
     }
     localStorage.setItem('st_ai_router_theme', theme);
 }
 
-// Toggle theme
 function toggleTheme() {
     setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    showToast(`เปลี่ยนเป็นโหมด ${currentTheme === 'dark' ? 'มืด' : 'สว่าง'} แล้ว`, 'info', 2000);
 }
 
-// Show info
+// Info & Settings
 function showInfo() {
     let totalAI = 0;
     let mobileCount = 0;
@@ -2106,66 +1658,66 @@ function showInfo() {
     
     modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> <span>เกี่ยวกับ ST AI Router</span>`;
     modalText.innerHTML = `
-        <strong>ST AI Router</strong> คือระบบกลางสำหรับเข้าถึง AI ทุกตัวบนโลก 🌍<br><br>
+        <strong>ST AI Router</strong> คือระบบกลางสำหรับเข้าถึง AI ทุกตัวในที่เดียว 🌍<br><br>
         
-        📊 <strong>สถิติ:</strong><br>
-        • AI ทั้งหมด: ${totalAI} ตัว<br>
-        • หมวดหมู่: ${aiCategories.length} หมวด<br>
-        • รองรับแอปมือถือ: ${mobileCount} ตัว<br>
-        • ฟรีใช้งาน: ${freeCount} ตัว<br><br>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0;">
+            <div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 8px;">
+                <div style="font-weight: 600; color: var(--primary);">${totalAI}</div>
+                <div style="font-size: 12px;">AI ทั้งหมด</div>
+            </div>
+            <div style="background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px;">
+                <div style="font-weight: 600; color: var(--secondary);">${mobileCount}</div>
+                <div style="font-size: 12px;">รองรับแอป</div>
+            </div>
+            <div style="background: rgba(59, 130, 246, 0.1); padding: 12px; border-radius: 8px;">
+                <div style="font-weight: 600; color: var(--info);">${freeCount}</div>
+                <div style="font-size: 12px;">ฟรีใช้งาน</div>
+            </div>
+            <div style="background: rgba(244, 63, 94, 0.1); padding: 12px; border-radius: 8px;">
+                <div style="font-weight: 600; color: #f43f5e;">${aiCategories.length}</div>
+                <div style="font-size: 12px;">หมวดหมู่</div>
+            </div>
+        </div>
         
-        🚀 <strong>วิธีใช้งาน:</strong><br>
-        1. ค้นหา AI จากช่องค้นหาด้านบน<br>
-        2. หรือเลือกหมวดหมู่จากเมนูดรอปดาวน์<br>
-        3. เลือก AI ที่ต้องการ<br>
-        4. ระบบจะเปิดไปยังแพลตฟอร์มนั้นทันที<br><br>
+        <strong>ฟีเจอร์หลัก:</strong><br>
+        • ค้นหา AI อย่างรวดเร็ว<br>
+        • จัดหมวดหมู่ชัดเจน<br>
+        • รองรับทั้งเว็บและแอปมือถือ<br>
+        • บันทึกประวัติการใช้งาน<br>
+        • ธีมมืด/สว่าง<br><br>
         
-        🔍 <strong>ฟีเจอร์:</strong><br>
-        • ช่องค้นหา AI ที่ด้านบน<br>
-        • เมนูดรอปดาวน์เลือกหมวดหมู่ง่ายขึ้น<br>
-        • ใช้โลโก้จริงของ AI แต่ละตัว<br>
-        • รองรับมือถือ/แท็บเล็ต/PC อัตโนมัติ<br>
-        • ฟิลเตอร์ค้นหาตามความต้องการ<br>
-        • บันทึก AI ที่ใช้งานล่าสุด<br><br>
-        
-        🔒 <strong>ความปลอดภัย:</strong><br>
-        • ไม่เก็บข้อมูลส่วนตัว<br>
-        • เปิดผ่านลิงก์อย่างถูกต้อง<br><br>
-        
-        <small>เวอร์ชัน 3.0.0 | พัฒนาโดย ST AI Team</small>
+        <small style="opacity: 0.6;">เวอร์ชัน 4.0 Premium | พัฒนาโดย ST AI Team</small>
     `;
     
     confirmationModal.classList.add('active');
 }
 
-// Show settings
 function showSettings() {
     modalTitle.innerHTML = `<i class="fas fa-cog"></i> <span>ตั้งค่า</span>`;
     modalText.innerHTML = `
         <strong>การตั้งค่า ST AI Router</strong><br><br>
         
-        🎨 <strong>ธีม:</strong><br>
+        🎨 <strong>การแสดงผล:</strong><br>
         • โหมดมืด/สว่าง<br>
-        • เปลี่ยนโดยคลิกปุ่มธีมด้านบน<br><br>
+        • แอนิเมชั่นที่ลื่นไหล<br>
+        • รองรับทุกอุปกรณ์<br><br>
         
-        🔍 <strong>ค้นหา:</strong><br>
-        • ค้นหา AI จากชื่อหรือคุณสมบัติ<br>
-        • คลิกผลลัพธ์เพื่อเลือก AI ทันที<br>
-        • Enter หรือคลิกปุ่มค้นหา<br><br>
+        🔍 <strong>การค้นหา:</strong><br>
+        • ค้นหาด้วยชื่อ AI<br>
+        • ค้นหาด้วยหมวดหมู่<br>
+        • แสดงผลลัพธ์แบบเรียลไทม์<br><br>
         
-        📱 <strong>การแสดงผล:</strong><br>
-        • รองรับอุปกรณ์ทุกขนาดอัตโนมัติ<br>
-        • ปรับเลย์เอาต์ตามหน้าจอ<br><br>
+        📱 <strong>การใช้งาน:</strong><br>
+        • เปิดแอปมือถือโดยตรง<br>
+        • ใช้ปุ่มลัด Ctrl/Cmd + K<br>
+        • ปิดหน้าต่างด้วย Esc<br><br>
         
         💾 <strong>ข้อมูล:</strong><br>
         • บันทึกธีมที่เลือก<br>
         • บันทึก AI ที่ใช้งานล่าสุด<br>
-        • ข้อมูลทั้งหมดเก็บในอุปกรณ์คุณ<br><br>
+        • ข้อมูลทั้งหมดอยู่ในอุปกรณ์คุณ<br><br>
         
-        🛠️ <strong>อื่นๆ:</strong><br>
-        • ล้างประวัติล่าสุด<br><br>
-        
-        <button class="modal-btn secondary" onclick="clearRecentHistory()" style="margin-top: 10px;">
+        <button class="modal-btn secondary" onclick="clearRecentHistory()" style="margin-top: 12px; width: 100%;">
             <i class="fas fa-trash"></i> ล้างประวัติล่าสุด
         </button>
     `;
@@ -2173,16 +1725,15 @@ function showSettings() {
     confirmationModal.classList.add('active');
 }
 
-// Clear recent history
 function clearRecentHistory() {
     recentAIs = [];
     localStorage.removeItem('st_ai_router_recent');
-    showToast('ล้างประวัติล่าสุดแล้ว', 'success', 3000);
+    showToast('ล้างประวัติล่าสุดแล้ว ✨', 'success', 3000);
     closeModal();
     renderCategories();
 }
 
-// Show toast notification
+// Toast Notification
 function showToast(message, type = 'info', duration = 3000) {
     Toastify({
         text: message,
@@ -2193,29 +1744,39 @@ function showToast(message, type = 'info', duration = 3000) {
                         type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' :
                         'linear-gradient(135deg, #3b82f6, #2563eb)',
         className: `toastify ${type}`,
+        style: {
+            background: 'var(--glass-bg)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid var(--glass-border)',
+            borderRadius: '12px',
+            padding: '16px',
+            fontFamily: "'Kanit', sans-serif",
+            fontWeight: '500'
+        },
         stopOnFocus: true
     }).showToast();
 }
 
-// Handle keyboard shortcuts
+// Keyboard Shortcuts
 document.addEventListener('keydown', function(e) {
-    // Ctrl/Cmd + K to focus search
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         searchInput.focus();
         searchInput.select();
+        showToast('พร้อมค้นหา! พิมพ์ชื่อ AI ที่ต้องการ 🔍', 'info', 2000);
     }
     
-    // Escape to clear or close modal
     if (e.key === 'Escape') {
         if (confirmationModal.classList.contains('active')) {
             closeModal();
-        } else if (isSearchOpen) {
+        } else if (searchResultsDiv.classList.contains('show')) {
             closeSearchResults();
-            searchInput.value = '';
-        } else if (isDropdownOpen) {
-            closeDropdown();
         }
+    }
+    
+    if (e.key === 't' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        toggleTheme();
     }
 });
 </script>
