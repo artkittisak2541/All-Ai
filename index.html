@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ST AI Router</title>
+
+<!-- Redirect อัตโนมัติ -->
+<meta http-equiv="refresh" content="1;url=login.html">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #8b5cf6, #0f172a 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Kanit', sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+.box {
+    text-align: center;
+    animation: fade 1s ease;
+}
+
+.logo {
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #a78bfa, #22d3ee, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.loading {
+    margin-top: 15px;
+    font-size: 18px;
+    opacity: 0.85;
+}
+
+.dot {
+    animation: blink 1.4s infinite both;
+}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+
+@keyframes blink {
+  0%{opacity:.2}
+  20%{opacity:1}
+  100%{opacity:.2}
+}
+
+@keyframes fade {
+    from {opacity:0; transform: scale(0.95);}
+    to {opacity:1; transform: scale(1);}
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <div class="logo">ST AI ROUTER</div>
+    <div class="loading">
+        กำลังเข้าสู่ระบบ<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+    </div>
+</div>
+
+<script>
+setTimeout(() => {
+    window.location.href = "login.html";
+}, 1000);
+</script>
+
+</body>
+</html>
