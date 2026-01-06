@@ -587,6 +587,189 @@ body.light-mode .prompt-input {
     box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
 }
 
+/* TTS Controls */
+.tts-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    border: 1px solid var(--dark-border);
+}
+
+body.light-mode .tts-controls {
+    background: rgba(226, 232, 240, 0.5);
+    border-color: var(--light-border);
+}
+
+.tts-main-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.tts-btn {
+    background: linear-gradient(135deg, var(--info), #2563eb);
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.tts-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.tts-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.tts-btn.stop {
+    background: linear-gradient(135deg, var(--danger), #dc2626);
+}
+
+.tts-btn.stop:hover {
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.tts-btn.pause {
+    background: linear-gradient(135deg, var(--warning), #d97706);
+}
+
+.tts-btn.pause:hover {
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.tts-btn.resume {
+    background: linear-gradient(135deg, var(--secondary), #059669);
+}
+
+.tts-btn.resume:hover {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.tts-settings {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.tts-setting-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tts-setting-label {
+    font-size: 13px;
+    color: var(--dark-text-secondary);
+    min-width: 60px;
+}
+
+body.light-mode .tts-setting-label {
+    color: var(--light-text-secondary);
+}
+
+.tts-slider {
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 4px;
+    outline: none;
+}
+
+body.light-mode .tts-slider {
+    background: rgba(226, 232, 240, 0.8);
+}
+
+.tts-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tts-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tts-value {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 500;
+    min-width: 40px;
+    text-align: center;
+}
+
+.tts-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--dark-text-secondary);
+    padding: 8px 12px;
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: var(--radius-md);
+    margin-top: 8px;
+}
+
+body.light-mode .tts-status {
+    color: var(--light-text-secondary);
+    background: rgba(226, 232, 240, 0.5);
+}
+
+.tts-status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--dark-text-secondary);
+}
+
+body.light-mode .tts-status-indicator {
+    background: var(--light-text-secondary);
+}
+
+.tts-status-indicator.active {
+    background: var(--secondary);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
 .input-actions {
     display: flex;
     gap: 10px;
@@ -1368,6 +1551,35 @@ body.light-mode ::-webkit-scrollbar-track {
     .search-dropdown {
         margin: 0 16px 12px;
     }
+    
+    .tts-controls {
+        padding: 12px;
+    }
+    
+    .tts-main-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .tts-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .tts-settings {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .tts-setting-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .tts-slider {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 576px) {
@@ -1474,6 +1686,10 @@ body.light-mode ::-webkit-scrollbar-track {
     
     .stat-item {
         font-size: 12px;
+    }
+    
+    .tts-controls {
+        padding: 10px;
     }
 }
 </style>
@@ -1600,6 +1816,55 @@ body.light-mode ::-webkit-scrollbar-track {
                     placeholder="พิมพ์คำถามหรือคำสั่งที่นี่... เช่น 'ช่วยเขียนโค้ด Python สำหรับระบบล็อกอิน', 'ออกแบบโลโก้สำหรับร้านกาแฟ', 'สรุปข่าววันนี้'"
                 ></textarea>
             </div>
+            
+            <!-- TTS Controls -->
+            <div class="tts-controls" id="ttsControls">
+                <div class="tts-main-controls">
+                    <button class="tts-btn" id="ttsSpeakBtn" onclick="speakText()">
+                        <i class="fas fa-volume-up"></i>
+                        อ่านข้อความให้ฟัง
+                    </button>
+                    <button class="tts-btn stop" id="ttsStopBtn" onclick="stopSpeaking()" disabled>
+                        <i class="fas fa-stop"></i>
+                        หยุด
+                    </button>
+                    <button class="tts-btn pause" id="ttsPauseBtn" onclick="pauseSpeaking()" disabled>
+                        <i class="fas fa-pause"></i>
+                        หยุดชั่วคราว
+                    </button>
+                    <button class="tts-btn resume" id="ttsResumeBtn" onclick="resumeSpeaking()" disabled>
+                        <i class="fas fa-play"></i>
+                        ต่อ
+                    </button>
+                </div>
+                
+                <div class="tts-settings">
+                    <div class="tts-setting-group">
+                        <span class="tts-setting-label">ความเร็ว:</span>
+                        <input type="range" min="0.5" max="2" step="0.1" value="1" class="tts-slider" id="ttsRateSlider">
+                        <span class="tts-value" id="ttsRateValue">1.0x</span>
+                    </div>
+                    
+                    <div class="tts-setting-group">
+                        <span class="tts-setting-label">ระดับเสียง:</span>
+                        <input type="range" min="0" max="1" step="0.1" value="1" class="tts-slider" id="ttsVolumeSlider">
+                        <span class="tts-value" id="ttsVolumeValue">100%</span>
+                    </div>
+                    
+                    <div class="tts-setting-group">
+                        <span class="tts-setting-label">เสียง:</span>
+                        <select class="tts-slider" id="ttsVoiceSelect" style="height: 36px; padding: 0 8px; border-radius: var(--radius-md); background: rgba(30, 41, 59, 0.8); color: var(--dark-text); border: 1px solid var(--dark-border);">
+                            <option value="">เลือกเสียง...</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="tts-status">
+                    <div class="tts-status-indicator" id="ttsStatusIndicator"></div>
+                    <span id="ttsStatusText">พร้อมใช้งาน</span>
+                </div>
+            </div>
+            
             <div class="input-actions">
                 <button class="action-btn secondary" id="clearBtn">
                     <i class="fas fa-eraser"></i>
@@ -3351,6 +3616,17 @@ let isDropdownOpen = false;
 let searchResults = [];
 let isSearchOpen = false;
 
+// TTS State
+let ttsSpeech = null;
+let ttsVoices = [];
+let ttsIsSpeaking = false;
+let ttsIsPaused = false;
+let ttsCurrentSettings = {
+    rate: parseFloat(localStorage.getItem('st_ai_router_tts_rate') || '1.0'),
+    volume: parseFloat(localStorage.getItem('st_ai_router_tts_volume') || '1.0'),
+    voice: localStorage.getItem('st_ai_router_tts_voice') || ''
+};
+
 // DOM Elements
 const promptInput = document.getElementById('promptInput');
 const categoriesContainer = document.getElementById('categoriesContainer');
@@ -3373,6 +3649,19 @@ const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const searchResultsDiv = document.getElementById('searchResults');
 
+// TTS DOM Elements
+const ttsSpeakBtn = document.getElementById('ttsSpeakBtn');
+const ttsStopBtn = document.getElementById('ttsStopBtn');
+const ttsPauseBtn = document.getElementById('ttsPauseBtn');
+const ttsResumeBtn = document.getElementById('ttsResumeBtn');
+const ttsRateSlider = document.getElementById('ttsRateSlider');
+const ttsRateValue = document.getElementById('ttsRateValue');
+const ttsVolumeSlider = document.getElementById('ttsVolumeSlider');
+const ttsVolumeValue = document.getElementById('ttsVolumeValue');
+const ttsVoiceSelect = document.getElementById('ttsVoiceSelect');
+const ttsStatusIndicator = document.getElementById('ttsStatusIndicator');
+const ttsStatusText = document.getElementById('ttsStatusText');
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     // Load theme
@@ -3390,10 +3679,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Render dropdown
     renderDropdown();
     
+    // Initialize TTS
+    initializeTTS();
+    
     // Add event listeners
     promptInput.addEventListener('input', function() {
         currentPrompt = this.value.trim();
         updateSendButton();
+        updateTTSButtonState();
     });
     
     themeToggle.addEventListener('click', toggleTheme);
@@ -3426,6 +3719,11 @@ document.addEventListener('DOMContentLoaded', function() {
         performSearch(searchInput.value.trim());
     });
     
+    // TTS Event Listeners
+    ttsRateSlider.addEventListener('input', updateTTSRate);
+    ttsVolumeSlider.addEventListener('input', updateTTSVolume);
+    ttsVoiceSelect.addEventListener('change', updateTTSVoice);
+    
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(event) {
         // Close category dropdown
@@ -3453,6 +3751,7 @@ document.addEventListener('DOMContentLoaded', function() {
         promptInput.value = '';
         currentPrompt = '';
         updateSendButton();
+        updateTTSButtonState();
     }, 500);
     
     // Show welcome message
@@ -3460,6 +3759,270 @@ document.addEventListener('DOMContentLoaded', function() {
         showToast('ยินดีต้อนรับสู่ ST AI Router! ค้นหา AI ตามหมวดหมู่หรือใช้ช่องค้นหา', 'info', 4000);
     }, 1000);
 });
+
+// TTS Functions
+function initializeTTS() {
+    // Check if browser supports TTS
+    if (!('speechSynthesis' in window)) {
+        ttsStatusText.textContent = 'เบราว์เซอร์ไม่รองรับระบบอ่านข้อความ';
+        ttsSpeakBtn.disabled = true;
+        ttsSpeakBtn.innerHTML = '<i class="fas fa-volume-mute"></i> ไม่รองรับ TTS';
+        return;
+    }
+    
+    // Load TTS settings
+    loadTTSSettings();
+    
+    // Get available voices
+    setTimeout(() => {
+        ttsVoices = speechSynthesis.getVoices();
+        populateVoiceList();
+        
+        // If voices are not loaded yet, try again
+        if (ttsVoices.length === 0) {
+            speechSynthesis.onvoiceschanged = function() {
+                ttsVoices = speechSynthesis.getVoices();
+                populateVoiceList();
+            };
+        }
+    }, 500);
+    
+    // Update TTS button state
+    updateTTSButtonState();
+}
+
+function loadTTSSettings() {
+    // Load saved settings
+    ttsRateSlider.value = ttsCurrentSettings.rate;
+    ttsVolumeSlider.value = ttsCurrentSettings.volume;
+    
+    // Update display values
+    ttsRateValue.textContent = `${ttsCurrentSettings.rate.toFixed(1)}x`;
+    ttsVolumeValue.textContent = `${Math.round(ttsCurrentSettings.volume * 100)}%`;
+}
+
+function populateVoiceList() {
+    ttsVoiceSelect.innerHTML = '<option value="">เลือกเสียง...</option>';
+    
+    // Filter for Thai voices if available
+    const thaiVoices = ttsVoices.filter(voice => voice.lang.includes('th') || voice.name.includes('Thai'));
+    const otherVoices = ttsVoices.filter(voice => !voice.lang.includes('th') && !voice.name.includes('Thai'));
+    
+    // Add Thai voices first
+    if (thaiVoices.length > 0) {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = 'เสียงภาษาไทย';
+        thaiVoices.forEach(voice => {
+            const option = document.createElement('option');
+            option.value = voice.voiceURI;
+            option.textContent = `${voice.name} (${voice.lang})`;
+            optgroup.appendChild(option);
+        });
+        ttsVoiceSelect.appendChild(optgroup);
+    }
+    
+    // Add other voices
+    if (otherVoices.length > 0) {
+        const optgroup = document.createElement('optgroup');
+        optgroup.label = 'เสียงอื่นๆ';
+        otherVoices.forEach(voice => {
+            const option = document.createElement('option');
+            option.value = voice.voiceURI;
+            option.textContent = `${voice.name} (${voice.lang})`;
+            optgroup.appendChild(option);
+        });
+        ttsVoiceSelect.appendChild(optgroup);
+    }
+    
+    // Select saved voice
+    if (ttsCurrentSettings.voice) {
+        ttsVoiceSelect.value = ttsCurrentSettings.voice;
+    }
+    
+    // If no Thai voices found, show message
+    if (thaiVoices.length === 0 && ttsVoices.length > 0) {
+        ttsStatusText.textContent = 'ไม่พบเสียงภาษาไทย รองรับเสียงภาษาอังกฤษเท่านั้น';
+    }
+}
+
+function speakText() {
+    const text = promptInput.value.trim();
+    
+    if (!text) {
+        showToast('กรุณาพิมพ์ข้อความก่อนอ่าน', 'error', 3000);
+        return;
+    }
+    
+    // Stop any current speech
+    stopSpeaking();
+    
+    // Create new speech
+    ttsSpeech = new SpeechSynthesisUtterance(text);
+    
+    // Apply settings
+    ttsSpeech.rate = ttsCurrentSettings.rate;
+    ttsSpeech.volume = ttsCurrentSettings.volume;
+    
+    // Set voice if selected
+    if (ttsCurrentSettings.voice) {
+        const selectedVoice = ttsVoices.find(voice => voice.voiceURI === ttsCurrentSettings.voice);
+        if (selectedVoice) {
+            ttsSpeech.voice = selectedVoice;
+        }
+    }
+    
+    // Event listeners
+    ttsSpeech.onstart = function() {
+        ttsIsSpeaking = true;
+        ttsIsPaused = false;
+        updateTTSButtonState();
+        updateTTSStatus('กำลังอ่านข้อความ...');
+    };
+    
+    ttsSpeech.onend = function() {
+        ttsIsSpeaking = false;
+        ttsIsPaused = false;
+        updateTTSButtonState();
+        updateTTSStatus('อ่านข้อความเสร็จสิ้น');
+        
+        // Reset status after delay
+        setTimeout(() => {
+            if (!ttsIsSpeaking && !ttsIsPaused) {
+                updateTTSStatus('พร้อมใช้งาน');
+            }
+        }, 2000);
+    };
+    
+    ttsSpeech.onerror = function(event) {
+        ttsIsSpeaking = false;
+        ttsIsPaused = false;
+        updateTTSButtonState();
+        updateTTSStatus('เกิดข้อผิดพลาดในการอ่าน');
+        console.error('TTS Error:', event);
+        showToast('เกิดข้อผิดพลาดในการอ่านข้อความ', 'error', 3000);
+    };
+    
+    // Start speech
+    speechSynthesis.speak(ttsSpeech);
+}
+
+function stopSpeaking() {
+    if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+        ttsIsSpeaking = false;
+        ttsIsPaused = false;
+        updateTTSButtonState();
+        updateTTSStatus('หยุดการอ่านแล้ว');
+    }
+}
+
+function pauseSpeaking() {
+    if (speechSynthesis.speaking && !ttsIsPaused) {
+        speechSynthesis.pause();
+        ttsIsPaused = true;
+        updateTTSButtonState();
+        updateTTSStatus('หยุดชั่วคราว');
+    }
+}
+
+function resumeSpeaking() {
+    if (ttsIsPaused) {
+        speechSynthesis.resume();
+        ttsIsPaused = false;
+        updateTTSButtonState();
+        updateTTSStatus('กำลังอ่านต่อ...');
+    }
+}
+
+function updateTTSRate() {
+    const rate = parseFloat(ttsRateSlider.value);
+    ttsCurrentSettings.rate = rate;
+    ttsRateValue.textContent = `${rate.toFixed(1)}x`;
+    
+    // Save to localStorage
+    localStorage.setItem('st_ai_router_tts_rate', rate.toString());
+    
+    // Update current speech if speaking
+    if (ttsSpeech && speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+        ttsSpeech.rate = rate;
+        speechSynthesis.speak(ttsSpeech);
+    }
+}
+
+function updateTTSVolume() {
+    const volume = parseFloat(ttsVolumeSlider.value);
+    ttsCurrentSettings.volume = volume;
+    ttsVolumeValue.textContent = `${Math.round(volume * 100)}%`;
+    
+    // Save to localStorage
+    localStorage.setItem('st_ai_router_tts_volume', volume.toString());
+    
+    // Update current speech if speaking
+    if (ttsSpeech && speechSynthesis.speaking) {
+        ttsSpeech.volume = volume;
+    }
+}
+
+function updateTTSVoice() {
+    const voiceURI = ttsVoiceSelect.value;
+    ttsCurrentSettings.voice = voiceURI;
+    
+    // Save to localStorage
+    localStorage.setItem('st_ai_router_tts_voice', voiceURI);
+    
+    // Update current speech if speaking
+    if (ttsSpeech && speechSynthesis.speaking && voiceURI) {
+        const selectedVoice = ttsVoices.find(voice => voice.voiceURI === voiceURI);
+        if (selectedVoice) {
+            speechSynthesis.cancel();
+            ttsSpeech.voice = selectedVoice;
+            speechSynthesis.speak(ttsSpeech);
+        }
+    }
+}
+
+function updateTTSButtonState() {
+    const hasText = promptInput.value.trim().length > 0;
+    
+    // Speak button
+    ttsSpeakBtn.disabled = !hasText || ttsIsSpeaking;
+    
+    // Control buttons
+    ttsStopBtn.disabled = !ttsIsSpeaking && !ttsIsPaused;
+    ttsPauseBtn.disabled = !ttsIsSpeaking || ttsIsPaused;
+    ttsResumeBtn.disabled = !ttsIsPaused;
+    
+    // Update speak button text
+    if (ttsIsSpeaking) {
+        ttsSpeakBtn.innerHTML = '<i class="fas fa-volume-up"></i> กำลังอ่าน...';
+    } else if (ttsIsPaused) {
+        ttsSpeakBtn.innerHTML = '<i class="fas fa-volume-up"></i> หยุดชั่วคราว';
+    } else {
+        ttsSpeakBtn.innerHTML = '<i class="fas fa-volume-up"></i> อ่านข้อความให้ฟัง';
+    }
+}
+
+function updateTTSStatus(status) {
+    ttsStatusText.textContent = status;
+    
+    // Update indicator
+    if (status.includes('กำลังอ่าน')) {
+        ttsStatusIndicator.className = 'tts-status-indicator active';
+    } else if (status.includes('หยุดชั่วคราว') || status.includes('หยุดการอ่าน')) {
+        ttsStatusIndicator.className = 'tts-status-indicator';
+        ttsStatusIndicator.style.background = 'var(--warning)';
+    } else if (status.includes('เกิดข้อผิดพลาด')) {
+        ttsStatusIndicator.className = 'tts-status-indicator';
+        ttsStatusIndicator.style.background = 'var(--danger)';
+    } else if (status.includes('พร้อมใช้งาน') || status.includes('อ่านข้อความเสร็จสิ้น')) {
+        ttsStatusIndicator.className = 'tts-status-indicator';
+        ttsStatusIndicator.style.background = 'var(--secondary)';
+    } else {
+        ttsStatusIndicator.className = 'tts-status-indicator';
+        ttsStatusIndicator.style.background = '';
+    }
+}
 
 // Calculate statistics
 function calculateStats() {
@@ -3943,6 +4506,11 @@ function confirmOpenAI() {
     
     closeModal();
     
+    // Stop TTS if speaking
+    if (ttsIsSpeaking || ttsIsPaused) {
+        stopSpeaking();
+    }
+    
     // Add to recent
     addToRecent(selectedAI);
     
@@ -4122,12 +4690,18 @@ function clearPrompt() {
     promptInput.value = '';
     currentPrompt = '';
     updateSendButton();
+    updateTTSButtonState();
     promptInput.focus();
     
     // Remove highlights
     document.querySelectorAll('.ai-card').forEach(card => {
         card.classList.remove('active');
     });
+    
+    // Stop TTS if speaking
+    if (ttsIsSpeaking || ttsIsPaused) {
+        stopSpeaking();
+    }
     
     showToast('ล้างคำถามแล้ว', 'info', 2000);
 }
@@ -4181,14 +4755,22 @@ function showInfo() {
         • รองรับแอปมือถือ: ${mobileCount} ตัว<br>
         • ฟรีใช้งาน: ${freeCount} ตัว<br><br>
         
+        🎤 <strong>ระบบ Text-to-Speech:</strong><br>
+        • อ่านข้อความในช่องคำถามออกมาเป็นเสียง<br>
+        • ปรับความเร็วและระดับเสียงได้<br>
+        • รองรับเสียงหลายภาษา (หากเบราว์เซอร์รองรับ)<br>
+        • ควบคุมการอ่านแบบหยุด/หยุดชั่วคราว/ต่อได้<br><br>
+        
         🚀 <strong>วิธีใช้งาน:</strong><br>
         1. พิมพ์คำถามของคุณ<br>
-        2. ค้นหา AI จากช่องค้นหาด้านบน<br>
-        3. หรือเลือกหมวดหมู่จากเมนูดรอปดาวน์<br>
-        4. เลือก AI ที่ต้องการ<br>
-        5. ระบบจะเปิดไปยังแพลตฟอร์มนั้นทันที<br><br>
+        2. คลิกปุ่ม "อ่านข้อความให้ฟัง" เพื่อฟังคำถาม<br>
+        3. ค้นหา AI จากช่องค้นหาด้านบน<br>
+        4. หรือเลือกหมวดหมู่จากเมนูดรอปดาวน์<br>
+        5. เลือก AI ที่ต้องการ<br>
+        6. ระบบจะเปิดไปยังแพลตฟอร์มนั้นทันที<br><br>
         
         🔍 <strong>ฟีเจอร์ใหม่:</strong><br>
+        • ระบบ Text-to-Speech<br>
         • ช่องค้นหา AI ที่ด้านบน<br>
         • เมนูดรอปดาวน์เลือกหมวดหมู่ง่ายขึ้น<br>
         • ใช้โลโก้จริงของ AI แต่ละตัว<br>
@@ -4201,7 +4783,7 @@ function showInfo() {
         • ไม่แชร์ข้อมูลส่วนตัว<br>
         • เปิดผ่านลิงก์อย่างถูกต้อง<br><br>
         
-        <small>เวอร์ชัน 3.0.0 | พัฒนาโดย ST AI Team</small>
+        <small>เวอร์ชัน 3.1.0 | พัฒนาโดย ST AI Team</small>
     `;
     
     confirmationModal.classList.add('active');
@@ -4217,6 +4799,12 @@ function showSettings() {
         • โหมดมืด/สว่าง<br>
         • เปลี่ยนโดยคลิกปุ่มธีมด้านบน<br><br>
         
+        🎤 <strong>Text-to-Speech:</strong><br>
+        • เปิด/ปิด การอ่านข้อความ<br>
+        • ปรับความเร็วการอ่าน (0.5x - 2.0x)<br>
+        • ปรับระดับเสียง (0% - 100%)<br>
+        • เลือกเสียงอ่าน (ขึ้นอยู่กับเบราว์เซอร์)<br><br>
+        
         🔍 <strong>ค้นหา:</strong><br>
         • ค้นหา AI จากชื่อหรือคุณสมบัติ<br>
         • คลิกผลลัพธ์เพื่อเลือก AI ทันที<br>
@@ -4229,19 +4817,36 @@ function showSettings() {
         
         💾 <strong>ข้อมูล:</strong><br>
         • บันทึกธีมที่เลือก<br>
+        • บันทึก TTS settings<br>
         • บันทึก AI ที่ใช้งานล่าสุด<br>
         • ข้อมูลทั้งหมดเก็บในอุปกรณ์คุณ<br><br>
-        
-        🛠️ <strong>อื่นๆ:</strong><br>
-        • ล้างประวัติล่าสุด<br>
-        • รีเซ็ตการตั้งค่าทั้งหมด<br><br>
         
         <button class="modal-btn secondary" onclick="clearRecentHistory()" style="margin-top: 10px;">
             <i class="fas fa-trash"></i> ล้างประวัติล่าสุด
         </button>
+        <button class="modal-btn secondary" onclick="resetTTSSettings()" style="margin-top: 10px;">
+            <i class="fas fa-volume-mute"></i> รีเซ็ตการตั้งค่า TTS
+        </button>
     `;
     
     confirmationModal.classList.add('active');
+}
+
+// Reset TTS settings
+function resetTTSSettings() {
+    ttsCurrentSettings = {
+        rate: 1.0,
+        volume: 1.0,
+        voice: ''
+    };
+    
+    localStorage.removeItem('st_ai_router_tts_rate');
+    localStorage.removeItem('st_ai_router_tts_volume');
+    localStorage.removeItem('st_ai_router_tts_voice');
+    
+    loadTTSSettings();
+    showToast('รีเซ็ตการตั้งค่า TTS แล้ว', 'success', 3000);
+    closeModal();
 }
 
 // Clear recent history
@@ -4258,6 +4863,7 @@ function insertExamplePrompt(example) {
     promptInput.value = example;
     currentPrompt = example;
     updateSendButton();
+    updateTTSButtonState();
     promptInput.focus();
     
     showToast('ใส่ตัวอย่างคำถามแล้ว ลองค้นหา AI ที่เหมาะดู!', 'info', 3000);
@@ -4293,6 +4899,14 @@ document.addEventListener('keydown', function(e) {
         promptInput.focus();
     }
     
+    // Ctrl/Cmd + Space to speak text
+    if ((e.ctrlKey || e.metaKey) && e.key === ' ') {
+        e.preventDefault();
+        if (!ttsIsSpeaking && promptInput.value.trim()) {
+            speakText();
+        }
+    }
+    
     // Escape to clear or close modal
     if (e.key === 'Escape') {
         if (confirmationModal.classList.contains('active')) {
@@ -4302,6 +4916,8 @@ document.addEventListener('keydown', function(e) {
             searchInput.value = '';
         } else if (isDropdownOpen) {
             closeDropdown();
+        } else if (ttsIsSpeaking || ttsIsPaused) {
+            stopSpeaking();
         } else if (currentPrompt) {
             clearPrompt();
         }
