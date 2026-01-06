@@ -1,2181 +1,641 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ST AI Router - Gateway to All AI Assistants</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css">
-    <style>
-        :root {
-            --primary: #8b5cf6;
-            --primary-dark: #7c3aed;
-            --primary-light: #c4b5fd;
-            --secondary: #10b981;
-            --secondary-dark: #059669;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --chat: #3b82f6;
-            --slide: #8b5cf6;
-            --code: #10b981;
-            --email: #ec4899;
-            --image: #f59e0b;
-            --excel: #06b6d4;
-            --meeting: #6366f1;
-            --workflow: #84cc16;
-            --article: #ef4444;
-            --schedule: #14b8a6;
-            --notes: #8b5cf6;
-            --video: #f97316;
-            --design: #06b6d4;
-            --dataviz: #ec4899;
-            
-            /* Dark Theme */
-            --dark-bg: #0f172a;
-            --dark-bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            --dark-card: #1e293b;
-            --dark-card-hover: #2d3748;
-            --dark-border: #334155;
-            --dark-border-light: #475569;
-            --dark-text: #f1f5f9;
-            --dark-text-secondary: #94a3b8;
-            --dark-text-muted: #64748b;
-            
-            /* Light Theme */
-            --light-bg: #f8fafc;
-            --light-bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            --light-card: #ffffff;
-            --light-card-hover: #f1f5f9;
-            --light-border: #e2e8f0;
-            --light-border-dark: #cbd5e1;
-            --light-text: #1e293b;
-            --light-text-secondary: #64748b;
-            --light-text-muted: #94a3b8;
-            
-            /* Glass Effect */
-            --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            
-            /* Animation */
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            
-            /* Shadows */
-            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.15);
-            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.2);
-            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
-            --shadow-primary: 0 10px 30px rgba(139, 92, 246, 0.3);
-            
-            /* Border Radius */
-            --radius-sm: 10px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
-            --radius-xl: 32px;
-            --radius-full: 9999px;
-            
-            /* Spacing */
-            --spacing-xs: 4px;
-            --spacing-sm: 8px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-2xl: 48px;
-            
-            /* Typography */
-            --font-size-xs: 12px;
-            --font-size-sm: 14px;
-            --font-size-base: 16px;
-            --font-size-lg: 18px;
-            --font-size-xl: 24px;
-            --font-size-2xl: 32px;
-            --font-size-3xl: 40px;
-            
-            /* Layout */
-            --header-height: 80px;
-            --sidebar-width: 280px;
-            --max-width: 1400px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Kanit', sans-serif;
-        }
-
-        body {
-            background: var(--dark-bg-gradient);
-            color: var(--dark-text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-            z-index: -1;
-            animation: bgFloat 20s ease-in-out infinite alternate;
-        }
-
-        @keyframes bgFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-50px, -50px) scale(1.1); }
-        }
-
-        body.light-mode {
-            background: var(--light-bg-gradient);
-            color: var(--light-text);
-        }
-
-        body.light-mode::before {
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-        }
-
-        /* Main Layout */
-        .main-container {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: var(--spacing-lg);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-xl);
-        }
-
-        /* Header - Modern Glass Effect */
-        .header {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg) var(--spacing-xl);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--glass-shadow);
-            animation: slideDown 0.6s ease-out;
-            position: sticky;
-            top: var(--spacing-lg);
-            z-index: 1000;
-            transition: var(--transition-smooth);
-        }
-
-        .header:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-xl);
-            color: white;
-            box-shadow: var(--shadow-primary);
-            animation: float 3s ease-in-out infinite, rotate 20s linear infinite;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-icon::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(255, 255, 255, 0.1) 50%,
-                transparent 70%
-            );
-            animation: shine 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo h1 {
-            font-size: var(--font-size-2xl);
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-subtitle {
-            font-size: var(--font-size-sm);
-            color: var(--dark-text-secondary);
-            font-weight: 400;
-            opacity: 0.8;
-        }
-
-        body.light-mode .logo-subtitle {
-            color: var(--light-text-secondary);
-        }
-
-        /* Header Actions and Category Menu */
-        .header-middle {
-            display: flex;
-            flex: 1;
-            justify-content: center;
-            margin: 0 var(--spacing-xl);
-        }
-
-        .category-menu-container {
-            position: relative;
-        }
-
-        .category-menu-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--dark-text);
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-lg);
-            font-size: var(--font-size-base);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition-bounce);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            backdrop-filter: blur(10px);
-            white-space: nowrap;
-        }
-
-        .category-menu-btn:hover {
-            background: rgba(139, 92, 246, 0.2);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-primary);
-        }
-
-        .category-menu-btn i.fa-chevron-down {
-            transition: transform 0.3s ease;
-        }
-
-        .category-menu-btn.active i.fa-chevron-down {
-            transform: rotate(180deg);
-        }
-
-        .category-dropdown {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            width: 320px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-xl);
-            display: none;
-            z-index: 999;
-            overflow: hidden;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .category-dropdown.show {
-            display: block;
-        }
-
-        .category-dropdown-header {
-            padding: var(--spacing-lg);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .category-dropdown-header h3 {
-            font-size: var(--font-size-lg);
-            font-weight: 600;
-            color: var(--dark-text);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .category-dropdown-body {
-            max-height: 400px;
-            overflow-y: auto;
-            padding: var(--spacing-sm);
-        }
-
-        .category-dropdown-item {
-            padding: var(--spacing-md);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .category-dropdown-item:hover {
-            background: rgba(139, 92, 246, 0.1);
-        }
-
-        .category-dropdown-item.active {
-            background: rgba(139, 92, 246, 0.2);
-            border-left: 3px solid var(--primary);
-        }
-
-        .category-dropdown-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-base);
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .category-dropdown-info {
-            flex: 1;
-        }
-
-        .category-dropdown-name {
-            font-weight: 500;
-            color: var(--dark-text);
-            margin-bottom: 2px;
-        }
-
-        .category-dropdown-count {
-            font-size: var(--font-size-xs);
-            color: var(--dark-text-secondary);
-        }
-
-        .category-dropdown-footer {
-            padding: var(--spacing-md);
-            border-top: 1px solid var(--glass-border);
-            text-align: center;
-        }
-
-        .show-all-btn {
-            background: transparent;
-            border: 1px solid var(--glass-border);
-            color: var(--dark-text);
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: var(--radius-md);
-            font-size: var(--font-size-sm);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--spacing-sm);
-        }
-
-        .show-all-btn:hover {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: var(--primary);
-        }
-
-        .header-actions {
-            display: flex;
-            gap: var(--spacing-sm);
-        }
-
-        .icon-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--dark-text);
-            width: 52px;
-            height: 52px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition-bounce);
-            font-size: var(--font-size-lg);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .icon-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .icon-btn:hover::before {
-            left: 100%;
-        }
-
-        .icon-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: var(--shadow-primary);
-        }
-
-        body.light-mode .icon-btn,
-        body.light-mode .category-menu-btn {
-            background: rgba(0, 0, 0, 0.05);
-            border-color: var(--light-border);
-            color: var(--light-text);
-        }
-
-        body.light-mode .icon-btn:hover,
-        body.light-mode .category-menu-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-        }
-
-        body.light-mode .category-dropdown {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: var(--light-border);
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-lg);
-            animation: fadeIn 0.8s ease-out 0.2s both;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            transition: var(--transition-smooth);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-card:hover::before {
-            transform: scaleY(1);
-        }
-
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-lg);
-            color: white;
-        }
-
-        .stat-content {
-            flex: 1;
-        }
-
-        .stat-value {
-            font-size: var(--font-size-2xl);
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .stat-label {
-            font-size: var(--font-size-sm);
-            color: var(--dark-text-secondary);
-            font-weight: 500;
-        }
-
-        body.light-mode .stat-label {
-            color: var(--light-text-secondary);
-        }
-
-        /* Search Bar */
-        .search-container {
-            animation: fadeIn 0.8s ease-out 0.4s both;
-            position: relative;
-        }
-
-        .search-wrapper {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .search-input {
-            width: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--glass-border);
-            border-radius: var(--radius-full);
-            padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-lg) 60px;
-            font-size: var(--font-size-lg);
-            color: var(--dark-text);
-            outline: none;
-            transition: var(--transition-bounce);
-            box-shadow: var(--shadow-md);
-        }
-
-        .search-input:focus {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-primary);
-            transform: scale(1.02);
-        }
-
-        .search-input::placeholder {
-            color: var(--dark-text-secondary);
-            opacity: 0.7;
-        }
-
-        body.light-mode .search-input {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: var(--light-border);
-            color: var(--light-text);
-        }
-
-        body.light-mode .search-input::placeholder {
-            color: var(--light-text-secondary);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: var(--spacing-lg);
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            font-size: var(--font-size-lg);
-            pointer-events: none;
-        }
-
-        /* FIXED: เพิ่ม z-index ให้ search-results */
-        .search-results {
-            position: absolute;
-            top: calc(100% + 8px);
-            left: 0;
-            right: 0;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            max-height: 400px;
-            overflow-y: auto;
-            display: none;
-            z-index: 2000; /* เพิ่ม z-index ให้สูงกว่าองค์ประกอบอื่น */
-            box-shadow: var(--shadow-xl);
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .search-results.show {
-            display: block;
-        }
-
-        .search-result-item {
-            padding: var(--spacing-md) var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            border-bottom: 1px solid var(--dark-border);
-        }
-
-        .search-result-item:last-child {
-            border-bottom: none;
-        }
-
-        .search-result-item:hover {
-            background: rgba(139, 92, 246, 0.1);
-        }
-
-        .search-result-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-base);
-            color: white;
-            flex-shrink: 0;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: white;
-            padding: 8px;
-        }
-
-        .search-result-content {
-            flex: 1;
-        }
-
-        .search-result-name {
-            font-weight: 600;
-            font-size: var(--font-size-base);
-            margin-bottom: 2px;
-            color: var(--dark-text);
-        }
-
-        .search-result-provider {
-            font-size: var(--font-size-sm);
-            color: var(--dark-text-secondary);
-        }
-
-        .search-result-category {
-            background: rgba(139, 92, 246, 0.2);
-            color: var(--primary);
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-        }
-
-        /* Categories Grid */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: var(--spacing-xl);
-            animation: fadeIn 0.8s ease-out 0.8s both;
-        }
-
-        .category-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-xl);
-            transition: var(--transition-bounce);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .category-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .category-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-xl);
-            color: white;
-            flex-shrink: 0;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .category-title {
-            font-size: var(--font-size-xl);
-            font-weight: 600;
-            color: var(--dark-text);
-            line-height: 1.2;
-        }
-
-        .category-count {
-            background: rgba(139, 92, 246, 0.2);
-            color: var(--primary);
-            padding: 4px 16px;
-            border-radius: var(--radius-full);
-            font-size: var(--font-size-sm);
-            font-weight: 600;
-            margin-left: auto;
-        }
-
-        .category-description {
-            color: var(--dark-text-secondary);
-            font-size: var(--font-size-base);
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .ai-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: var(--spacing-lg);
-        }
-
-        .ai-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-lg);
-            transition: var(--transition-smooth);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ai-card:hover {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .ai-card-header {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .ai-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: var(--font-size-lg);
-            color: white;
-            flex-shrink: 0;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: white;
-            padding: 8px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .ai-info {
-            flex: 1;
-        }
-
-        .ai-name {
-            font-size: var(--font-size-base);
-            font-weight: 600;
-            color: var(--dark-text);
-            margin-bottom: 2px;
-        }
-
-        .ai-provider {
-            font-size: var(--font-size-sm);
-            color: var(--dark-text-secondary);
-        }
-
-        .ai-badges {
-            display: flex;
-            gap: var(--spacing-xs);
-            margin-top: var(--spacing-xs);
-        }
-
-        .ai-badge {
-            font-size: var(--font-size-xs);
-            padding: 2px 10px;
-            border-radius: var(--radius-full);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-free {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--secondary);
-        }
-
-        .badge-paid {
-            background: rgba(139, 92, 246, 0.2);
-            color: var(--primary);
-        }
-
-        .badge-mobile {
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--info);
-        }
-
-        .ai-description {
-            font-size: var(--font-size-sm);
-            color: var(--dark-text-secondary);
-            line-height: 1.5;
-            margin-bottom: var(--spacing-md);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .ai-action {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .open-btn {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border: none;
-            color: white;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: var(--radius-md);
-            font-size: var(--font-size-sm);
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            transition: var(--transition-bounce);
-            flex: 1;
-            justify-content: center;
-        }
-
-        .open-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-primary);
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-        }
-
-        .device-indicator {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            font-size: var(--font-size-xs);
-            color: var(--dark-text-secondary);
-            margin-left: var(--spacing-sm);
-        }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-            padding: var(--spacing-lg);
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--glass-bg);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            max-width: 500px;
-            width: 100%;
-            box-shadow: var(--shadow-xl);
-            animation: modalSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        @keyframes modalSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-30px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .modal-title {
-            font-size: var(--font-size-xl);
-            font-weight: 700;
-            color: var(--dark-text);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .modal-body {
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .modal-text {
-            color: var(--dark-text-secondary);
-            line-height: 1.6;
-            font-size: var(--font-size-base);
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: flex-end;
-        }
-
-        .modal-btn {
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-md);
-            font-size: var(--font-size-base);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-bounce);
-            border: none;
-            min-width: 120px;
-        }
-
-        .modal-btn.primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .modal-btn.primary:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-primary);
-        }
-
-        .modal-btn.secondary {
-            background: transparent;
-            border: 2px solid var(--dark-border);
-            color: var(--dark-text);
-        }
-
-        .modal-btn.secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        /* Loading */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 4000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-        }
-
-        .loading.active {
-            display: flex;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .spinner {
-            width: 80px;
-            height: 80px;
-            border: 4px solid rgba(139, 92, 246, 0.1);
-            border-top: 4px solid var(--primary);
-            border-right: 4px solid var(--secondary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: var(--font-size-lg);
-            color: var(--dark-text);
-            font-weight: 500;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: var(--spacing-xl);
-            color: var(--dark-text-secondary);
-            font-size: var(--font-size-sm);
-            margin-top: auto;
-            animation: fadeIn 0.8s ease-out 1s both;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .categories-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-            
-            .ai-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-container {
-                padding: var(--spacing-md);
-                gap: var(--spacing-lg);
-            }
-            
-            .header {
-                flex-direction: column;
-                gap: var(--spacing-md);
-                padding: var(--spacing-md);
-            }
-            
-            .header-middle {
-                margin: var(--spacing-md) 0;
-                width: 100%;
-            }
-            
-            .category-menu-btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .category-dropdown {
-                width: 100%;
-                left: 0;
-                right: 0;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal {
-                padding: var(--spacing-lg);
-            }
-            
-            .modal-actions {
-                flex-direction: column;
-            }
-            
-            .modal-btn {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .logo h1 {
-                font-size: var(--font-size-xl);
-            }
-            
-            .logo-icon {
-                width: 50px;
-                height: 50px;
-                font-size: var(--font-size-lg);
-            }
-            
-            .search-input {
-                padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) 50px;
-                font-size: var(--font-size-base);
-            }
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius-full);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: var(--radius-full);
-            transition: var(--transition-smooth);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
-        }
-
-        /* Selection */
-        ::selection {
-            background: rgba(139, 92, 246, 0.3);
-            color: white;
-        }
-    </style>
-</head>
-<body>
-
-<!-- Loading Overlay -->
-<div class="loading" id="loading">
-    <div class="spinner"></div>
-    <div class="loading-text">กำลังเปิด AI...</div>
-</div>
-
-<!-- Confirmation Modal -->
-<div class="modal-overlay" id="confirmationModal">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 class="modal-title">
-                <i class="fas fa-rocket"></i>
-                <span id="modalTitle">ยืนยันการเปิด AI</span>
-            </h2>
-            <button class="modal-btn secondary" onclick="closeModal()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p class="modal-text" id="modalText">
-                คุณต้องการเปิด AI นี้ใช่หรือไม่?
-            </p>
-        </div>
-        <div class="modal-actions">
-            <button class="modal-btn secondary" onclick="closeModal()">ยกเลิก</button>
-            <button class="modal-btn primary" onclick="confirmOpenAI()">เปิดเลย!</button>
-        </div>
-    </div>
-</div>
-
-<!-- Main Container -->
-<div class="main-container">
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-satellite-dish"></i>
-            </div>
-            <div class="logo-text">
-                <h1>ST AI ROUTER</h1>
-                <div class="logo-subtitle">Gateway to All AI Assistants</div>
-            </div>
-        </div>
+/**
+ * ST AI Router - Anti-Tampering System
+ * Protects against code modification and reverse engineering
+ */
+
+class AntiTamper {
+    constructor() {
+        this.checksums = new Map();
+        this.integrityChecks = [];
+        this.obfuscationLevel = 'high';
         
-        <!-- Category Dropdown Menu -->
-        <div class="header-middle">
-            <div class="category-menu-container">
-                <button class="category-menu-btn" id="categoryMenuBtn">
-                    <i class="fas fa-th-large"></i>
-                    <span id="categoryMenuText">หมวดหมู่ทั้งหมด</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="category-dropdown" id="categoryDropdown">
-                    <div class="category-dropdown-header">
-                        <h3>
-                            <i class="fas fa-folder-open"></i>
-                            หมวดหมู่ AI
-                        </h3>
-                        <span class="category-count" id="dropdownCategoryCount">ทั้งหมด 14 หมวดหมู่</span>
-                    </div>
-                    <div class="category-dropdown-body" id="categoryDropdownBody">
-                        <!-- Category items will be generated here -->
-                    </div>
-                    <div class="category-dropdown-footer">
-                        <button class="show-all-btn" onclick="showAllCategories()">
-                            <i class="fas fa-eye"></i>
-                            แสดงทั้งหมด
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        this.init();
+    }
+    
+    init() {
+        // Calculate initial checksums
+        this.calculateChecksums();
         
-        <div class="header-actions">
-            <button class="icon-btn" id="themeToggle" title="เปลี่ยนธีม">
-                <i class="fas fa-moon"></i>
-            </button>
-            <button class="icon-btn" id="infoBtn" title="ข้อมูล">
-                <i class="fas fa-info-circle"></i>
-            </button>
-            <button class="icon-btn" id="settingsBtn" title="ตั้งค่า">
-                <i class="fas fa-cog"></i>
-            </button>
-        </div>
-    </header>
-    
-    <!-- Stats -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-robot"></i>
-            </div>
-            <div class="stat-content">
-                <div class="stat-value" id="totalAI">0</div>
-                <div class="stat-label">AI ทั้งหมด</div>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-mobile-alt"></i>
-            </div>
-            <div class="stat-content">
-                <div class="stat-value" id="mobileAI">0</div>
-                <div class="stat-label">รองรับแอป</div>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-tags"></i>
-            </div>
-            <div class="stat-content">
-                <div class="stat-value" id="totalCategories">0</div>
-                <div class="stat-label">หมวดหมู่</div>
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-bolt"></i>
-            </div>
-            <div class="stat-content">
-                <div class="stat-value" id="freeAI">0</div>
-                <div class="stat-label">ฟรีใช้งาน</div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Search -->
-    <div class="search-container">
-        <div class="search-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-input" id="searchInput" placeholder="ค้นหา AI ที่คุณต้องการ...">
-            <div class="search-results" id="searchResults"></div>
-        </div>
-    </div>
-    
-    <!-- Categories Grid -->
-    <div class="categories-grid" id="categoriesGrid"></div>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2024 ST AI Router. All rights reserved.</p>
-        <p style="opacity: 0.6; margin-top: 8px; font-size: 12px;">
-            Gateway to All AI Assistants - Powered by AI Technology
-        </p>
-    </footer>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
-<script src="ai-data.js"></script>
-<script>
-
-// State
-let currentTheme = 'dark';
-let recentAIs = JSON.parse(localStorage.getItem('st_ai_router_recent') || '[]');
-let selectedAI = null;
-let activeCategory = 'all';
-let searchResults = [];
-let isCategoryMenuOpen = false;
-
-// DOM Elements
-const loading = document.getElementById('loading');
-const confirmationModal = document.getElementById('confirmationModal');
-const modalTitle = document.getElementById('modalTitle');
-const modalText = document.getElementById('modalText');
-const themeToggle = document.getElementById('themeToggle');
-const infoBtn = document.getElementById('infoBtn');
-const settingsBtn = document.getElementById('settingsBtn');
-const totalAISpan = document.getElementById('totalAI');
-const mobileAISpan = document.getElementById('mobileAI');
-const totalCategoriesSpan = document.getElementById('totalCategories');
-const freeAISpan = document.getElementById('freeAI');
-const searchInput = document.getElementById('searchInput');
-const searchResultsDiv = document.getElementById('searchResults');
-const categoriesGrid = document.getElementById('categoriesGrid');
-const categoryMenuBtn = document.getElementById('categoryMenuBtn');
-const categoryMenuText = document.getElementById('categoryMenuText');
-const categoryDropdown = document.getElementById('categoryDropdown');
-const categoryDropdownBody = document.getElementById('categoryDropdownBody');
-const dropdownCategoryCount = document.getElementById('dropdownCategoryCount');
-
-// Check authentication before loading main page
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if user is logged in
-    const currentUser = JSON.parse(localStorage.getItem('st_ai_current_user') || 'null');
-    
-    if (!currentUser) {
-        // Redirect to login page
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    // Update UI based on user role
-    const isAdmin = currentUser.isAdmin === true;
-    
-    // Add user info to header if needed
-    const headerActions = document.querySelector('.header-actions');
-    if (headerActions) {
-        const userBadge = document.createElement('div');
-        userBadge.className = 'user-badge';
-        userBadge.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; 
-                       background: rgba(255, 255, 255, 0.1); border-radius: 12px;">
-                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #8b5cf6, #10b981); 
-                           border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-                           font-size: 14px; color: white; font-weight: 600;">
-                    ${currentUser.name.charAt(0).toUpperCase()}
-                </div>
-                <div style="font-size: 12px;">
-                    <div style="font-weight: 600;">${currentUser.name}</div>
-                    <div style="color: var(--dark-text-secondary); font-size: 10px;">
-                        ${isAdmin ? 'ผู้ดูแลระบบ' : 'ผู้ใช้ทั่วไป'}
-                    </div>
-                </div>
-                <button onclick="logoutFromMain()" style="background: none; border: none; color: var(--dark-text-secondary); 
-                           cursor: pointer; padding: 4px; border-radius: 4px; transition: all 0.3s;">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </div>
-        `;
+        // Setup integrity monitoring
+        this.setupIntegrityMonitoring();
         
-        // Insert before other buttons
-        headerActions.insertBefore(userBadge, headerActions.firstChild);
-    }
-});
-
-// Logout function for main page
-function logoutFromMain() {
-    localStorage.removeItem('st_ai_current_user');
-    showToast('ออกจากระบบสำเร็จ 👋', 'info', 2000);
-    setTimeout(() => {
-        window.location.href = 'login.html';
-    }, 2000);
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    // Load theme
-    const savedTheme = localStorage.getItem('st_ai_router_theme');
-    if (savedTheme === 'light') {
-        setTheme('light');
+        // Setup obfuscation
+        this.setupObfuscation();
+        
+        // Setup anti-debugging
+        this.setupAntiDebugging();
     }
     
-    // Calculate stats
-    calculateStats();
-    
-    // Render category dropdown
-    renderCategoryDropdown();
-    
-    // Render categories
-    renderCategories();
-    
-    // Add event listeners
-    themeToggle.addEventListener('click', toggleTheme);
-    infoBtn.addEventListener('click', showInfo);
-    settingsBtn.addEventListener('click', showSettings);
-    
-    // Category menu
-    categoryMenuBtn.addEventListener('click', toggleCategoryMenu);
-    
-    // Close category menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!categoryMenuBtn.contains(event.target) && !categoryDropdown.contains(event.target)) {
-            closeCategoryMenu();
-        }
-    });
-    
-    // Search functionality
-    searchInput.addEventListener('input', function() {
-        performSearch(this.value.trim());
-    });
-    
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            performSearch(this.value.trim());
-        }
-    });
-    
-    searchInput.addEventListener('focus', function() {
-        if (this.value.trim()) {
-            performSearch(this.value.trim());
-        }
-    });
-    
-    // Close search results when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
-            closeSearchResults();
-        }
-    });
-    
-    // Show welcome message with smooth animation
-    setTimeout(() => {
-        showToast('🚀 ยินดีต้อนรับสู่ ST AI Router! ค้นพบ AI มากมายในที่เดียว', 'info', 4000);
-    }, 1000);
-});
-
-// Calculate statistics
-function calculateStats() {
-    let totalAI = 0;
-    let mobileAI = 0;
-    let freeAI = 0;
-    
-    aiCategories.forEach(category => {
-        totalAI += category.ais.length;
-        mobileAI += category.ais.filter(ai => ai.mobileUrl !== null).length;
-        freeAI += category.ais.filter(ai => 
-            ai.badges.some(badge => badge.text === 'ฟรี' || badge.type === 'free')
-        ).length;
-    });
-    
-    totalAISpan.textContent = totalAI.toLocaleString();
-    mobileAISpan.textContent = mobileAI.toLocaleString();
-    totalCategoriesSpan.textContent = aiCategories.length.toLocaleString();
-    freeAISpan.textContent = freeAI.toLocaleString();
-    
-    // Update dropdown count
-    dropdownCategoryCount.textContent = `ทั้งหมด ${aiCategories.length} หมวดหมู่`;
-}
-
-// Category Dropdown Menu
-function renderCategoryDropdown() {
-    categoryDropdownBody.innerHTML = '';
-    
-    // Add "All Categories" item
-    const allItem = document.createElement('div');
-    allItem.className = `category-dropdown-item ${activeCategory === 'all' ? 'active' : ''}`;
-    allItem.onclick = () => selectCategoryFromDropdown('all');
-    allItem.innerHTML = `
-        <div class="category-dropdown-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
-            <i class="fas fa-th-large"></i>
-        </div>
-        <div class="category-dropdown-info">
-            <div class="category-dropdown-name">หมวดหมู่ทั้งหมด</div>
-            <div class="category-dropdown-count">${aiCategories.reduce((sum, cat) => sum + cat.ais.length, 0)} AI</div>
-        </div>
-    `;
-    categoryDropdownBody.appendChild(allItem);
-    
-    // Add category items
-    aiCategories.forEach(category => {
-        const item = document.createElement('div');
-        item.className = `category-dropdown-item ${activeCategory === category.id ? 'active' : ''}`;
-        item.onclick = () => selectCategoryFromDropdown(category.id);
-        item.innerHTML = `
-            <div class="category-dropdown-icon" style="background: linear-gradient(135deg, ${getCategoryColor(category.id)});">
-                <i class="${category.icon}"></i>
-            </div>
-            <div class="category-dropdown-info">
-                <div class="category-dropdown-name">${category.name}</div>
-                <div class="category-dropdown-count">${category.ais.length} AI</div>
-            </div>
-        `;
-        categoryDropdownBody.appendChild(item);
-    });
-}
-
-function toggleCategoryMenu() {
-    if (isCategoryMenuOpen) {
-        closeCategoryMenu();
-    } else {
-        openCategoryMenu();
-    }
-}
-
-function openCategoryMenu() {
-    isCategoryMenuOpen = true;
-    categoryDropdown.classList.add('show');
-    categoryMenuBtn.classList.add('active');
-}
-
-function closeCategoryMenu() {
-    isCategoryMenuOpen = false;
-    categoryDropdown.classList.remove('show');
-    categoryMenuBtn.classList.remove('active');
-}
-
-function selectCategoryFromDropdown(categoryId) {
-    activeCategory = categoryId;
-    
-    if (categoryId === 'all') {
-        categoryMenuText.textContent = 'หมวดหมู่ทั้งหมด';
-    } else {
-        const category = aiCategories.find(cat => cat.id === categoryId);
-        categoryMenuText.textContent = category.name;
+    // 1. Code Integrity Checking
+    calculateChecksums() {
+        // Calculate checksum of critical functions
+        this.addIntegrityCheck(() => {
+            const authSystemCode = authSystem.toString();
+            return this.calculateHash(authSystemCode);
+        }, 'authSystem');
+        
+        this.addIntegrityCheck(() => {
+            const securitySystemCode = securitySystem.toString();
+            return this.calculateHash(securitySystemCode);
+        }, 'securitySystem');
+        
+        // Check DOM integrity
+        this.addIntegrityCheck(() => {
+            const criticalElements = ['loginForm', 'adminPanel', 'userTable'];
+            return criticalElements.map(id => {
+                const element = document.getElementById(id);
+                return element ? this.calculateHash(element.outerHTML) : 'MISSING';
+            });
+        }, 'domIntegrity');
     }
     
-    renderCategoryDropdown();
-    renderCategories();
-    closeCategoryMenu();
-    
-    // Scroll to categories section
-    categoriesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
-    showToast(`แสดงหมวดหมู่: ${categoryId === 'all' ? 'ทั้งหมด' : aiCategories.find(cat => cat.id === categoryId).name}`, 'info', 2000);
-}
-
-function showAllCategories() {
-    selectCategoryFromDropdown('all');
-}
-
-// Search functionality - IMPROVED VERSION
-function performSearch(query) {
-    if (!query || query.trim() === '') {
-        closeSearchResults();
-        renderCategories(); // แสดงหมวดหมู่ทั้งหมดเมื่อไม่มีข้อความค้นหา
-        return;
+    addIntegrityCheck(checkFunction, name) {
+        const initialValue = checkFunction();
+        this.checksums.set(name, initialValue);
+        this.integrityChecks.push({ name, check: checkFunction });
     }
     
-    searchResults = [];
-    const searchTerm = query.toLowerCase().trim();
-    
-    // ล้างผลการค้นหาก่อนหน้า
-    searchResultsDiv.innerHTML = '';
-    
-    aiCategories.forEach(category => {
-        category.ais.forEach(ai => {
-            const searchText = (ai.name + ' ' + ai.provider + ' ' + ai.description + ' ' + ai.features.join(' ')).toLowerCase();
-            if (searchText.includes(searchTerm) || 
-                category.name.toLowerCase().includes(searchTerm)) {
-                searchResults.push({ ai, category });
+    verifyIntegrity() {
+        const violations = [];
+        
+        this.integrityChecks.forEach(({ name, check }) => {
+            const currentValue = check();
+            const storedValue = this.checksums.get(name);
+            
+            if (JSON.stringify(currentValue) !== JSON.stringify(storedValue)) {
+                violations.push({
+                    component: name,
+                    stored: storedValue,
+                    current: currentValue,
+                    type: 'INTEGRITY_VIOLATION'
+                });
             }
         });
-    });
-    
-    
-    // กรองหมวดหมู่ตามผลการค้นหา
-    filterCategoriesBySearch(searchTerm);
-}
-
-function filterCategoriesBySearch(searchTerm) {
-    categoriesGrid.innerHTML = '';
-    
-    // กรองเฉพาะหมวดหมู่ที่มี AI ตรงกับการค้นหา
-    const filteredCategories = aiCategories.filter(category => {
-        // ตรวจสอบว่าชื่อหมวดหมู่ตรงหรือไม่
-        if (category.name.toLowerCase().includes(searchTerm)) {
-            return true;
-        }
         
-        // ตรวจสอบว่าในหมวดมู่นี้มี AI ตรงกับการค้นหาหรือไม่
-        const matchingAIs = category.ais.filter(ai => {
-            const searchText = (ai.name + ' ' + ai.provider + ' ' + ai.description + ' ' + ai.features.join(' ')).toLowerCase();
-            return searchText.includes(searchTerm);
-        });
-        
-        return matchingAIs.length > 0;
-    });
-    
-    if (filteredCategories.length === 0) {
-        categoriesGrid.innerHTML = `
-            <div style="text-align: center; padding: 48px; color: var(--dark-text-secondary);">
-                <i class="fas fa-search" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                <div style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">ไม่พบ AI ที่ตรงกับการค้นหา</div>
-                <div style="font-size: 14px;">ลองค้นหาด้วยคำอื่นดูสิ!</div>
-            </div>
-        `;
-        return;
+        return violations;
     }
     
-    filteredCategories.forEach(category => {
-        const categoryCard = document.createElement('div');
-        categoryCard.className = 'category-card';
-        
-        // กรองเฉพาะ AI ที่ตรงกับการค้นหาในหมวดหมู่นี้
-        const filteredAIs = category.ais.filter(ai => {
-            const searchText = (ai.name + ' ' + ai.provider + ' ' + ai.description + ' ' + ai.features.join(' ')).toLowerCase();
-            return searchText.includes(searchTerm) || category.name.toLowerCase().includes(searchTerm);
-        });
-        
-        const aiCardsHTML = filteredAIs.map(ai => createAICardHTML(ai)).join('');
-        
-        categoryCard.innerHTML = `
-            <div class="category-header">
-                <div class="category-icon" style="background: linear-gradient(135deg, ${getCategoryColor(category.id)});">
-                    <i class="${category.icon}"></i>
-                </div>
-                <h2 class="category-title">${category.name}</h2>
-                <div class="category-count">${filteredAIs.length} AI</div>
-            </div>
-            <p class="category-description">${category.description}</p>
-            <div class="ai-grid">${aiCardsHTML}</div>
-        `;
-        
-        categoriesGrid.appendChild(categoryCard);
-    });
-}
-
-function renderSearchResults() {
-    searchResultsDiv.innerHTML = '';
-    
-    if (searchResults.length === 0) {
-        searchResultsDiv.innerHTML = `
-            <div style="padding: 32px; text-align: center; color: var(--dark-text-secondary);">
-                <i class="fas fa-search" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5;"></i>
-                <div style="font-weight: 500;">ไม่พบ AI ที่ตรงกับการค้นหา</div>
-                <div style="font-size: 12px; margin-top: 4px;">ลองค้นหาด้วยคำอื่นดูสิ!</div>
-            </div>
-        `;
-        searchResultsDiv.classList.add('show');
-        return;
-    }
-    
-    // จำกัดผลลัพธ์สูงสุด 10 รายการ
-    const limitedResults = searchResults.slice(0, 10);
-    
-    limitedResults.forEach(result => {
-        const item = document.createElement('div');
-        item.className = 'search-result-item';
-        item.onclick = () => {
-            selectAIFromSearch(result.ai.id);
-            closeSearchResults();
-            searchInput.value = '';
-            renderCategories(); // แสดงหมวดหมู่ทั้งหมดอีกครั้ง
+    // 2. Anti-Debugging Techniques
+    setupAntiDebugging() {
+        // Debugger detection
+        const debuggerCheck = () => {
+            const start = new Date().getTime();
+            debugger;
+            const end = new Date().getTime();
+            return (end - start) > 1000;
         };
         
-        item.innerHTML = `
-            <div class="search-result-icon" style="${result.ai.logoUrl ? `background-image: url('${result.ai.logoUrl}');` : ''}">
-                ${!result.ai.logoUrl ? `<i class="${result.ai.icon}"></i>` : ''}
-            </div>
-            <div class="search-result-content">
-                <div class="search-result-name">${result.ai.name}</div>
-                <div class="search-result-provider">${result.ai.provider}</div>
-            </div>
-            <div class="search-result-category">${result.category.name}</div>
-        `;
-        searchResultsDiv.appendChild(item);
-    });
-    
-    // เพิ่มข้อความแสดงจำนวนผลลัพธ์ทั้งหมด
-    const footer = document.createElement('div');
-    footer.style.padding = '12px 16px';
-    footer.style.borderTop = '1px solid var(--dark-border)';
-    footer.style.fontSize = '12px';
-    footer.style.color = 'var(--dark-text-secondary)';
-    footer.style.textAlign = 'center';
-    footer.textContent = `พบ ${searchResults.length} ผลลัพธ์ (แสดง ${limitedResults.length} รายการแรก)`;
-    searchResultsDiv.appendChild(footer);
-    
-    searchResultsDiv.classList.add('show');
-}
-
-function closeSearchResults() {
-    searchResultsDiv.classList.remove('show');
-}
-
-// Render Categories
-function renderCategories() {
-    categoriesGrid.innerHTML = '';
-    
-    let categoriesToShow = aiCategories;
-    
-    // Filter by active category
-    if (activeCategory !== 'all') {
-        categoriesToShow = aiCategories.filter(category => category.id === activeCategory);
+        // Periodic debugger checks
+        setInterval(() => {
+            if (debuggerCheck()) {
+                this.triggerTamperResponse('DEBUGGER_DETECTED');
+            }
+        }, 1000);
+        
+        // Breakpoint detection
+        this.setupBreakpointDetection();
+        
+        // Memory tampering detection
+        this.setupMemoryProtection();
     }
     
-    if (categoriesToShow.length === 0) {
-        categoriesGrid.innerHTML = `
-            <div style="text-align: center; padding: 48px; color: var(--dark-text-secondary);">
-                <i class="fas fa-folder-open" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                <div style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">ไม่พบหมวดหมู่</div>
-                <div style="font-size: 14px;">ลองเลือกหมวดหมู่อื่นจากเมนูด้านบน</div>
-            </div>
-        `;
-        return;
+    setupBreakpointDetection() {
+        // Override console methods to detect breakpoints
+        const consoleMethods = ['log', 'error', 'warn', 'info'];
+        consoleMethods.forEach(method => {
+            const original = console[method];
+            console[method] = function(...args) {
+                // Check if we're in a debugging session
+                const error = new Error();
+                const stack = error.stack || '';
+                
+                if (stack.includes('debugger')) {
+                    antiTamper.triggerTamperResponse('BREAKPOINT_DETECTED');
+                }
+                
+                return original.apply(this, args);
+            };
+        });
     }
     
-    categoriesToShow.forEach(category => {
-        const categoryCard = document.createElement('div');
-        categoryCard.className = 'category-card';
+    setupMemoryProtection() {
+        // Protect sensitive data in memory
+        const sensitiveKeys = ['password', 'token', 'secret', 'key'];
         
-        const aiCardsHTML = category.ais.map(ai => createAICardHTML(ai)).join('');
+        // Monitor memory access
+        this.setupMemoryAccessMonitoring();
         
-        categoryCard.innerHTML = `
-            <div class="category-header">
-                <div class="category-icon" style="background: linear-gradient(135deg, ${getCategoryColor(category.id)});">
-                    <i class="${category.icon}"></i>
-                </div>
-                <h2 class="category-title">${category.name}</h2>
-                <div class="category-count">${category.ais.length} AI</div>
-            </div>
-            <p class="category-description">${category.description}</p>
-            <div class="ai-grid">${aiCardsHTML}</div>
-        `;
-        
-        categoriesGrid.appendChild(categoryCard);
-    });
+        // Encrypt sensitive data in memory
+        this.encryptSensitiveMemory();
+    }
     
-    // Add animation to cards
-    document.querySelectorAll('.category-card').forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-    });
-}
-
-function getCategoryColor(categoryId) {
-    const colors = {
-        'chat': '#3b82f6, #2563eb',
-        'slide': '#8b5cf6, #7c3aed',
-        'code': '#10b981, #059669',
-        'email': '#ec4899, #db2777',
-        'image': '#f59e0b, #d97706',
-        'excel': '#06b6d4, #0891b2',
-        'meeting': '#6366f1, #4f46e5',
-        'workflow': '#84cc16, #65a30d',
-        'article': '#ef4444, #dc2626',
-        'schedule': '#14b8a6, #0d9488',
-        'notes': '#8b5cf6, #7c3aed',
-        'video': '#f97316, #ea580c',
-        'design': '#06b6d4, #0891b2',
-        'dataviz': '#ec4899, #db2777'
-    };
-    return colors[categoryId] || '#8b5cf6, #7c3aed';
-}
-
-function createAICardHTML(ai) {
-    const badgesHTML = ai.badges.map(badge => 
-        `<span class="ai-badge badge-${badge.type}">${badge.text}</span>`
-    ).join('');
-    
-    const hasMobile = ai.mobileUrl !== null;
-    const deviceIndicator = hasMobile ? 
-        '<div class="device-indicator"><i class="fas fa-mobile-alt"></i><span>แอป</span></div>' :
-        '<div class="device-indicator"><i class="fas fa-desktop"></i><span>เว็บ</span></div>';
-    
-    const iconHTML = ai.logoUrl ? 
-        `<div class="ai-icon" style="background-image: url('${ai.logoUrl}');"></div>` :
-        `<div class="ai-icon" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark));"><i class="${ai.icon}"></i></div>`;
-    
-    return `
-        <div class="ai-card" onclick="selectAI('${ai.id}')">
-            <div class="ai-card-header">
-                ${iconHTML}
-                <div class="ai-info">
-                    <div class="ai-name">${ai.name}</div>
-                    <div class="ai-provider">${ai.provider}</div>
-                    <div class="ai-badges">${badgesHTML}</div>
-                </div>
-            </div>
-            <div class="ai-description">${ai.description}</div>
-            <div class="ai-action">
-                <button class="open-btn" onclick="event.stopPropagation(); selectAI('${ai.id}')">
-                    <i class="fas fa-external-link-alt"></i>
-                    เปิด
-                </button>
-                ${deviceIndicator}
-            </div>
-        </div>
-    `;
-}
-
-// AI Selection
-function selectAI(aiId) {
-    let selectedAIObject = null;
-    for (const category of aiCategories) {
-        const ai = category.ais.find(a => a.id === aiId);
-        if (ai) {
-            selectedAIObject = ai;
-            break;
+    // 3. Code Obfuscation
+    setupObfuscation() {
+        if (this.obfuscationLevel === 'high') {
+            this.applyAdvancedObfuscation();
+        } else {
+            this.applyBasicObfuscation();
         }
     }
     
-    if (!selectedAIObject) return;
-    
-    selectedAI = selectedAIObject;
-    
-    modalTitle.innerHTML = `<i class="${selectedAI.icon}"></i> <span>${selectedAI.name}</span>`;
-    modalText.innerHTML = `
-        คุณต้องการเปิด <strong>${selectedAI.name}</strong> ใช่หรือไม่?<br><br>
-        <div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 8px; margin: 12px 0;">
-            <i class="fas fa-info-circle" style="color: var(--primary);"></i>
-            ${selectedAI.mobileUrl ? 
-                '📱 <small>จะพยายามเปิดแอปมือถือก่อน หากไม่มีจะเปิดเว็บแทน</small>' : 
-                '🖥️ <small>จะเปิดในเว็บเบราว์เซอร์</small>'}
-        </div>
-    `;
-    
-    confirmationModal.classList.add('active');
-}
-
-function selectAIFromSearch(aiId) {
-    selectAI(aiId);
-}
-
-function confirmOpenAI() {
-    if (!selectedAI) {
-        showToast('เกิดข้อผิดพลาด กรุณาลองอีกครั้ง', 'error', 3000);
-        return;
+    applyAdvancedObfuscation() {
+        // Rename variables and functions (simulated)
+        this.obfuscateFunctionNames();
+        
+        // Add junk code
+        this.addJunkCode();
+        
+        // Control flow obfuscation
+        this.obfuscateControlFlow();
+        
+        // String encryption
+        this.encryptStrings();
     }
     
-    closeModal();
-    loading.classList.add('active');
-    
-    // Add to recent
-    addToRecent(selectedAI);
-    
-    setTimeout(() => {
-        openAI(selectedAI);
-    }, 800);
-}
-
-function openAI(ai) {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (isMobile && ai.mobileUrl) {
-        const timeout = 1500;
-        const start = Date.now();
+    obfuscateFunctionNames() {
+        // In a real implementation, this would be done at build time
+        // This is just a simulation
+        const functionMap = new Map();
         
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = ai.mobileUrl;
-        document.body.appendChild(iframe);
+        // Rename security functions
+        const securityFunctions = [
+            'validateLogin',
+            'createSecureSession',
+            'generateCSRFToken',
+            'sanitizeInput'
+        ];
         
-        window.addEventListener('blur', function onBlur() {
-            window.removeEventListener('blur', onBlur);
-            loading.classList.remove('active');
-            showToast(`เปิดแอป ${ai.name} สำเร็จ! 🚀`, 'success', 3000);
-            setTimeout(() => iframe.parentNode?.removeChild(iframe), 1000);
+        securityFunctions.forEach((funcName, index) => {
+            const newName = `_${this.generateRandomName()}_${index}`;
+            functionMap.set(funcName, newName);
         });
         
-        setTimeout(() => {
-            if (Date.now() - start < timeout + 100) {
-                window.open(ai.webUrl, '_blank');
-                loading.classList.remove('active');
-                showToast(`เปิดเว็บ ${ai.name} แล้ว! 🌐`, 'info', 3000);
-                iframe.parentNode?.removeChild(iframe);
+        // Store mapping for internal use
+        this.functionMap = functionMap;
+    }
+    
+    addJunkCode() {
+        // Add meaningless code to confuse reverse engineers
+        const junkFunctions = [
+            () => {
+                const x = Math.random();
+                if (x > 0.5) {
+                    return () => {};
+                } else {
+                    return function() { return null; };
+                }
+            },
+            () => {
+                for (let i = 0; i < 1000; i++) {
+                    // Do nothing
+                }
+                return false;
             }
-        }, timeout);
-    } else {
-        window.open(ai.webUrl, '_blank');
-        loading.classList.remove('active');
-        showToast(`เปิด ${ai.name} สำเร็จ! 🎉`, 'success', 3000);
-    }
-}
-
-function addToRecent(ai) {
-    recentAIs = recentAIs.filter(item => item.id !== ai.id);
-    recentAIs.unshift({
-        id: ai.id,
-        name: ai.name,
-        timestamp: Date.now()
-    });
-    recentAIs = recentAIs.slice(0, 10);
-    localStorage.setItem('st_ai_router_recent', JSON.stringify(recentAIs));
-}
-
-// Modal
-function closeModal() {
-    confirmationModal.classList.remove('active');
-}
-
-// Theme
-function setTheme(theme) {
-    currentTheme = theme;
-    if (theme === 'light') {
-        document.body.classList.add('light-mode');
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        themeToggle.title = 'เปลี่ยนเป็นโหมดมืด';
-        document.body.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.7)');
-        document.body.style.setProperty('--glass-border', 'rgba(0, 0, 0, 0.1)');
-    } else {
-        document.body.classList.remove('light-mode');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        themeToggle.title = 'เปลี่ยนเป็นโหมดสว่าง';
-        document.body.style.setProperty('--glass-bg', 'rgba(30, 41, 59, 0.7)');
-        document.body.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.1)');
-    }
-    localStorage.setItem('st_ai_router_theme', theme);
-}
-
-function toggleTheme() {
-    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-    showToast(`เปลี่ยนเป็นโหมด ${currentTheme === 'dark' ? 'มืด' : 'สว่าง'} แล้ว`, 'info', 2000);
-}
-
-// Info & Settings
-function showInfo() {
-    let totalAI = 0;
-    let mobileCount = 0;
-    let freeCount = 0;
-    
-    aiCategories.forEach(category => {
-        totalAI += category.ais.length;
-        mobileCount += category.ais.filter(ai => ai.mobileUrl).length;
-        freeCount += category.ais.filter(ai => 
-            ai.badges.some(b => b.text === 'ฟรี' || b.type === 'free')
-        ).length;
-    });
-    
-    modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> <span>เกี่ยวกับ ST AI Router</span>`;
-    modalText.innerHTML = `
-        <strong>ST AI Router</strong> คือระบบกลางสำหรับเข้าถึง AI ทุกตัวในที่เดียว 🌍<br><br>
+        ];
         
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0;">
-            <div style="background: rgba(139, 92, 246, 0.1); padding: 12px; border-radius: 8px;">
-                <div style="font-weight: 600; color: var(--primary);">${totalAI}</div>
-                <div style="font-size: 12px;">AI ทั้งหมด</div>
-            </div>
-            <div style="background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 8px;">
-                <div style="font-weight: 600; color: var(--secondary);">${mobileCount}</div>
-                <div style="font-size: 12px;">รองรับแอป</div>
-            </div>
-            <div style="background: rgba(59, 130, 246, 0.1); padding: 12px; border-radius: 8px;">
-                <div style="font-weight: 600; color: var(--info);">${freeCount}</div>
-                <div style="font-size: 12px;">ฟรีใช้งาน</div>
-            </div>
-            <div style="background: rgba(244, 63, 94, 0.1); padding: 12px; border-radius: 8px;">
-                <div style="font-weight: 600; color: #f43f5e;">${aiCategories.length}</div>
-                <div style="font-size: 12px;">หมวดหมู่</div>
-            </div>
-        </div>
-        
-        <strong>ฟีเจอร์หลัก:</strong><br>
-        • ค้นหา AI อย่างรวดเร็ว<br>
-        • จัดหมวดหมู่ชัดเจน<br>
-        • รองรับทั้งเว็บและแอปมือถือ<br>
-        • บันทึกประวัติการใช้งาน<br>
-        • ธีมมืด/สว่าง<br><br>
-        
-        <small style="opacity: 0.6;">เวอร์ชัน 4.0 Premium | พัฒนาโดย ST AI Team</small>
-    `;
-    
-    confirmationModal.classList.add('active');
-}
-
-function showSettings() {
-    modalTitle.innerHTML = `<i class="fas fa-cog"></i> <span>ตั้งค่า</span>`;
-    modalText.innerHTML = `
-        <strong>การตั้งค่า ST AI Router</strong><br><br>
-        
-        🎨 <strong>การแสดงผล:</strong><br>
-        • โหมดมืด/สว่าง<br>
-        • แอนิเมชั่นที่ลื่นไหล<br>
-        • รองรับทุกอุปกรณ์<br><br>
-        
-        🔍 <strong>การค้นหา:</strong><br>
-        • ค้นหาด้วยชื่อ AI<br>
-        • ค้นหาด้วยหมวดหมู่<br>
-        • แสดงผลลัพธ์แบบเรียลไทม์<br><br>
-        
-        📱 <strong>การใช้งาน:</strong><br>
-        • เปิดแอปมือถือโดยตรง<br>
-        • ใช้ปุ่มลัด Ctrl/Cmd + K<br>
-        • ปิดหน้าต่างด้วย Esc<br><br>
-        
-        💾 <strong>ข้อมูล:</strong><br>
-        • บันทึกธีมที่เลือก<br>
-        • บันทึก AI ที่ใช้งานล่าสุด<br>
-        • ข้อมูลทั้งหมดอยู่ในอุปกรณ์คุณ<br><br>
-        
-        <button class="modal-btn secondary" onclick="clearRecentHistory()" style="margin-top: 12px; width: 100%;">
-            <i class="fas fa-trash"></i> ล้างประวัติล่าสุด
-        </button>
-    `;
-    
-    confirmationModal.classList.add('active');
-}
-
-function clearRecentHistory() {
-    recentAIs = [];
-    localStorage.removeItem('st_ai_router_recent');
-    showToast('ล้างประวัติล่าสุดแล้ว ✨', 'success', 3000);
-    closeModal();
-}
-
-// Toast Notification
-function showToast(message, type = 'info', duration = 3000) {
-    Toastify({
-        text: message,
-        duration: duration,
-        gravity: "top",
-        position: "right",
-        backgroundColor: type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' :
-                        type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' :
-                        'linear-gradient(135deg, #3b82f6, #2563eb)',
-        className: `toastify ${type}`,
-        style: {
-            background: 'var(--glass-bg)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid var(--glass-border)',
-            borderRadius: '12px',
-            padding: '16px',
-            fontFamily: "'Kanit', sans-serif",
-            fontWeight: '500'
-        },
-        stopOnFocus: true
-    }).showToast();
-}
-
-// Keyboard Shortcuts
-document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        searchInput.focus();
-        searchInput.select();
-        showToast('พร้อมค้นหา! พิมพ์ชื่อ AI ที่ต้องการ 🔍', 'info', 2000);
+        // Execute junk code periodically
+        setInterval(() => {
+            if (Math.random() > 0.9) {
+                junkFunctions[Math.floor(Math.random() * junkFunctions.length)]();
+            }
+        }, 5000);
     }
     
-    if (e.key === 'Escape') {
-        if (confirmationModal.classList.contains('active')) {
-            closeModal();
-        } else if (searchResultsDiv.classList.contains('show')) {
-            closeSearchResults();
-            searchInput.value = '';
-            renderCategories(); // แสดงหมวดหมู่ทั้งหมดอีกครั้ง
-        } else if (isCategoryMenuOpen) {
-            closeCategoryMenu();
-        } else if (searchInput.value.trim()) {
-            searchInput.value = '';
-            renderCategories(); // แสดงหมวดหมู่ทั้งหมดอีกครั้ง
-            closeSearchResults();
+    obfuscateControlFlow() {
+        // Obfuscate control flow with indirect jumps
+        const originalSetTimeout = window.setTimeout;
+        window.setTimeout = function(callback, delay) {
+            // Add random delay variation
+            const variedDelay = delay + (Math.random() * 100 - 50);
+            return originalSetTimeout.call(this, callback, Math.max(0, variedDelay));
+        };
+    }
+    
+    encryptStrings() {
+        // Encrypt sensitive strings
+        const stringMap = new Map();
+        
+        const sensitiveStrings = [
+            'admin',
+            'password',
+            'token',
+            'session',
+            'secret'
+        ];
+        
+        sensitiveStrings.forEach(str => {
+            const encrypted = btoa(this.xorEncrypt(str, 'secret_key'));
+            stringMap.set(str, encrypted);
+        });
+        
+        this.stringMap = stringMap;
+    }
+    
+    // 4. Runtime Protection
+    setupIntegrityMonitoring() {
+        // Monitor script modifications
+        this.monitorScriptElements();
+        
+        // Monitor function modifications
+        this.monitorFunctionIntegrity();
+        
+        // Monitor global object modifications
+        this.monitorGlobalObject();
+        
+        // Periodic integrity checks
+        setInterval(() => {
+            const violations = this.verifyIntegrity();
+            if (violations.length > 0) {
+                this.handleTampering(violations);
+            }
+        }, 30000);
+    }
+    
+    monitorScriptElements() {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.tagName === 'SCRIPT') {
+                            this.triggerTamperResponse('SCRIPT_INJECTION');
+                            node.remove();
+                        }
+                    });
+                }
+            });
+        });
+        
+        observer.observe(document.head, { childList: true });
+        observer.observe(document.body, { childList: true });
+    }
+    
+    monitorFunctionIntegrity() {
+        // Monitor critical function modifications
+        const criticalFunctions = {
+            'authSystem.login': authSystem.login,
+            'securitySystem.validateSession': securitySystem.validateSession,
+            'antiTamper.verifyIntegrity': this.verifyIntegrity
+        };
+        
+        Object.entries(criticalFunctions).forEach(([name, originalFunc]) => {
+            const wrapper = function(...args) {
+                // Check function integrity before execution
+                if (originalFunc.toString() !== wrapper._original.toString()) {
+                    antiTamper.triggerTamperResponse('FUNCTION_TAMPERING');
+                    return null;
+                }
+                return originalFunc.apply(this, args);
+            };
+            
+            wrapper._original = originalFunc;
+            
+            // Replace function with wrapper
+            const parts = name.split('.');
+            let obj = window;
+            for (let i = 0; i < parts.length - 1; i++) {
+                obj = obj[parts[i]];
+            }
+            obj[parts[parts.length - 1]] = wrapper;
+        });
+    }
+    
+    monitorGlobalObject() {
+        // Prevent modification of critical global objects
+        const protectedObjects = ['localStorage', 'sessionStorage', 'document', 'window'];
+        
+        protectedObjects.forEach(objName => {
+            const obj = window[objName];
+            if (obj) {
+                Object.seal(obj);
+                Object.freeze(Object.getPrototypeOf(obj));
+            }
+        });
+        
+        // Monitor global property modifications
+        const originalDefineProperty = Object.defineProperty;
+        Object.defineProperty = function(obj, prop, descriptor) {
+            if (obj === window || obj === document) {
+                antiTamper.logTamperAttempt('GLOBAL_PROPERTY_MODIFICATION', {
+                    object: obj.constructor.name,
+                    property: prop
+                });
+                return obj;
+            }
+            return originalDefineProperty.call(this, obj, prop, descriptor);
+        };
+    }
+    
+    // 5. Tamper Response System
+    triggerTamperResponse(type, details = {}) {
+        this.logTamperAttempt(type, details);
+        
+        // Take appropriate action based on severity
+        switch (type) {
+            case 'DEBUGGER_DETECTED':
+            case 'BREAKPOINT_DETECTED':
+                this.handleDebuggerDetection();
+                break;
+                
+            case 'FUNCTION_TAMPERING':
+            case 'INTEGRITY_VIOLATION':
+                this.handleCodeTampering();
+                break;
+                
+            case 'SCRIPT_INJECTION':
+                this.handleScriptInjection();
+                break;
+                
+            default:
+                this.handleGeneralTampering();
         }
     }
     
-    if (e.key === 't' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        toggleTheme();
+    handleDebuggerDetection() {
+        // Redirect to error page
+        window.location.href = '/security-error.html?reason=debugging';
     }
     
-    if (e.key === 'm' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        toggleCategoryMenu();
+    handleCodeTampering() {
+        // Clear all sensitive data
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // Redirect to login with warning
+        window.location.href = '/login.html?warning=tampering';
     }
-});
-
-// ฟังก์ชันเพิ่มเติมสำหรับการกรองหมวดหมู่
-function toggleCategory(card, categoryId) {
-    const aiGrid = card.querySelector('.ai-grid');
-    const isHidden = aiGrid.style.display === 'none';
     
-    if (isHidden) {
-        aiGrid.style.display = 'grid';
-        card.style.height = 'auto';
-    } else {
-        aiGrid.style.display = 'none';
-        card.style.height = '200px';
+    handleScriptInjection() {
+        // Reload page to remove injected scripts
+        location.reload();
+    }
+    
+    handleGeneralTampering() {
+        // Show warning and log user out
+        if (window.showSecurityAlert) {
+            window.showSecurityAlert('Security violation detected. Please login again.', 'error');
+        }
+        
+        setTimeout(() => {
+            localStorage.removeItem('st_ai_current_user');
+            window.location.href = '/login.html';
+        }, 3000);
+    }
+    
+    // 6. Utility Functions
+    calculateHash(str) {
+        // Simple hash function for demonstration
+        // In production, use SHA-256 or similar
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return hash.toString(16);
+    }
+    
+    generateRandomName() {
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = '';
+        for (let i = 0; i < 8; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+    
+    xorEncrypt(str, key) {
+        let result = '';
+        for (let i = 0; i < str.length; i++) {
+            const charCode = str.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+            result += String.fromCharCode(charCode);
+        }
+        return result;
+    }
+    
+    // 7. Logging and Reporting
+    logTamperAttempt(type, details) {
+        const logEntry = {
+            type,
+            timestamp: new Date().toISOString(),
+            details,
+            userAgent: navigator.userAgent,
+            url: window.location.href
+        };
+        
+        // Save to tamper log
+        const tamperLogs = JSON.parse(localStorage.getItem('tamper_logs') || '[]');
+        tamperLogs.push(logEntry);
+        
+        // Keep only last 100 entries
+        if (tamperLogs.length > 100) {
+            tamperLogs.shift();
+        }
+        
+        localStorage.setItem('tamper_logs', JSON.stringify(tamperLogs));
+        
+        // Send to server in production
+        this.reportToServer(logEntry);
+        
+        return logEntry;
+    }
+    
+    reportToServer(logEntry) {
+        // In production, send to security monitoring server
+        // This is a simulated version
+        if (navigator.sendBeacon) {
+            const data = JSON.stringify(logEntry);
+            navigator.sendBeacon('/api/security/log', data);
+        }
+    }
+    
+    // 8. Security Self-Test
+    runSelfTest() {
+        const tests = [
+            {
+                name: 'Integrity Check',
+                test: () => this.verifyIntegrity().length === 0,
+                weight: 40
+            },
+            {
+                name: 'Debugger Detection',
+                test: () => {
+                    const start = new Date().getTime();
+                    debugger;
+                    const end = new Date().getTime();
+                    return (end - start) < 100;
+                },
+                weight: 30
+            },
+            {
+                name: 'Memory Protection',
+                test: () => {
+                    try {
+                        // Try to access protected memory
+                        Object.defineProperty(window, 'testProp', { value: 'test' });
+                        return false;
+                    } catch {
+                        return true;
+                    }
+                },
+                weight: 20
+            },
+            {
+                name: 'Script Injection Protection',
+                test: () => {
+                    // Test if script injection is blocked
+                    const script = document.createElement('script');
+                    script.textContent = 'window.injectionTest = true';
+                    document.head.appendChild(script);
+                    const result = window.injectionTest === true;
+                    delete window.injectionTest;
+                    return !result;
+                },
+                weight: 10
+            }
+        ];
+        
+        let totalScore = 0;
+        const results = [];
+        
+        tests.forEach(({ name, test, weight }) => {
+            try {
+                const passed = test();
+                results.push({ name, passed });
+                if (passed) totalScore += weight;
+            } catch (error) {
+                results.push({ name, passed: false, error: error.message });
+            }
+        });
+        
+        return {
+            score: totalScore,
+            results,
+            timestamp: new Date().toISOString()
+        };
+    }
+    
+    // 9. Public API
+    getSecurityStatus() {
+        const integrity = this.verifyIntegrity();
+        const selfTest = this.runSelfTest();
+        const tamperLogs = JSON.parse(localStorage.getItem('tamper_logs') || '[]');
+        
+        return {
+            integrity: {
+                violations: integrity,
+                status: integrity.length === 0 ? 'SECURE' : 'COMPROMISED'
+            },
+            selfTest,
+            recentTamperAttempts: tamperLogs.slice(-5),
+            obfuscationLevel: this.obfuscationLevel,
+            protectionActive: true
+        };
+    }
+    
+    // 10. Memory Access Monitoring
+    setupMemoryAccessMonitoring() {
+        // Protect sensitive objects
+        const sensitiveObjects = [
+            authSystem,
+            securitySystem,
+            this
+        ];
+        
+        sensitiveObjects.forEach(obj => {
+            this.protectObject(obj);
+        });
+        
+        // Monitor access to sensitive data
+        this.monitorSensitiveAccess();
+    }
+    
+    protectObject(obj) {
+        // Make object non-configurable and non-writable
+        Object.keys(obj).forEach(key => {
+            try {
+                Object.defineProperty(obj, key, {
+                    configurable: false,
+                    writable: false,
+                    enumerable: true
+                });
+            } catch (e) {
+                // Some properties might not be configurable
+            }
+        });
+        
+        // Freeze the object
+        Object.freeze(obj);
+    }
+    
+    monitorSensitiveAccess() {
+        // Override Function constructor to detect eval-like behavior
+        const OriginalFunction = Function;
+        window.Function = function(...args) {
+            antiTamper.logTamperAttempt('FUNCTION_CONSTRUCTOR_CALL', {
+                args: args.map(arg => typeof arg === 'string' ? arg.substring(0, 50) : typeof arg)
+            });
+            return OriginalFunction(...args);
+        };
+        
+        // Monitor eval usage
+        const originalEval = eval;
+        window.eval = function(code) {
+            antiTamper.logTamperAttempt('EVAL_CALL', {
+                code: typeof code === 'string' ? code.substring(0, 100) : typeof code
+            });
+            return originalEval(code);
+        };
+    }
+    
+    encryptSensitiveMemory() {
+        // Store sensitive data encrypted in memory
+        const encryptionKey = this.generateRandomName();
+        
+        // Override sensitive data access
+        const sensitiveData = {
+            adminKey: localStorage.getItem('st_ai_admin_key'),
+            users: localStorage.getItem('st_ai_users')
+        };
+        
+        // Store encrypted
+        Object.entries(sensitiveData).forEach(([key, value]) => {
+            if (value) {
+                const encrypted = this.xorEncrypt(value, encryptionKey);
+                localStorage.setItem(`enc_${key}`, btoa(encrypted));
+                localStorage.removeItem(key);
+            }
+        });
+        
+        // Store encryption key in a non-obvious place
+        sessionStorage.setItem('mem_key', btoa(encryptionKey));
+    }
+    
+    decryptSensitiveMemory() {
+        // Decrypt when needed
+        const encryptionKey = atob(sessionStorage.getItem('mem_key') || '');
+        if (!encryptionKey) return null;
+        
+        const encryptedData = {
+            adminKey: localStorage.getItem('enc_adminKey'),
+            users: localStorage.getItem('enc_users')
+        };
+        
+        const decrypted = {};
+        Object.entries(encryptedData).forEach(([key, value]) => {
+            if (value) {
+                const decryptedValue = this.xorEncrypt(atob(value), encryptionKey);
+                decrypted[key] = decryptedValue;
+            }
+        });
+        
+        return decrypted;
     }
 }
-</script>
-</body>
-</html>
+
+// Create global instance
+const antiTamper = new AntiTamper();
+
+// Export for use in other files
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { AntiTamper, antiTamper };
+}
