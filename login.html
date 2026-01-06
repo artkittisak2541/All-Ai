@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST AI Router - เข้าสู่ระบบ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #c4b5fd;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            
+            /* Dark Theme */
+            --dark-bg: #0f172a;
+            --dark-bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --dark-card: #1e293b;
+            --dark-card-hover: #2d3748;
+            --dark-border: #334155;
+            --dark-border-light: #475569;
+            --dark-text: #f1f5f9;
+            --dark-text-secondary: #94a3b8;
+            
+            /* Glass Effect */
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            
+            /* Animation */
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --shadow-primary: 0 10px 30px rgba(139, 92, 246, 0.3);
+            
+            /* Border Radius */
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-full: 9999px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background: var(--dark-bg-gradient);
+            color: var(--dark-text);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgFloat 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgFloat {
+            0% { 
+                transform: translate(0, 0) scale(1); 
+                filter: hue-rotate(0deg);
+            }
+            50% { 
+                transform: translate(-30px, -30px) scale(1.05); 
+                filter: hue-rotate(20deg);
+            }
+            100% { 
+                transform: translate(30px, 30px) scale(1.1); 
+                filter: hue-rotate(-20deg);
+            }
+        }
+
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-lg);
+            position: relative;
+        }
+
+        /* Login Card */
+        .login-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            width: 100%;
+            max-width: 480px;
+            box-shadow: var(--shadow-xl);
+            animation: cardAppear 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--info));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9) rotateX(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0);
+            }
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Logo Section */
+        .logo-section {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-md);
+            font-size: 32px;
+            color: white;
+            box-shadow: var(--shadow-primary);
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.2) 50%,
+                transparent 70%
+            );
+            animation: shine 2s ease-in-out infinite;
+        }
+
+        .logo-text h1 {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .logo-subtitle {
+            font-size: 14px;
+            color: var(--dark-text-secondary);
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+
+        /* Form Section */
+        .form-section {
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .form-label i {
+            color: var(--primary);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 50px;
+            font-size: 16px;
+            color: var(--dark-text);
+            outline: none;
+            transition: var(--transition-bounce);
+            font-weight: 400;
+        }
+
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-primary);
+            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: var(--dark-text-secondary);
+            opacity: 0.6;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 18px;
+            pointer-events: none;
+            transition: var(--transition-smooth);
+        }
+
+        .form-input:focus + .input-icon {
+            color: var(--secondary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--dark-text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition-smooth);
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-sm);
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Buttons */
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-primary);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Admin Login Toggle */
+        .admin-toggle {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            color: var(--dark-text-secondary);
+            font-size: 14px;
+        }
+
+        .admin-toggle:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary);
+        }
+
+        .admin-toggle i {
+            transition: transform 0.3s ease;
+        }
+
+        .admin-toggle.active i {
+            transform: rotate(180deg);
+        }
+
+        .admin-form {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .admin-form.show {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: var(--spacing-lg);
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--danger);
+            font-size: 12px;
+            margin-top: var(--spacing-xs);
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Footer */
+        .login-footer {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--dark-text-secondary);
+            font-size: 12px;
+            animation: fadeIn 0.8s ease-out 0.6s both;
+        }
+
+        .version {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: var(--spacing-xs);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            max-width: 400px;
+            width: 90%;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .modal-body {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .modal-text {
+            color: var(--dark-text-secondary);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            border: none;
+            min-width: 100px;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .modal-btn.secondary {
+            background: transparent;
+            border: 2px solid var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        .modal-btn.secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+            z-index: 3000;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(139, 92, 246, 0.1);
+            border-top: 3px solid var(--primary);
+            border-right: 3px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .loading-text {
+            font-size: 16px;
+            color: var(--dark-text);
+            font-weight: 500;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+    
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: var(--spacing-md);
+            }
+            
+            .login-card {
+                padding: var(--spacing-xl);
+            }
+            
+            .logo-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .logo-text h1 {
+                font-size: 28px;
+            }
+            
+            .form-input {
+                padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 45px;
+            }
+            
+            .input-icon {
+                left: var(--spacing-sm);
+            }
+            
+            .shortcut-hint {
+                bottom: var(--spacing-md);
+                right: var(--spacing-md);
+                left: var(--spacing-md);
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: var(--spacing-lg);
+            }
+            
+            .logo-text h1 {
+                font-size: 24px;
+            }
+            
+            .modal {
+                padding: var(--spacing-lg);
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">กำลังเข้าสู่ระบบ...</div>
+    </div>
+    
+    <!-- Welcome Modal -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-robot"></i>
+                    <span>ยินดีต้อนรับสู่ ST AI Router</span>
+                </h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-text">
+                    Gateway to All AI Assistants<br><br>
+                    ระบบจัดการและใช้งาน AI ครบวงจร<br>
+                    พร้อมฟีเจอร์ที่ทันสมัยและการจัดการที่สมบูรณ์แบบ
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn primary" onclick="closeWelcomeModal()">
+                    เริ่มต้นใช้งาน
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Login Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-satellite-dish"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>ST AI ROUTER</h1>
+                    <div class="logo-subtitle">AUTHENTICATION SYSTEM</div>
+                </div>
+            </div>
+            
+            <!-- Login Form -->
+            <div class="form-section">
+                <form id="loginForm">
+                    <!-- Username -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-user"></i>
+                            ชื่อผู้ใช้
+                        </label>
+                        <div class="input-group">
+                            <input type="text" 
+                                   class="form-input" 
+                                   id="username"
+                                   placeholder="กรอกชื่อผู้ใช้ของคุณ"
+                                   autocomplete="username"
+                                   required>
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <div class="error-message" id="usernameError"></div>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-lock"></i>
+                            รหัสผ่าน
+                        </label>
+                        <div class="input-group">
+                            <input type="password" 
+                                   class="form-input" 
+                                   id="password"
+                                   placeholder="กรอกรหัสผ่านของคุณ"
+                                   autocomplete="current-password"
+                                   required>
+                            <i class="fas fa-lock input-icon"></i>
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+                    
+                    <!-- Admin Login Section -->
+                    <div class="admin-toggle" id="adminToggle">
+                        <i class="fas fa-chevron-down"></i>
+                        <span>เข้าสู่ระบบในฐานะแอดมิน</span>
+                    </div>
+                    
+                    <div class="admin-form" id="adminForm">
+                        <!-- Admin Key -->
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-key"></i>
+                                รหัสลับแอดมิน
+                            </label>
+                            <div class="input-group">
+                                <input type="password" 
+                                       class="form-input" 
+                                       id="adminKey"
+                                       placeholder="กรอกรหัสลับแอดมิน"
+                                       autocomplete="off">
+                                <i class="fas fa-key input-icon"></i>
+                            </div>
+                            <div class="error-message" id="adminKeyError"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        <span id="btnText">เข้าสู่ระบบ</span>
+                        <div class="btn-loading" id="btnLoading"></div>
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Footer -->
+            <div class="login-footer">
+                <p>© 2024 ST AI Router. All rights reserved.</p>
+                <div class="version">v4.0 SECURE</div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
+    <script src="auth-system.js"></script>
+    <script>
+        // Initialize particles
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = Math.random() * 4 + 2;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                const color = `rgba(${Math.floor(Math.random() * 139 + 92)}, ${Math.floor(Math.random() * 92 + 164)}, ${Math.floor(Math.random() * 246)}, ${Math.random() * 0.3 + 0.2})`;
+                
+                // Set styles
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.background = color;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const adminKeyInput = document.getElementById('adminKey');
+        const passwordToggle = document.getElementById('passwordToggle');
+        const adminToggle = document.getElementById('adminToggle');
+        const adminForm = document.getElementById('adminForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoading = document.getElementById('btnLoading');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const welcomeModal = document.getElementById('welcomeModal');
+        
+        // Show welcome modal on load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                welcomeModal.classList.add('active');
+            }, 1000);
+        });
+        
+        // Close welcome modal
+        function closeWelcomeModal() {
+            welcomeModal.classList.remove('active');
+        }
+        
+        // Initialize particles
+        initParticles();
+        
+        // Password toggle
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        });
+        
+        // Admin toggle
+        adminToggle.addEventListener('click', function() {
+            const isActive = this.classList.toggle('active');
+            adminForm.classList.toggle('show');
+            
+            // Update text
+            const textSpan = this.querySelector('span');
+            textSpan.textContent = isActive ? 
+                'ซ่อนการเข้าสู่ระบบแอดมิน' : 
+                'เข้าสู่ระบบในฐานะแอดมิน';
+        });
+        
+        // Form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+            const isAdminMode = adminToggle.classList.contains('active');
+            const adminKey = adminKeyInput.value;
+            
+            // Validate inputs
+            let isValid = true;
+            
+            if (!username) {
+                showError('usernameError', 'กรุณากรอกชื่อผู้ใช้');
+                isValid = false;
+            } else {
+                hideError('usernameError');
+            }
+            
+            if (!password) {
+                showError('passwordError', 'กรุณากรอกรหัสผ่าน');
+                isValid = false;
+            } else {
+                hideError('passwordError');
+            }
+            
+            if (isAdminMode && !adminKey) {
+                showError('adminKeyError', 'กรุณากรอกรหัสลับแอดมิน');
+                isValid = false;
+            } else {
+                hideError('adminKeyError');
+            }
+            
+            if (!isValid) return;
+            
+            // Show loading
+            loginBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'block';
+            
+            // Simulate API call
+            setTimeout(() => {
+                authenticateUser(username, password, isAdminMode, adminKey);
+            }, 1500);
+        });
+        
+        // Authentication function
+        function authenticateUser(username, password, isAdminMode, adminKey) {
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('st_ai_users') || '[]');
+            const adminKeyStored = localStorage.getItem('st_ai_admin_key') || 'admin1234';
+            
+            // Find user
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (!user) {
+                // Login failed
+                loginFailed('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+                return;
+            }
+            
+            // Check admin access if in admin mode
+            if (isAdminMode) {
+                if (adminKey !== adminKeyStored) {
+                    loginFailed('รหัสลับแอดมินไม่ถูกต้อง');
+                    return;
+                }
+                
+                // Admin login successful
+                localStorage.setItem('st_ai_current_user', JSON.stringify({
+                    ...user,
+                    isAdmin: true,
+                    loginTime: new Date().toISOString()
+                }));
+                
+                showToast('เข้าสู่ระบบแอดมินสำเร็จ! 🔐', 'success', 2000);
+                
+                // Redirect to admin panel
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 2000);
+                
+            } else {
+                // Regular user login successful
+                if (user.isAdmin && !isAdminMode) {
+                    showToast('แจ้งเตือน: คุณกำลังเข้าสู่ระบบในฐานะผู้ใช้ปกติ', 'warning', 3000);
+                }
+                
+                localStorage.setItem('st_ai_current_user', JSON.stringify({
+                    ...user,
+                    isAdmin: false,
+                    loginTime: new Date().toISOString()
+                }));
+                
+                showToast(`ยินดีต้อนกลับ, ${user.name}! 👋`, 'success', 2000);
+                
+                // Redirect to main page
+                setTimeout(() => {
+                    window.location.href = 'index2.html';
+                }, 2000);
+            }
+        }
+        
+        // Login failed handler
+        function loginFailed(message) {
+            loginBtn.disabled = false;
+            btnText.style.display = 'block';
+            btnLoading.style.display = 'none';
+            
+            showToast(message, 'error', 3000);
+            
+            // Shake animation
+            loginForm.style.animation = 'shake 0.5s ease';
+            setTimeout(() => {
+                loginForm.style.animation = '';
+            }, 500);
+        }
+        
+        // Error handling
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.add('show');
+        }
+        
+        function hideError(elementId) {
+            const element = document.getElementById(elementId);
+            element.classList.remove('show');
+        }
+        
+        // Toast notification
+        function showToast(message, type = 'info', duration = 3000) {
+            Toastify({
+                text: message,
+                duration: duration,
+                gravity: "top",
+                position: "right",
+                backgroundColor: type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' :
+                                type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' :
+                                type === 'warning' ? 'linear-gradient(135deg, #f59e0b, #d97706)' :
+                                'linear-gradient(135deg, #3b82f6, #2563eb)',
+                className: `toastify ${type}`,
+                style: {
+                    background: 'rgba(30, 41, 59, 0.9)',
+                    backdropFilter: 'blur(20px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    fontFamily: "'Kanit', sans-serif",
+                    fontWeight: '500'
+                },
+                stopOnFocus: true
+            }).showToast();
+        }
+        
+        // Auto focus first input
+        usernameInput.focus();
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Enter to submit
+            if (e.key === 'Enter' && !loginBtn.disabled) {
+                if (document.activeElement !== adminKeyInput || 
+                    (document.activeElement === adminKeyInput && adminKeyInput.value)) {
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            }
+            
+            // Tab to toggle admin mode
+            if (e.key === 'Tab' && e.ctrlKey) {
+                e.preventDefault();
+                adminToggle.click();
+            }
+            
+            // Esc to clear form
+            if (e.key === 'Escape') {
+                loginForm.reset();
+                hideError('usernameError');
+                hideError('passwordError');
+                hideError('adminKeyError');
+                usernameInput.focus();
+            }
+        });
+        
+        // Check if users exist, if not create default
+        window.addEventListener('load', function() {
+            const users = JSON.parse(localStorage.getItem('st_ai_users') || '[]');
+            const adminKey = localStorage.getItem('st_ai_admin_key');
+            
+            if (users.length === 0) {
+                // Create default admin user
+                const defaultUsers = [
+                    {
+                        id: '1',
+                        username: 'admin',
+                        password: 'admin123',
+                        name: 'ผู้ดูแลระบบ',
+                        email: 'admin@stai.com',
+                        role: 'admin',
+                        isAdmin: true,
+                        createdAt: new Date().toISOString()
+                    },
+                    {
+                        id: '2',
+                        username: 'user',
+                        password: 'user123',
+                        name: 'ผู้ใช้ทั่วไป',
+                        email: 'user@stai.com',
+                        role: 'user',
+                        isAdmin: false,
+                        createdAt: new Date().toISOString()
+                    }
+                ];
+                
+                localStorage.setItem('st_ai_users', JSON.stringify(defaultUsers));
+                
+                if (!adminKey) {
+                    localStorage.setItem('st_ai_admin_key', 'admin1234');
+                }
+                
+                console.log('Default users created');
+            }
+        });
+    </script>
+</body>
+</html>

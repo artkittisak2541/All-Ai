@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ST AI Router - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #c4b5fd;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            
+            /* Dark Theme */
+            --dark-bg: #0f172a;
+            --dark-bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --dark-card: #1e293b;
+            --dark-card-hover: #2d3748;
+            --dark-border: #334155;
+            --dark-border-light: #475569;
+            --dark-text: #f1f5f9;
+            --dark-text-secondary: #94a3b8;
+            
+            /* Glass Effect */
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            
+            /* Animation */
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --shadow-primary: 0 10px 30px rgba(139, 92, 246, 0.3);
+            
+            /* Border Radius */
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-full: 9999px;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+            background: var(--dark-bg-gradient);
+            color: var(--dark-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgFloat 20s ease-in-out infinite alternate;
+        }
+
+        /* Admin Container */
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+            min-height: 100vh;
+        }
+
+        /* Admin Header */
+        .admin-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg) var(--spacing-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--glass-shadow);
+            margin-bottom: var(--spacing-xl);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .admin-logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: var(--shadow-primary);
+        }
+
+        .admin-logo-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .admin-logo-text .subtitle {
+            font-size: 12px;
+            color: var(--dark-text-secondary);
+            opacity: 0.8;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            margin-right: var(--spacing-md);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: var(--dark-text-secondary);
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--secondary);
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            margin-top: 2px;
+        }
+
+        .admin-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--dark-text);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .admin-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .admin-btn.logout {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+
+        .admin-btn.logout:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .dashboard-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            transition: var(--transition-smooth);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .card-value {
+            font-size: 36px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .card-label {
+            font-size: 14px;
+            color: var(--dark-text-secondary);
+        }
+
+        /* Users Table */
+        .users-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .add-user-btn {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            border: none;
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .add-user-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+        }
+
+        .users-table th {
+            background: rgba(255, 255, 255, 0.05);
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--dark-text-secondary);
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .users-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--dark-border);
+            font-size: 14px;
+        }
+
+        .users-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .users-table tr:hover td {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .user-role-badge {
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .role-admin {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+        }
+
+        .role-user {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--secondary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: none;
+            font-size: 14px;
+        }
+
+        .action-btn.edit {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--info);
+        }
+
+        .action-btn.edit:hover {
+            background: var(--info);
+            color: white;
+        }
+
+        .action-btn.delete {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .action-btn.delete:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Settings Section */
+        .settings-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .setting-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+        }
+
+        .setting-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .setting-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-sm);
+            font-size: 14px;
+            color: var(--dark-text);
+            outline: none;
+            transition: var(--transition-smooth);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .setting-input:focus {
+            border-color: var(--primary);
+        }
+
+        .setting-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            width: 100%;
+        }
+
+        .setting-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: var(--spacing-lg);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            max-width: 500px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            animation: modalSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .modal-body {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-md);
+            font-size: 14px;
+            color: var(--dark-text);
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+        }
+
+        .form-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-md);
+            font-size: 14px;
+            color: var(--dark-text);
+            outline: none;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            border-color: var(--primary);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: none;
+            min-width: 100px;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .modal-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .modal-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        .modal-btn.secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .admin-footer {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--dark-text-secondary);
+            font-size: 12px;
+            margin-top: var(--spacing-xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes bgFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-50px, -50px) scale(1.1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: var(--spacing-md);
+            }
+            
+            .admin-header {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                padding: var(--spacing-md);
+            }
+            
+            .admin-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .users-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: var(--spacing-md);
+                align-items: flex-start;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal {
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Dashboard -->
+    <div class="admin-container">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="admin-logo">
+                <div class="admin-logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="admin-logo-text">
+                    <h1>ST AI ADMIN</h1>
+                    <div class="subtitle">Control Panel v4.0</div>
+                </div>
+            </div>
+            
+            <div class="admin-actions">
+                <div class="user-info" id="userInfo">
+                    <!-- Filled by JavaScript -->
+                </div>
+                <button class="admin-btn" onclick="goToMainPage()">
+                    <i class="fas fa-home"></i>
+                    หน้าแรก
+                </button>
+                <button class="admin-btn logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    ออกจากระบบ
+                </button>
+            </div>
+        </header>
+        
+        <!-- Dashboard Stats -->
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-users"></i>
+                        ผู้ใช้ทั้งหมด
+                    </h3>
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="totalUsers">0</div>
+                <div class="card-label">บัญชีผู้ใช้ในระบบ</div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-user-shield"></i>
+                        ผู้ดูแลระบบ
+                    </h3>
+                    <div class="card-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="adminUsers">0</div>
+                <div class="card-label">ผู้ดูแลระบบทั้งหมด</div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-user"></i>
+                        ผู้ใช้ทั่วไป
+                    </h3>
+                    <div class="card-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="regularUsers">0</div>
+                <div class="card-label">ผู้ใช้ทั่วไปทั้งหมด</div>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        ใช้งานล่าสุด
+                    </h3>
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                </div>
+                <div class="card-value" id="lastLogin">-</div>
+                <div class="card-label">เข้าสู่ระบบล่าสุด</div>
+            </div>
+        </div>
+        
+        <!-- Users Management -->
+        <section class="users-section">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-user-cog"></i>
+                    จัดการผู้ใช้
+                </h2>
+                <button class="add-user-btn" onclick="showAddUserModal()">
+                    <i class="fas fa-plus"></i>
+                    เพิ่มผู้ใช้ใหม่
+                </button>
+            </div>
+            
+            <table class="users-table" id="usersTable">
+                <thead>
+                    <tr>
+                        <th>ชื่อผู้ใช้</th>
+                        <th>ชื่อ-สกุล</th>
+                        <th>อีเมล</th>
+                        <th>บทบาท</th>
+                        <th>วันที่สร้าง</th>
+                        <th>จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- Filled by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+        
+        <!-- System Settings -->
+        <section class="settings-section">
+            <h2 class="section-title" style="margin-bottom: var(--spacing-xl);">
+                <i class="fas fa-cogs"></i>
+                การตั้งค่าระบบ
+            </h2>
+            
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <h3 class="setting-title">
+                        <i class="fas fa-key"></i>
+                        รหัสลับแอดมิน
+                    </h3>
+                    <input type="password" 
+                           class="setting-input" 
+                           id="newAdminKey" 
+                           placeholder="รหัสลับแอดมินใหม่">
+                    <input type="password" 
+                           class="setting-input" 
+                           id="currentAdminKey" 
+                           placeholder="รหัสลับแอดมินปัจจุบัน">
+                    <button class="setting-btn" onclick="changeAdminKey()">
+                        เปลี่ยนรหัสลับ
+                    </button>
+                </div>
+                
+                <div class="setting-card">
+                    <h3 class="setting-title">
+                        <i class="fas fa-lock"></i>
+                        เปลี่ยนรหัสผ่าน
+                    </h3>
+                    <input type="password" 
+                           class="setting-input" 
+                           id="oldPassword" 
+                           placeholder="รหัสผ่านเดิม">
+                    <input type="password" 
+                           class="setting-input" 
+                           id="newPassword" 
+                           placeholder="รหัสผ่านใหม่">
+                    <button class="setting-btn" onclick="changeOwnPassword()">
+                        เปลี่ยนรหัสผ่าน
+                    </button>
+                </div>
+                
+                <div class="setting-card">
+                    <h3 class="setting-title">
+                        <i class="fas fa-database"></i>
+                        ข้อมูลระบบ
+                    </h3>
+                    <div style="margin-bottom: var(--spacing-md);">
+                        <div style="color: var(--dark-text-secondary); font-size: 12px;">
+                            เวอร์ชัน: 4.0 Premium
+                        </div>
+                        <div style="color: var(--dark-text-secondary); font-size: 12px;">
+                            อัปเดตล่าสุด: 2024-01-15
+                        </div>
+                    </div>
+                    <button class="setting-btn" onclick="exportData()" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="fas fa-download"></i>
+                        ส่งออกข้อมูล
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="admin-footer">
+            <p>© 2024 ST AI Router Admin System. All rights reserved.</p>
+            <p style="opacity: 0.6; margin-top: 8px;">
+                Secure Admin Panel v4.0 | Developed with ❤️ by ST AI Team
+            </p>
+        </footer>
+    </div>
+    
+    <!-- Add/Edit User Modal -->
+    <div class="modal-overlay" id="userModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-user-plus"></i>
+                    <span id="modalUserTitle">เพิ่มผู้ใช้ใหม่</span>
+                </h2>
+                <button class="modal-btn secondary" onclick="closeUserModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">ชื่อผู้ใช้ *</label>
+                        <input type="text" 
+                               class="form-input" 
+                               id="modalUsername" 
+                               placeholder="กรอกชื่อผู้ใช้" 
+                               required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">รหัสผ่าน *</label>
+                        <input type="password" 
+                               class="form-input" 
+                               id="modalPassword" 
+                               placeholder="กรอกรหัสผ่าน" 
+                               required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">ชื่อ-สกุล *</label>
+                        <input type="text" 
+                               class="form-input" 
+                               id="modalName" 
+                               placeholder="กรอกชื่อ-สกุล" 
+                               required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">อีเมล</label>
+                        <input type="email" 
+                               class="form-input" 
+                               id="modalEmail" 
+                               placeholder="กรอกอีเมล">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">บทบาท *</label>
+                        <select class="form-select" id="modalRole" required>
+                            <option value="user">ผู้ใช้ทั่วไป</option>
+                            <option value="admin">ผู้ดูแลระบบ</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeUserModal()">
+                    ยกเลิก
+                </button>
+                <button class="modal-btn primary" onclick="saveUser()">
+                    บันทึก
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="confirmTitle">ยืนยันการลบ</span>
+                </h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-text" id="confirmText">
+                    คุณแน่ใจว่าต้องการลบผู้ใช้นี้หรือไม่?
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeConfirmModal()">
+                    ยกเลิก
+                </button>
+                <button class="modal-btn primary" onclick="confirmDelete()" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                    ลบ
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
+    <script src="auth-system.js"></script>
+    <script src="admin-panel.js"></script>
+    <script>
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is admin
+            if (!authSystem.isAdmin()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Load user info
+            loadUserInfo();
+            
+            // Load dashboard stats
+            loadDashboardStats();
+            
+            // Load users table
+            loadUsersTable();
+            
+            // Show welcome message
+            setTimeout(() => {
+                const user = authSystem.getCurrentUser();
+                showToast(`ยินดีต้อนรับ, ${user.name}! 👨‍💼`, 'success', 3000);
+            }, 1000);
+        });
+        
+        // Load user info
+        function loadUserInfo() {
+            const user = authSystem.getCurrentUser();
+            const userInfo = document.getElementById('userInfo');
+            
+            userInfo.innerHTML = `
+                <div class="user-avatar">
+                    ${user.name.charAt(0).toUpperCase()}
+                </div>
+                <div class="user-details">
+                    <div class="user-name">${user.name}</div>
+                    <div class="user-role">ADMIN</div>
+                </div>
+            `;
+        }
+        
+        // Load dashboard stats
+        function loadDashboardStats() {
+            const result = authSystem.getAllUsers();
+            
+            if (result.success) {
+                const users = result.users;
+                const totalUsers = users.length;
+                const adminUsers = users.filter(u => u.role === 'admin').length;
+                const regularUsers = totalUsers - adminUsers;
+                
+                // Update stats
+                document.getElementById('totalUsers').textContent = totalUsers;
+                document.getElementById('adminUsers').textContent = adminUsers;
+                document.getElementById('regularUsers').textContent = regularUsers;
+                
+                // Last login
+                const currentUser = authSystem.getCurrentUser();
+                if (currentUser && currentUser.loginTime) {
+                    const loginTime = new Date(currentUser.loginTime);
+                    const now = new Date();
+                    const diffMs = now - loginTime;
+                    const diffMins = Math.floor(diffMs / 60000);
+                    
+                    let lastLoginText;
+                    if (diffMins < 1) {
+                        lastLoginText = 'เมื่อสักครู่นี้';
+                    } else if (diffMins < 60) {
+                        lastLoginText = `${diffMins} นาทีที่แล้ว`;
+                    } else if (diffMins < 1440) {
+                        const hours = Math.floor(diffMins / 60);
+                        lastLoginText = `${hours} ชั่วโมงที่แล้ว`;
+                    } else {
+                        const days = Math.floor(diffMins / 1440);
+                        lastLoginText = `${days} วันที่แล้ว`;
+                    }
+                    
+                    document.getElementById('lastLogin').textContent = lastLoginText;
+                }
+            }
+        }
+        
+        // Load users table
+        function loadUsersTable() {
+            const result = authSystem.getAllUsers();
+            
+            if (result.success) {
+                const users = result.users;
+                const tbody = document.getElementById('usersTableBody');
+                const currentUser = authSystem.getCurrentUser();
+                
+                tbody.innerHTML = '';
+                
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    
+                    // Format date
+                    const createDate = new Date(user.createdAt);
+                    const formattedDate = createDate.toLocaleDateString('th-TH', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    
+                    row.innerHTML = `
+                        <td>${user.username}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email || '-'}</td>
+                        <td>
+                            <span class="user-role-badge role-${user.role}">
+                                ${user.role === 'admin' ? 'ผู้ดูแลระบบ' : 'ผู้ใช้ทั่วไป'}
+                            </span>
+                        </td>
+                        <td>${formattedDate}</td>
+                        <td>
+                            <div class="action-buttons">
+                                ${user.id !== currentUser.id ? `
+                                    <button class="action-btn edit" onclick="editUser('${user.id}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn delete" onclick="deleteUser('${user.id}', '${user.username}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                ` : `
+                                    <span style="color: var(--dark-text-secondary); font-size: 12px;">
+                                        บัญชีปัจจุบัน
+                                    </span>
+                                `}
+                            </div>
+                        </td>
+                    `;
+                    
+                    tbody.appendChild(row);
+                });
+            }
+        }
+        
+        // Show add user modal
+        function showAddUserModal() {
+            document.getElementById('modalUserTitle').textContent = 'เพิ่มผู้ใช้ใหม่';
+            document.getElementById('userForm').reset();
+            document.getElementById('userId').value = '';
+            document.getElementById('userModal').classList.add('active');
+        }
+        
+        // Edit user
+        let userToDelete = null;
+        
+        function editUser(userId) {
+            const result = authSystem.getAllUsers();
+            
+            if (result.success) {
+                const user = result.users.find(u => u.id === userId);
+                
+                if (user) {
+                    document.getElementById('modalUserTitle').textContent = 'แก้ไขผู้ใช้';
+                    document.getElementById('userId').value = user.id;
+                    document.getElementById('modalUsername').value = user.username;
+                    document.getElementById('modalPassword').value = user.password;
+                    document.getElementById('modalName').value = user.name;
+                    document.getElementById('modalEmail').value = user.email || '';
+                    document.getElementById('modalRole').value = user.role;
+                    
+                    document.getElementById('userModal').classList.add('active');
+                }
+            }
+        }
+        
+        // Delete user
+        function deleteUser(userId, username) {
+            userToDelete = userId;
+            document.getElementById('confirmTitle').textContent = 'ยืนยันการลบผู้ใช้';
+            document.getElementById('confirmText').textContent = `คุณแน่ใจว่าต้องการลบผู้ใช้ "${username}" หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้`;
+            document.getElementById('confirmModal').classList.add('active');
+        }
+        
+        // Save user
+        function saveUser() {
+            const userId = document.getElementById('userId').value;
+            const username = document.getElementById('modalUsername').value.trim();
+            const password = document.getElementById('modalPassword').value;
+            const name = document.getElementById('modalName').value.trim();
+            const email = document.getElementById('modalEmail').value.trim();
+            const role = document.getElementById('modalRole').value;
+            
+            // Validate
+            const usernameError = authSystem.validateUsername(username);
+            const passwordError = authSystem.validatePassword(password);
+            const emailError = authSystem.validateEmail(email);
+            
+            if (usernameError) {
+                showToast(usernameError, 'error', 3000);
+                return;
+            }
+            
+            if (passwordError) {
+                showToast(passwordError, 'error', 3000);
+                return;
+            }
+            
+            if (emailError) {
+                showToast(emailError, 'error', 3000);
+                return;
+            }
+            
+            if (!name) {
+                showToast('กรุณากรอกชื่อ-สกุล', 'error', 3000);
+                return;
+            }
+            
+            const userData = {
+                username,
+                password,
+                name,
+                email,
+                role
+            };
+            
+            let result;
+            
+            if (userId) {
+                // Update existing user
+                result = authSystem.updateUser(userId, userData);
+            } else {
+                // Create new user
+                result = authSystem.createUser(userData);
+            }
+            
+            if (result.success) {
+                showToast(result.message, 'success', 3000);
+                closeUserModal();
+                loadDashboardStats();
+                loadUsersTable();
+            } else {
+                showToast(result.message, 'error', 3000);
+            }
+        }
+        
+        // Confirm delete
+        function confirmDelete() {
+            if (userToDelete) {
+                const result = authSystem.deleteUser(userToDelete);
+                
+                if (result.success) {
+                    showToast(result.message, 'success', 3000);
+                    loadDashboardStats();
+                    loadUsersTable();
+                } else {
+                    showToast(result.message, 'error', 3000);
+                }
+                
+                closeConfirmModal();
+                userToDelete = null;
+            }
+        }
+        
+        // Change admin key
+        function changeAdminKey() {
+            const newKey = document.getElementById('newAdminKey').value;
+            const currentKey = document.getElementById('currentAdminKey').value;
+            
+            if (!newKey || !currentKey) {
+                showToast('กรุณากรอกข้อมูลให้ครบถ้วน', 'error', 3000);
+                return;
+            }
+            
+            const result = authSystem.changeAdminKey(newKey, currentKey);
+            
+            if (result.success) {
+                showToast(result.message, 'success', 3000);
+                document.getElementById('newAdminKey').value = '';
+                document.getElementById('currentAdminKey').value = '';
+            } else {
+                showToast(result.message, 'error', 3000);
+            }
+        }
+        
+        // Change own password
+        function changeOwnPassword() {
+            const oldPassword = document.getElementById('oldPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            
+            if (!oldPassword || !newPassword) {
+                showToast('กรุณากรอกข้อมูลให้ครบถ้วน', 'error', 3000);
+                return;
+            }
+            
+            const result = authSystem.changePassword(oldPassword, newPassword);
+            
+            if (result.success) {
+                showToast(result.message, 'success', 3000);
+                document.getElementById('oldPassword').value = '';
+                document.getElementById('newPassword').value = '';
+            } else {
+                showToast(result.message, 'error', 3000);
+            }
+        }
+        
+        // Export data
+        function exportData() {
+            const result = authSystem.getAllUsers();
+            
+            if (result.success) {
+                const data = {
+                    users: result.users,
+                    exportDate: new Date().toISOString(),
+                    version: '4.0'
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = `st-ai-users-${new Date().toISOString().split('T')[0]}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                
+                showToast('ส่งออกข้อมูลสำเร็จ! 📥', 'success', 3000);
+            }
+        }
+        
+        // Modal functions
+        function closeUserModal() {
+            document.getElementById('userModal').classList.remove('active');
+        }
+        
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+        
+        // Navigation
+        function goToMainPage() {
+            window.location.href = 'index2.html';
+        }
+        
+        function logout() {
+            authSystem.logout();
+            showToast('ออกจากระบบสำเร็จ 👋', 'info', 2000);
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        }
+        
+        // Toast notification
+        function showToast(message, type = 'info', duration = 3000) {
+            Toastify({
+                text: message,
+                duration: duration,
+                gravity: "top",
+                position: "right",
+                backgroundColor: type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' :
+                                type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' :
+                                type === 'warning' ? 'linear-gradient(135deg, #f59e0b, #d97706)' :
+                                'linear-gradient(135deg, #3b82f6, #2563eb)',
+                className: `toastify ${type}`,
+                style: {
+                    background: 'rgba(30, 41, 59, 0.9)',
+                    backdropFilter: 'blur(20px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    fontFamily: "'Kanit', sans-serif",
+                    fontWeight: '500'
+                },
+                stopOnFocus: true
+            }).showToast();
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Escape to close modals
+            if (e.key === 'Escape') {
+                if (document.getElementById('userModal').classList.contains('active')) {
+                    closeUserModal();
+                }
+                if (document.getElementById('confirmModal').classList.contains('active')) {
+                    closeConfirmModal();
+                }
+            }
+            
+            // Ctrl+N to add new user
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                showAddUserModal();
+            }
+            
+            // Ctrl+E to export
+            if (e.ctrlKey && e.key === 'e') {
+                e.preventDefault();
+                exportData();
+            }
+            
+            // Ctrl+L to logout
+            if (e.ctrlKey && e.key === 'l') {
+                e.preventDefault();
+                logout();
+            }
+        });
+    </script>
+</body>
+</html>
