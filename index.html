@@ -594,6 +594,7 @@
         /* Search Bar */
         .search-container {
             animation: fadeIn 0.8s ease-out 0.4s both;
+            position: relative;
         }
 
         .search-wrapper {
@@ -647,6 +648,7 @@
             pointer-events: none;
         }
 
+        /* FIXED: เพิ่ม z-index ให้ search-results */
         .search-results {
             position: absolute;
             top: calc(100% + 8px);
@@ -659,7 +661,7 @@
             max-height: 400px;
             overflow-y: auto;
             display: none;
-            z-index: 1000;
+            z-index: 2000; /* เพิ่ม z-index ให้สูงกว่าองค์ประกอบอื่น */
             box-shadow: var(--shadow-xl);
             animation: slideDown 0.3s ease-out;
         }
@@ -969,7 +971,7 @@
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 2000;
+            z-index: 3000;
             padding: var(--spacing-lg);
             animation: fadeIn 0.3s ease-out;
         }
@@ -1075,7 +1077,7 @@
             height: 100%;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
-            z-index: 3000;
+            z-index: 4000;
             display: none;
             align-items: center;
             justify-content: center;
@@ -1460,6 +1462,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    searchInput.addEventListener('focus', function() {
+        if (this.value.trim()) {
+            performSearch(this.value.trim());
+        }
+    });
+    
     // Close search results when clicking outside
     document.addEventListener('click', function(event) {
         if (!searchInput.contains(event.target) && !searchResultsDiv.contains(event.target)) {
@@ -1577,15 +1585,19 @@ function showAllCategories() {
     selectCategoryFromDropdown('all');
 }
 
-// Search functionality
+// Search functionality - IMPROVED VERSION
 function performSearch(query) {
-    if (!query) {
+    if (!query || query.trim() === '') {
         closeSearchResults();
+        renderCategories(); // แสดงหมวดหมู่ทั้งหมดเมื่อไม่มีข้อความค้นหา
         return;
     }
     
     searchResults = [];
-    const searchTerm = query.toLowerCase();
+    const searchTerm = query.toLowerCase().trim();
+    
+    // ล้างผลการค้นหาก่อนหน้า
+    searchResultsDiv.innerHTML = '';
     
     aiCategories.forEach(category => {
         category.ais.forEach(ai => {
@@ -1597,7 +1609,67 @@ function performSearch(query) {
         });
     });
     
-    renderSearchResults();
+    
+    // กรองหมวดหมู่ตามผลการค้นหา
+    filterCategoriesBySearch(searchTerm);
+}
+
+function filterCategoriesBySearch(searchTerm) {
+    categoriesGrid.innerHTML = '';
+    
+    // กรองเฉพาะหมวดหมู่ที่มี AI ตรงกับการค้นหา
+    const filteredCategories = aiCategories.filter(category => {
+        // ตรวจสอบว่าชื่อหมวดหมู่ตรงหรือไม่
+        if (category.name.toLowerCase().includes(searchTerm)) {
+            return true;
+        }
+        
+        // ตรวจสอบว่าในหมวดมู่นี้มี AI ตรงกับการค้นหาหรือไม่
+        const matchingAIs = category.ais.filter(ai => {
+            const searchText = (ai.name + ' ' + ai.provider + ' ' + ai.description + ' ' + ai.features.join(' ')).toLowerCase();
+            return searchText.includes(searchTerm);
+        });
+        
+        return matchingAIs.length > 0;
+    });
+    
+    if (filteredCategories.length === 0) {
+        categoriesGrid.innerHTML = `
+            <div style="text-align: center; padding: 48px; color: var(--dark-text-secondary);">
+                <i class="fas fa-search" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                <div style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">ไม่พบ AI ที่ตรงกับการค้นหา</div>
+                <div style="font-size: 14px;">ลองค้นหาด้วยคำอื่นดูสิ!</div>
+            </div>
+        `;
+        return;
+    }
+    
+    filteredCategories.forEach(category => {
+        const categoryCard = document.createElement('div');
+        categoryCard.className = 'category-card';
+        
+        // กรองเฉพาะ AI ที่ตรงกับการค้นหาในหมวดหมู่นี้
+        const filteredAIs = category.ais.filter(ai => {
+            const searchText = (ai.name + ' ' + ai.provider + ' ' + ai.description + ' ' + ai.features.join(' ')).toLowerCase();
+            return searchText.includes(searchTerm) || category.name.toLowerCase().includes(searchTerm);
+        });
+        
+        const aiCardsHTML = filteredAIs.map(ai => createAICardHTML(ai)).join('');
+        
+        categoryCard.innerHTML = `
+            <div class="category-header">
+                <div class="category-icon" style="background: linear-gradient(135deg, ${getCategoryColor(category.id)});">
+                    <i class="${category.icon}"></i>
+                </div>
+                <h2 class="category-title">${category.name}</h2>
+                <div class="category-count">${filteredAIs.length} AI</div>
+            </div>
+            <p class="category-description">${category.description}</p>
+            <div class="ai-grid">${aiCardsHTML}</div>
+        `;
+        
+        categoriesGrid.appendChild(categoryCard);
+    });
 }
 
 function renderSearchResults() {
@@ -1615,13 +1687,17 @@ function renderSearchResults() {
         return;
     }
     
-    searchResults.forEach(result => {
+    // จำกัดผลลัพธ์สูงสุด 10 รายการ
+    const limitedResults = searchResults.slice(0, 10);
+    
+    limitedResults.forEach(result => {
         const item = document.createElement('div');
         item.className = 'search-result-item';
         item.onclick = () => {
             selectAIFromSearch(result.ai.id);
             closeSearchResults();
             searchInput.value = '';
+            renderCategories(); // แสดงหมวดหมู่ทั้งหมดอีกครั้ง
         };
         
         item.innerHTML = `
@@ -1636,6 +1712,16 @@ function renderSearchResults() {
         `;
         searchResultsDiv.appendChild(item);
     });
+    
+    // เพิ่มข้อความแสดงจำนวนผลลัพธ์ทั้งหมด
+    const footer = document.createElement('div');
+    footer.style.padding = '12px 16px';
+    footer.style.borderTop = '1px solid var(--dark-border)';
+    footer.style.fontSize = '12px';
+    footer.style.color = 'var(--dark-text-secondary)';
+    footer.style.textAlign = 'center';
+    footer.textContent = `พบ ${searchResults.length} ผลลัพธ์ (แสดง ${limitedResults.length} รายการแรก)`;
+    searchResultsDiv.appendChild(footer);
     
     searchResultsDiv.classList.add('show');
 }
@@ -1669,7 +1755,6 @@ function renderCategories() {
     categoriesToShow.forEach(category => {
         const categoryCard = document.createElement('div');
         categoryCard.className = 'category-card';
-        categoryCard.onclick = () => toggleCategory(categoryCard, category.id);
         
         const aiCardsHTML = category.ais.map(ai => createAICardHTML(ai)).join('');
         
@@ -1712,19 +1797,6 @@ function getCategoryColor(categoryId) {
         'dataviz': '#ec4899, #db2777'
     };
     return colors[categoryId] || '#8b5cf6, #7c3aed';
-}
-
-function toggleCategory(card, categoryId) {
-    const aiGrid = card.querySelector('.ai-grid');
-    const isHidden = aiGrid.style.display === 'none';
-    
-    if (isHidden) {
-        aiGrid.style.display = 'grid';
-        card.style.height = 'auto';
-    } else {
-        aiGrid.style.display = 'none';
-        card.style.height = '200px';
-    }
 }
 
 function createAICardHTML(ai) {
@@ -2015,8 +2087,14 @@ document.addEventListener('keydown', function(e) {
             closeModal();
         } else if (searchResultsDiv.classList.contains('show')) {
             closeSearchResults();
+            searchInput.value = '';
+            renderCategories(); // แสดงหมวดหมู่ทั้งหมดอีกครั้ง
         } else if (isCategoryMenuOpen) {
             closeCategoryMenu();
+        } else if (searchInput.value.trim()) {
+            searchInput.value = '';
+            renderCategories(); // แสดงหมวดหมู่ทั้งหมดอีกครั้ง
+            closeSearchResults();
         }
     }
     
@@ -2030,6 +2108,20 @@ document.addEventListener('keydown', function(e) {
         toggleCategoryMenu();
     }
 });
+
+// ฟังก์ชันเพิ่มเติมสำหรับการกรองหมวดหมู่
+function toggleCategory(card, categoryId) {
+    const aiGrid = card.querySelector('.ai-grid');
+    const isHidden = aiGrid.style.display === 'none';
+    
+    if (isHidden) {
+        aiGrid.style.display = 'grid';
+        card.style.height = 'auto';
+    } else {
+        aiGrid.style.display = 'none';
+        card.style.height = '200px';
+    }
+}
 </script>
 </body>
 </html>
