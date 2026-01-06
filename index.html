@@ -273,6 +273,167 @@
             color: var(--light-text-secondary);
         }
 
+        /* Header Actions and Category Menu */
+        .header-middle {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            margin: 0 var(--spacing-xl);
+        }
+
+        .category-menu-container {
+            position: relative;
+        }
+
+        .category-menu-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--dark-text);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+        }
+
+        .category-menu-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .category-menu-btn i.fa-chevron-down {
+            transition: transform 0.3s ease;
+        }
+
+        .category-menu-btn.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .category-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 320px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            display: none;
+            z-index: 999;
+            overflow: hidden;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .category-dropdown.show {
+            display: block;
+        }
+
+        .category-dropdown-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-dropdown-header h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .category-dropdown-body {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: var(--spacing-sm);
+        }
+
+        .category-dropdown-item {
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .category-dropdown-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .category-dropdown-item.active {
+            background: rgba(139, 92, 246, 0.2);
+            border-left: 3px solid var(--primary);
+        }
+
+        .category-dropdown-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-base);
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .category-dropdown-info {
+            flex: 1;
+        }
+
+        .category-dropdown-name {
+            font-weight: 500;
+            color: var(--dark-text);
+            margin-bottom: 2px;
+        }
+
+        .category-dropdown-count {
+            font-size: var(--font-size-xs);
+            color: var(--dark-text-secondary);
+        }
+
+        .category-dropdown-footer {
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .show-all-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--dark-text);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .show-all-btn:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+        }
+
         .header-actions {
             display: flex;
             gap: var(--spacing-sm);
@@ -319,16 +480,23 @@
             box-shadow: var(--shadow-primary);
         }
 
-        body.light-mode .icon-btn {
+        body.light-mode .icon-btn,
+        body.light-mode .category-menu-btn {
             background: rgba(0, 0, 0, 0.05);
             border-color: var(--light-border);
             color: var(--light-text);
         }
 
-        body.light-mode .icon-btn:hover {
+        body.light-mode .icon-btn:hover,
+        body.light-mode .category-menu-btn:hover {
             background: var(--primary);
             border-color: var(--primary);
             color: white;
+        }
+
+        body.light-mode .category-dropdown {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: var(--light-border);
         }
 
         /* Stats Cards */
@@ -558,48 +726,6 @@
             border-radius: var(--radius-full);
             font-size: var(--font-size-xs);
             font-weight: 600;
-        }
-
-        /* Filter Tabs */
-        .filter-tabs {
-            display: flex;
-            gap: var(--spacing-sm);
-            overflow-x: auto;
-            padding: var(--spacing-sm) 0;
-            scrollbar-width: none;
-            animation: fadeIn 0.8s ease-out 0.6s both;
-        }
-
-        .filter-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .filter-tab {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--dark-text-secondary);
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: var(--radius-full);
-            font-size: var(--font-size-sm);
-            cursor: pointer;
-            transition: var(--transition-bounce);
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-
-        .filter-tab:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .filter-tab.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            box-shadow: var(--shadow-primary);
         }
 
         /* Categories Grid */
@@ -1023,6 +1149,22 @@
                 padding: var(--spacing-md);
             }
             
+            .header-middle {
+                margin: var(--spacing-md) 0;
+                width: 100%;
+            }
+            
+            .category-menu-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .category-dropdown {
+                width: 100%;
+                left: 0;
+                right: 0;
+            }
+            
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1139,6 +1281,35 @@
             </div>
         </div>
         
+        <!-- Category Dropdown Menu -->
+        <div class="header-middle">
+            <div class="category-menu-container">
+                <button class="category-menu-btn" id="categoryMenuBtn">
+                    <i class="fas fa-th-large"></i>
+                    <span id="categoryMenuText">หมวดหมู่ทั้งหมด</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="category-dropdown" id="categoryDropdown">
+                    <div class="category-dropdown-header">
+                        <h3>
+                            <i class="fas fa-folder-open"></i>
+                            หมวดหมู่ AI
+                        </h3>
+                        <span class="category-count" id="dropdownCategoryCount">ทั้งหมด 14 หมวดหมู่</span>
+                    </div>
+                    <div class="category-dropdown-body" id="categoryDropdownBody">
+                        <!-- Category items will be generated here -->
+                    </div>
+                    <div class="category-dropdown-footer">
+                        <button class="show-all-btn" onclick="showAllCategories()">
+                            <i class="fas fa-eye"></i>
+                            แสดงทั้งหมด
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="header-actions">
             <button class="icon-btn" id="themeToggle" title="เปลี่ยนธีม">
                 <i class="fas fa-moon"></i>
@@ -1201,25 +1372,6 @@
         </div>
     </div>
     
-    <!-- Filter Tabs -->
-    <div class="filter-tabs" id="filterTabs">
-        <button class="filter-tab active" data-filter="all">
-            <i class="fas fa-th-large"></i> ทั้งหมด
-        </button>
-        <button class="filter-tab" data-filter="free">
-            <i class="fas fa-gift"></i> ฟรี
-        </button>
-        <button class="filter-tab" data-filter="mobile">
-            <i class="fas fa-mobile-alt"></i> แอปมือถือ
-        </button>
-        <button class="filter-tab" data-filter="recent">
-            <i class="fas fa-history"></i> ล่าสุด
-        </button>
-        <button class="filter-tab" data-filter="popular">
-            <i class="fas fa-fire"></i> ยอดนิยม
-        </button>
-    </div>
-    
     <!-- Categories Grid -->
     <div class="categories-grid" id="categoriesGrid"></div>
     
@@ -1235,12 +1387,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.js"></script>
 <script src="ai-data.js"></script>
 <script>
+
 // State
 let currentTheme = 'dark';
 let recentAIs = JSON.parse(localStorage.getItem('st_ai_router_recent') || '[]');
 let selectedAI = null;
-let activeFilter = 'all';
+let activeCategory = 'all';
 let searchResults = [];
+let isCategoryMenuOpen = false;
 
 // DOM Elements
 const loading = document.getElementById('loading');
@@ -1256,8 +1410,12 @@ const totalCategoriesSpan = document.getElementById('totalCategories');
 const freeAISpan = document.getElementById('freeAI');
 const searchInput = document.getElementById('searchInput');
 const searchResultsDiv = document.getElementById('searchResults');
-const filterTabs = document.getElementById('filterTabs');
 const categoriesGrid = document.getElementById('categoriesGrid');
+const categoryMenuBtn = document.getElementById('categoryMenuBtn');
+const categoryMenuText = document.getElementById('categoryMenuText');
+const categoryDropdown = document.getElementById('categoryDropdown');
+const categoryDropdownBody = document.getElementById('categoryDropdownBody');
+const dropdownCategoryCount = document.getElementById('dropdownCategoryCount');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
@@ -1270,6 +1428,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Calculate stats
     calculateStats();
     
+    // Render category dropdown
+    renderCategoryDropdown();
+    
     // Render categories
     renderCategories();
     
@@ -1277,6 +1438,16 @@ document.addEventListener('DOMContentLoaded', function() {
     themeToggle.addEventListener('click', toggleTheme);
     infoBtn.addEventListener('click', showInfo);
     settingsBtn.addEventListener('click', showSettings);
+    
+    // Category menu
+    categoryMenuBtn.addEventListener('click', toggleCategoryMenu);
+    
+    // Close category menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!categoryMenuBtn.contains(event.target) && !categoryDropdown.contains(event.target)) {
+            closeCategoryMenu();
+        }
+    });
     
     // Search functionality
     searchInput.addEventListener('input', function() {
@@ -1287,16 +1458,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Enter') {
             performSearch(this.value.trim());
         }
-    });
-    
-    // Filter tabs
-    document.querySelectorAll('.filter-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            activeFilter = this.dataset.filter;
-            renderCategories();
-        });
     });
     
     // Close search results when clicking outside
@@ -1330,6 +1491,90 @@ function calculateStats() {
     mobileAISpan.textContent = mobileAI.toLocaleString();
     totalCategoriesSpan.textContent = aiCategories.length.toLocaleString();
     freeAISpan.textContent = freeAI.toLocaleString();
+    
+    // Update dropdown count
+    dropdownCategoryCount.textContent = `ทั้งหมด ${aiCategories.length} หมวดหมู่`;
+}
+
+// Category Dropdown Menu
+function renderCategoryDropdown() {
+    categoryDropdownBody.innerHTML = '';
+    
+    // Add "All Categories" item
+    const allItem = document.createElement('div');
+    allItem.className = `category-dropdown-item ${activeCategory === 'all' ? 'active' : ''}`;
+    allItem.onclick = () => selectCategoryFromDropdown('all');
+    allItem.innerHTML = `
+        <div class="category-dropdown-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+            <i class="fas fa-th-large"></i>
+        </div>
+        <div class="category-dropdown-info">
+            <div class="category-dropdown-name">หมวดหมู่ทั้งหมด</div>
+            <div class="category-dropdown-count">${aiCategories.reduce((sum, cat) => sum + cat.ais.length, 0)} AI</div>
+        </div>
+    `;
+    categoryDropdownBody.appendChild(allItem);
+    
+    // Add category items
+    aiCategories.forEach(category => {
+        const item = document.createElement('div');
+        item.className = `category-dropdown-item ${activeCategory === category.id ? 'active' : ''}`;
+        item.onclick = () => selectCategoryFromDropdown(category.id);
+        item.innerHTML = `
+            <div class="category-dropdown-icon" style="background: linear-gradient(135deg, ${getCategoryColor(category.id)});">
+                <i class="${category.icon}"></i>
+            </div>
+            <div class="category-dropdown-info">
+                <div class="category-dropdown-name">${category.name}</div>
+                <div class="category-dropdown-count">${category.ais.length} AI</div>
+            </div>
+        `;
+        categoryDropdownBody.appendChild(item);
+    });
+}
+
+function toggleCategoryMenu() {
+    if (isCategoryMenuOpen) {
+        closeCategoryMenu();
+    } else {
+        openCategoryMenu();
+    }
+}
+
+function openCategoryMenu() {
+    isCategoryMenuOpen = true;
+    categoryDropdown.classList.add('show');
+    categoryMenuBtn.classList.add('active');
+}
+
+function closeCategoryMenu() {
+    isCategoryMenuOpen = false;
+    categoryDropdown.classList.remove('show');
+    categoryMenuBtn.classList.remove('active');
+}
+
+function selectCategoryFromDropdown(categoryId) {
+    activeCategory = categoryId;
+    
+    if (categoryId === 'all') {
+        categoryMenuText.textContent = 'หมวดหมู่ทั้งหมด';
+    } else {
+        const category = aiCategories.find(cat => cat.id === categoryId);
+        categoryMenuText.textContent = category.name;
+    }
+    
+    renderCategoryDropdown();
+    renderCategories();
+    closeCategoryMenu();
+    
+    // Scroll to categories section
+    categoriesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    showToast(`แสดงหมวดหมู่: ${categoryId === 'all' ? 'ทั้งหมด' : aiCategories.find(cat => cat.id === categoryId).name}`, 'info', 2000);
+}
+
+function showAllCategories() {
+    selectCategoryFromDropdown('all');
 }
 
 // Search functionality
@@ -1403,30 +1648,30 @@ function closeSearchResults() {
 function renderCategories() {
     categoriesGrid.innerHTML = '';
     
-    aiCategories.forEach(category => {
-        // Filter AIs based on active filter
-        let filteredAIs = category.ais;
-        if (activeFilter === 'free') {
-            filteredAIs = category.ais.filter(ai => 
-                ai.badges.some(badge => badge.text === 'ฟรี' || badge.type === 'free')
-            );
-        } else if (activeFilter === 'mobile') {
-            filteredAIs = category.ais.filter(ai => ai.mobileUrl !== null);
-        } else if (activeFilter === 'recent') {
-            const recentIds = recentAIs.map(r => r.id);
-            filteredAIs = category.ais.filter(ai => recentIds.includes(ai.id));
-        } else if (activeFilter === 'popular') {
-            // Sort by name for popular (demo)
-            filteredAIs = [...category.ais].sort((a, b) => a.name.localeCompare(b.name));
-        }
-        
-        if (filteredAIs.length === 0 && activeFilter !== 'all') return;
-        
+    let categoriesToShow = aiCategories;
+    
+    // Filter by active category
+    if (activeCategory !== 'all') {
+        categoriesToShow = aiCategories.filter(category => category.id === activeCategory);
+    }
+    
+    if (categoriesToShow.length === 0) {
+        categoriesGrid.innerHTML = `
+            <div style="text-align: center; padding: 48px; color: var(--dark-text-secondary);">
+                <i class="fas fa-folder-open" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                <div style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">ไม่พบหมวดหมู่</div>
+                <div style="font-size: 14px;">ลองเลือกหมวดหมู่อื่นจากเมนูด้านบน</div>
+            </div>
+        `;
+        return;
+    }
+    
+    categoriesToShow.forEach(category => {
         const categoryCard = document.createElement('div');
         categoryCard.className = 'category-card';
         categoryCard.onclick = () => toggleCategory(categoryCard, category.id);
         
-        const aiCardsHTML = filteredAIs.map(ai => createAICardHTML(ai)).join('');
+        const aiCardsHTML = category.ais.map(ai => createAICardHTML(ai)).join('');
         
         categoryCard.innerHTML = `
             <div class="category-header">
@@ -1434,7 +1679,7 @@ function renderCategories() {
                     <i class="${category.icon}"></i>
                 </div>
                 <h2 class="category-title">${category.name}</h2>
-                <div class="category-count">${filteredAIs.length} AI</div>
+                <div class="category-count">${category.ais.length} AI</div>
             </div>
             <p class="category-description">${category.description}</p>
             <div class="ai-grid">${aiCardsHTML}</div>
@@ -1730,7 +1975,6 @@ function clearRecentHistory() {
     localStorage.removeItem('st_ai_router_recent');
     showToast('ล้างประวัติล่าสุดแล้ว ✨', 'success', 3000);
     closeModal();
-    renderCategories();
 }
 
 // Toast Notification
@@ -1771,12 +2015,19 @@ document.addEventListener('keydown', function(e) {
             closeModal();
         } else if (searchResultsDiv.classList.contains('show')) {
             closeSearchResults();
+        } else if (isCategoryMenuOpen) {
+            closeCategoryMenu();
         }
     }
     
     if (e.key === 't' && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
         toggleTheme();
+    }
+    
+    if (e.key === 'm' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        toggleCategoryMenu();
     }
 });
 </script>
